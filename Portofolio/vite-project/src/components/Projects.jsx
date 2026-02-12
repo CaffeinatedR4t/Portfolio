@@ -72,6 +72,7 @@ const projectsData = [
     image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop",
     date: "September 2024",
     role: "Data Analyst & Researcher",
+    pdf: "/AI_Student_Learning_Paper.pdf",
     fullDescription: "Comprehensive research project examining the integration of AI tools in educational settings and their effect on student engagement, comprehension, and academic performance. Utilized R and RStudio for statistical modeling, hypothesis testing, and data visualization to derive actionable insights."
   }
 ]
