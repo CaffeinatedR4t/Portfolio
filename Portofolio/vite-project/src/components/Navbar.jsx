@@ -43,7 +43,7 @@ function Navbar() {
     <>
       <nav className={`navbar ${scrolled ? 'scrolled' : ''} ${visible ? '' : 'navbar-hidden'}`}>
         <div className="nav-left">
-          <ScrambleLogo onClick={closeMobileMenu} />
+          <Logo onClick={closeMobileMenu} />
         </div>
 
         <div 
@@ -73,62 +73,8 @@ function Navbar() {
   )
 }
 
-function ScrambleLogo({ onClick }) {
-  const fullName = 'JEREMY JOSEPH POHAR'
-  const shortName = 'JJP'
-  const [displayText, setDisplayText] = useState(shortName)
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [isHovering, setIsHovering] = useState(false)
-
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*'
-
-  useEffect(() => {
-    if (!isHovering) {
-      setDisplayText(isExpanded ? fullName : shortName)
-      return
-    }
-
-    const targetText = isExpanded ? fullName : shortName
-    let iteration = 0
-
-    const interval = setInterval(() => {
-      setDisplayText(
-        targetText
-          .split('')
-          .map((char, index) => {
-            if (char === ' ') return ' '
-            if (index < iteration) {
-              return targetText[index]
-            }
-            return characters[Math.floor(Math.random() * characters.length)]
-          })
-          .join('')
-      )
-
-      if (iteration >= targetText.length) {
-        clearInterval(interval)
-      }
-
-      iteration += 1 / 3
-    }, 30)
-
-    return () => clearInterval(interval)
-  }, [isHovering, isExpanded])
-
-  const handleMouseEnter = () => {
-    setIsHovering(true)
-    setIsExpanded(true)
-  }
-
-  const handleMouseLeave = () => {
-    setIsHovering(true)
-    setIsExpanded(false)
-    
-    setTimeout(() => {
-      setIsHovering(false)
-    }, 500)
-  }
-
+// ✅ NEW: Simple Logo component with static image
+function Logo({ onClick }) {
   const handleClick = (e) => {
     e.preventDefault()
     const homeSection = document.getElementById('home')
@@ -136,7 +82,7 @@ function ScrambleLogo({ onClick }) {
       if (window.lenis) {
         window.lenis.scrollTo(homeSection, {
           offset: 0,
-          duration: 1,
+          duration: 1.5,
           easing: (t) => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
         })
       } else {
@@ -149,14 +95,10 @@ function ScrambleLogo({ onClick }) {
   return (
     <a
       href="#home"
-      className={`nav-logo expandable-logo ${isExpanded ? 'expanded' : ''}`}
+      className="nav-logo"
       onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
-      <span className="logo-bracket">[</span>
-      <span className="logo-text">{displayText}</span>
-      <span className="logo-bracket">]</span>
+      <img src="/weblogo.png" alt="Logo" className="logo-image" />
     </a>
   )
 }
@@ -223,7 +165,7 @@ function CursorPopupLink({ href, text, popup, onClick }) {
       if (window.lenis) {
         window.lenis.scrollTo(targetElement, {
           offset: -80,
-          duration: 2,
+          duration: 2.5,
           easing: (t) => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
         })
       } else {
@@ -272,7 +214,7 @@ function MobileNavLink({ href, text, onClick }) {
       if (window.lenis) {
         window.lenis.scrollTo(targetElement, {
           offset: -80,
-          duration: 2,
+          duration: 2.5,
           easing: (t) => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
         })
       } else {

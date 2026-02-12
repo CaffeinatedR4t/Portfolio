@@ -63,7 +63,7 @@ function Home() {
         
         <p className="home-quote">
           "ANALYZE. DEVELOP. DELIVER."<br />
-          (J.J.POHAR)
+          (JEREMY JOSEPH POHAR)
         </p>
         
         <p className="home-year">©2025</p>
