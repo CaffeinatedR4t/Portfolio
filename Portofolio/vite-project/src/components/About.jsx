@@ -59,8 +59,7 @@ const certificationsData = [
     date: "March 2025",
     description: "Comprehensive certification covering AI fundamentals, machine learning algorithms, deep learning frameworks, and practical applications of artificial intelligence in real-world scenarios.",
     image: "/images/1757263374472.png",
-    pdf: null, // No PDF
-    icon: "🏆"
+    pdf: null // No PDF
   },
   {
     id: 2,
@@ -69,8 +68,7 @@ const certificationsData = [
     date: "May 2025",
     description: "Advanced Python programming certification covering object-oriented programming, decorators, generators, error handling, and best practices for writing clean, efficient Python code.",
     image: "/images/cf42e461-75c2-4823-b515-f953be549a55.png",
-    pdf: "/certs/31a36364-2ae2-41a7-8a17-d5ae64270025.pdf",
-    icon: "🐍"
+    pdf: "/certs/31a36364-2ae2-41a7-8a17-d5ae64270025.pdf"
   },
   {
     id: 3,
@@ -79,8 +77,7 @@ const certificationsData = [
     date: "November 2025",
     description: "Foundational certification in cybersecurity covering threat landscape, security principles, cryptography, network security, and best practices for protecting digital assets.",
     image: "/images/cybersecurity-fundamentals.png",
-    pdf: "/certs/IBMDesign20260212-32-t4abd9.pdf",
-    icon: "🔒"
+    pdf: "/certs/IBMDesign20260212-32-t4abd9.pdf"
   },
   {
     id: 4,
@@ -89,8 +86,7 @@ const certificationsData = [
     date: "November 2025",
     description: "Introduction to cybersecurity concepts, including security frameworks, risk management, incident response, and hands-on experience with security tools and techniques.",
     image: "/images/getting-started-with-cybersecurity.png",
-    pdf: "/certs/IBMDesign20260212-33-qfwwb4.pdf",
-    icon: "🛡️"
+    pdf: "/certs/IBMDesign20260212-33-qfwwb4.pdf"
   },
   {
     id: 5,
@@ -99,8 +95,7 @@ const certificationsData = [
     date: "June 2025",
     description: "Advanced English proficiency certification (C1 level) demonstrating strong command of English language skills including reading comprehension, listening, and communication.",
     image: "/images/efset.png",
-    pdf: "/certs/EF SET Certificate.pdf",
-    icon: "🌐"
+    pdf: "/certs/EF SET Certificate.pdf"
   }
 ]
 
