@@ -111,7 +111,7 @@ function Contact() {
               <a href="https://www.linkedin.com/in/jeremyjosephpohar/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
                 <FaLinkedin />
               </a>
-              <a href="https://instagram.com/jrmy.jp" target="_blank" rel="noopener noreferrer" title="Instagram">
+              <a href="https://instagram.com/jeremyjpohar" target="_blank" rel="noopener noreferrer" title="Instagram">
                 <FaInstagram />
               </a>
               <a href="mailto:jeremy.yosep@gmail.com" title="Email">

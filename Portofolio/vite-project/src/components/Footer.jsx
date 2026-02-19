@@ -89,7 +89,7 @@ function Footer() {
           <div className="footer-col">
             <h4>SOCIAL</h4>
             <ul>
-              <li><a href="https://instagram.com/jrmy.jp" target="_blank" rel="noopener noreferrer">INSTAGRAM</a></li>
+              <li><a href="https://instagram.com/jeremyjpohar" target="_blank" rel="noopener noreferrer">INSTAGRAM</a></li>
               <li><a href="https://www.linkedin.com/in/jeremyjosephpohar/" target="_blank" rel="noopener noreferrer">LINKEDIN</a></li>
               <li><a href="https://github.com/CaffeinatedR4t" target="_blank" rel="noopener noreferrer">GITHUB</a></li>
             </ul>
