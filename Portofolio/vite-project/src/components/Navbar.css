@@ -308,3 +308,7 @@
     font-size: 1.3rem;
   }
 }
+
+.navbar {
+  mix-blend-mode: difference;
+}

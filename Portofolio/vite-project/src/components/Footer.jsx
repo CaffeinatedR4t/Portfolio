@@ -1,4 +1,5 @@
 import './Footer.css'
+import { FaChevronUp } from 'react-icons/fa'
 
 function Footer() {
   const currentYear = new Date().getFullYear()
@@ -58,8 +59,15 @@ function Footer() {
         <h2>READY TO BUILD<br />RESILIENT SOLUTIONS?</h2>
         <button onClick={scrollToContact} className="arrow-button">
           <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-            <rect x="1" y="1" width="78" height="78" stroke="currentColor" strokeWidth="1"/>
-            <path d="M30 50 L40 25 L50 50" stroke="currentColor" strokeWidth="2" fill="none"/>
+            <rect x="1" y="1" width="78" height="78" stroke="currentColor" strokeWidth="1" />
+            <path
+              d="M28 46 L40 34 L52 46"
+              stroke="currentColor"
+              strokeWidth="2"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </button>
       </div>
@@ -123,7 +131,7 @@ function Footer() {
           <p>Portfolio by Jeremy Joseph Pohar</p>
         </div>
         <button className="back-to-top" onClick={scrollToTop}>
-          BACK TO TOP ↑
+          BACK TO TOP <FaChevronUp />
         </button>
       </div>
     </footer>

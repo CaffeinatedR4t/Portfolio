@@ -576,7 +576,7 @@
 .cert-card-carousel.active {
   transform: scale(1.15);
   border-color: #ffffff;
-  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.15);
+  box-shadow: none;
   z-index: 5;
 }
 
@@ -590,7 +590,7 @@
 
 .cert-card-carousel:hover.active {
   border-color: #ffffff;
-  box-shadow: 0 15px 50px rgba(255, 255, 255, 0.25);
+  box-shadow: none;
 }
 
 
@@ -807,97 +807,27 @@
 .download-cv-button {
   display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
-  padding: 0.9rem 2.2rem;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
   background: transparent;
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50px;
+  border: 1px solid #ffffff;
+  border-radius: 0; /* match Back to Top */
   font-family: var(--font-accent);
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 1px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2px;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
   text-transform: none;
+  text-decoration: none;
 }
 
 .download-cv-button:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.6);
-  transform: translateY(-3px);
-  box-shadow: 
-    0 10px 30px rgba(255, 255, 255, 0.15),
-    0 0 40px rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  color: #000000;
 }
 
-.download-cv-button:active {
-  transform: translateY(-1px);
-}
-
-.download-icon {
-  font-size: 1.2rem;
-  transition: transform 0.3s ease;
-}
-
-.download-cv-button:hover .download-icon {
-  transform: translateY(2px);
-}
-
-.download-cv-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.1) 0%,
-    transparent 70%
-  );
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.download-cv-button:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.download-popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000;
-  animation: fadeIn 0.3s ease;
-}
-
-.download-popup {
-  background: #0a0a0a;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 2.5rem;
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
-  animation: slideUp 0.3s ease;
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 100px rgba(255, 255, 255, 0.05);
-}
 
 .popup-icon {
   font-size: 3rem;
@@ -905,22 +835,6 @@
   animation: bounce 0.6s ease;
 }
 
-.download-popup h3 {
-  font-family: var(--font-accent);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 1px;
-  margin-bottom: 1rem;
-}
-
-.download-popup p {
-  font-family: var(--font-accent);
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 2rem;
-  line-height: 1.6;
-}
 
 .popup-buttons {
   display: flex;
@@ -1087,12 +1001,36 @@
     padding: 1.5rem;
   }
 
-  .download-cv-button {
-    padding: 0.7rem 1.5rem;
-    font-size: 0.75rem;
-  }
+}
+/* ✅ STATIC TECH GRID */
+.tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
 
-  .download-popup {
-    padding: 1.5rem;
-  }
+/* ✅ REMOVE BORDER */
+.icon-box {
+  border: none;
+}
+
+/* ✅ DISABLE GLOW / HOVER LIGHT */
+.tech-carousel .tech-icon:hover {
+  transform: none;
+}
+
+.tech-carousel .tech-icon:hover .icon-box {
+  background: #000000;
+  box-shadow: none;
+  color: inherit;
+}
+
+.tech-carousel .tech-icon:hover .icon-box svg {
+  color: inherit;
+}
+
+.tech-carousel .tech-icon:hover span {
+  color: #808080;
 }

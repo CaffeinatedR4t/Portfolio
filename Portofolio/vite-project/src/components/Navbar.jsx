@@ -41,7 +41,10 @@ function Navbar() {
 
   return (
     <>
-      <nav className={`navbar ${scrolled ? 'scrolled' : ''} ${visible ? '' : 'navbar-hidden'}`}>
+      <nav
+        className={`navbar ${scrolled ? 'scrolled' : ''} ${visible ? '' : 'navbar-hidden'}`}
+        style={{ mixBlendMode: 'difference' }}
+      >
         <div className="nav-left">
           <Logo onClick={closeMobileMenu} />
         </div>
@@ -98,7 +101,7 @@ function Logo({ onClick }) {
       className="nav-logo"
       onClick={handleClick}
     >
-      <img src="/weblogo.png" alt="Logo" className="logo-image" />
+      <img src="/[logo].svg" alt="Logo" className="logo-image" />
     </a>
   )
 }

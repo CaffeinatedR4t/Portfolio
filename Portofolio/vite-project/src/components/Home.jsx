@@ -58,12 +58,12 @@ function Home() {
 
       <div className="home-bottom-left">
         <button className="cta-button" onClick={scrollToContact}>
-          Let's Connect
+          CONNECT
         </button>
         
         <p className="home-quote">
-          "ANALYZE. DEVELOP. DELIVER."<br />
-          (JEREMY JOSEPH POHAR)
+          "IN PURSUIT OF GREATNESS."<br />
+          [Jeremy J. Pohar]
         </p>
         
         <p className="home-year">©2025</p>
@@ -73,10 +73,10 @@ function Home() {
         <div className="status-card">
           <div className="status-preview">
             <span>AI TRAINER</span>
-            <span>DEVELOPER</span>
-            <span>RESEARCHER</span>
+            <span>FULL STACK DEV</span>
+            <span>IT SECURITY</span>
           </div>
-          <p className="status-title">WORKING NOW.</p>
+          <p className="status-title">AVAILABLE FOR WORK.</p>
           <a href="#projects" className="status-link">VIEW PROJECTS</a>
         </div>
       </div>

@@ -22,7 +22,7 @@ import {
 } from 'react-icons/si'
 
 import { DiJava } from 'react-icons/di'
-import { FaDownload, FaFilePdf, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import { FaFilePdf, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
 // Custom SVG Logos
 const CSharpLogo = () => (
@@ -100,47 +100,6 @@ const certificationsData = [
 ]
 
 function About() {
-  const [showDownloadPopup, setShowDownloadPopup] = useState(false)
-
-  useEffect(() => {
-    if (showDownloadPopup) {
-      document.body.style.overflow = 'hidden'
-      if (window.lenis) {
-        window.lenis.stop()
-      }
-    } else {
-      document.body.style.overflow = 'auto'
-      if (window.lenis) {
-        window.lenis.start()
-      }
-    }
-
-    return () => {
-      document.body.style.overflow = 'auto'
-      if (window.lenis) {
-        window.lenis.start()
-      }
-    }
-  }, [showDownloadPopup])
-
-  const handleDownloadClick = () => {
-    setShowDownloadPopup(true)
-  }
-
-  const handleConfirmDownload = () => {
-    const link = document.createElement('a')
-    link.href = '/CV_ATS_JeremyJosephPohar.pdf'
-    link.download = 'CV_ATS_JeremyJosephPohar.pdf'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    setShowDownloadPopup(false)
-  }
-
-  const handleCancelDownload = () => {
-    setShowDownloadPopup(false)
-  }
-
   // Tech stack arrays
   const programmingLanguages = [
     { name: 'TypeScript', icon: <SiTypescript />, className: 'ts' },
@@ -176,40 +135,37 @@ function About() {
     <section id="about" className="section">
       <div className="container">
         <div className="section-header">
-          <h2 className="section-title">ABOUT ME</h2>
+          <h2 className="section-title">ABOUT</h2>
           <p className="section-subtitle">Get to know me</p>
         </div>
 
         <div className="about-content">
           <div className="about-text">
             <p className="intro-text">
-              Hi! I'm <strong>Jeremy Joseph Pohar</strong>, a Computer Science student at Universitas Multimedia Nusantara specializing in <strong>Cybersecurity</strong> and <strong>Artificial Intelligence</strong>.
-            </p>
-            <p>
-              Currently working as an <strong>Advanced AI Trainer</strong> at Invisible Technologies, I'm passionate about analyzing complex problems, developing innovative solutions, and delivering results that make a real impact.
+              Hi! I'm <strong>Jeremy Joseph Pohar</strong>, a Computer Science student at Universitas Multimedia Nusantara.
             </p>
             <p>
               Fluent in <strong>English (C1)</strong> and <strong>Indonesian (Native)</strong>, I combine technical expertise with strong communication skills to tackle challenges in cybersecurity, AI development, and full-stack engineering.
             </p>
           </div>
 
-          <div className="tech-stack">
-            {/* ✅ PROGRAMMING LANGUAGES - LEFT TO RIGHT */}
+            <div className="tech-stack">
+            {/* ✅ PROGRAMMING LANGUAGES */}
             <div className="tech-category">
               <h3>Programming Languages</h3>
-              <ScrollingTechStack items={programmingLanguages} direction="left" />
+              <StaticTechGrid items={programmingLanguages} />
             </div>
 
-            {/* ✅ FRAMEWORKS & LIBRARIES - RIGHT TO LEFT */}
+            {/* ✅ FRAMEWORKS & LIBRARIES */}
             <div className="tech-category">
               <h3>Frameworks & Libraries</h3>
-              <ScrollingTechStack items={frameworks} direction="right" />
+              <StaticTechGrid items={frameworks} />
             </div>
 
-            {/* ✅ TOOLS & PLATFORMS - LEFT TO RIGHT */}
+            {/* ✅ TOOLS & PLATFORMS */}
             <div className="tech-category">
               <h3>Tools & Platforms</h3>
-              <ScrollingTechStack items={tools} direction="left" />
+              <StaticTechGrid items={tools} />
             </div>
           </div>
 
@@ -217,53 +173,33 @@ function About() {
           <CertificationsCarousel certifications={certificationsData} />
 
           <div className="download-cv-container">
-            <button className="download-cv-button" onClick={handleDownloadClick}>
-              <FaDownload className="download-icon" />
-              Download CV
-            </button>
+            <a
+              className="download-cv-button"
+              href="/CV_ATS_JeremyJosephPohar.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View CV
+            </a>
           </div>
         </div>
       </div>
-
-      {/* Download Popup */}
-      {showDownloadPopup && (
-        <div className="download-popup-overlay" onClick={handleCancelDownload}>
-          <div className="download-popup" onClick={(e) => e.stopPropagation()}>
-            <div className="popup-icon">📄</div>
-            <h3>Download CV?</h3>
-            <p>This will download my professional resume in PDF format.</p>
-            <div className="popup-buttons">
-              <button className="popup-btn confirm-btn" onClick={handleConfirmDownload}>
-                Download
-              </button>
-              <button className="popup-btn cancel-btn" onClick={handleCancelDownload}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   )
 }
 
-// ✅ SCROLLING TECH STACK COMPONENT
-function ScrollingTechStack({ items, direction }) {
-  // ✅ FIX: Duplicate items 5 times for larger screens
-  const duplicatedItems = [...items, ...items, ...items, ...items, ...items]
-
+// ✅ STATIC TECH GRID (NO CAROUSEL)
+function StaticTechGrid({ items }) {
   return (
-    <div className="scrolling-container">
-      <div className={`scrolling-track scrolling-${direction}`}>
-        {duplicatedItems.map((item, index) => (
-          <div key={index} className="tech-icon">
-            <div className={`icon-box ${item.className}`}>
-              {item.icon}
-            </div>
-            <span>{item.name}</span>
+    <div className="tech-grid">
+      {items.map((item) => (
+        <div key={item.name} className="tech-icon">
+          <div className={`icon-box ${item.className}`}>
+            {item.icon}
           </div>
-        ))}
-      </div>
+          <span>{item.name}</span>
+        </div>
+      ))}
     </div>
   )
 }
@@ -274,16 +210,6 @@ function CertificationsCarousel({ certifications }) {
   const [selectedCert, setSelectedCert] = useState(null)
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
-
-  // Auto-rotate every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleNext()
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [currentIndex])
-
   const handlePrev = () => {
     setCurrentIndex((prev) => 
       prev === 0 ? certifications.length - 1 : prev - 1
