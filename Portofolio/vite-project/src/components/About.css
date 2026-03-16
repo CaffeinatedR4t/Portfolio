@@ -1,5 +1,5 @@
 #about {
-  background: #000000; 
+  background: #000000;
   padding: 100px 0;
   min-height: 100vh;
 }
@@ -31,18 +31,15 @@
   font-weight: 600;
 }
 
-.tech-stack {
-  margin-bottom: 4rem;
-}
+/* ── Tech Stack ─────────────────────────────── */
+.tech-stack { margin-bottom: 4rem; }
 
 .tech-category {
   margin-bottom: 3rem;
-  width: 100vw; /* ✅ Full viewport width */
+  width: 100vw;
   position: relative;
   left: 50%;
-  right: 50%;
-  margin-left: -50vw; /* ✅ Pull to left edge */
-  margin-right: -50vw; /* ✅ Pull to right edge */
+  margin-left: -50vw;
 }
 
 .tech-category h3 {
@@ -55,73 +52,32 @@
   text-align: center;
 }
 
-/* ✅ SCROLLING CONTAINER */
-.scrolling-container {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
+/* Static grid */
+.tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
   padding: 1rem 0;
 }
 
-.scrolling-track {
-  display: flex;
-  gap: 1.5rem; /* ✅ SAME GAP FOR ALL */
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  will-change: transform;
-}
-
-/* ✅ PAUSE ON HOVER */
-.scrolling-container:hover .scrolling-track {
-  animation-play-state: paused;
-}
-
-/* ✅ LEFT TO RIGHT SCROLL */
-.scrolling-left {
-  animation: scrollLeft 30s linear infinite;
-}
-
-/* ✅ RIGHT TO LEFT SCROLL */
-.scrolling-right {
-  animation: scrollRight 30s linear infinite;
-}
-
-@keyframes scrollLeft {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-20%); /* ✅ FIX: 20% = 1/5 (because we quintuple items) */
-  }
-}
-
-@keyframes scrollRight {
-  0% {
-    transform: translateX(-20%); /* ✅ FIX: Start at -20% */
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
+/* ── Icon box — base ────────────────────────── */
 .tech-icon {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
-  flex-shrink: 0; /* ✅ Prevent shrinking */
-  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  /* NO will-change here — only promote on hover */
 }
 
-.tech-icon:hover {
-  transform: translateY(-5px);
-}
+.tech-icon:hover { transform: translateY(-5px); }
 
 .icon-box {
   width: 80px;
   height: 80px;
   background: #000000;
-  border: 2px solid #ffffff;
+  border: none;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -129,164 +85,9 @@
   font-family: var(--font-accent);
   font-size: 2.5rem;
   font-weight: 700;
-  transition: all 0.3s ease;
+  /* Composite-only transition — no layout/paint */
+  transition: background 0.3s ease, color 0.3s ease;
   cursor: pointer;
-}
-
-/* Programming Languages Colors */
-.icon-box.ts { 
-  color: #3178c6; 
-  border-color: #3178c6; 
-}
-.icon-box.ts svg { 
-  color: #3178c6; 
-}
-.tech-icon:hover .ts { 
-  background: #3178c6; 
-  color: #fff; 
-}
-.tech-icon:hover .ts svg { 
-  color: #fff; 
-}
-
-.icon-box.js { 
-  color: #f7df1e; 
-  border-color: #f7df1e; 
-}
-.icon-box.js svg { 
-  color: #f7df1e; 
-}
-.tech-icon:hover .js { 
-  background: #f7df1e; 
-  color: #000; 
-}
-.tech-icon:hover .js svg { 
-  color: #000; 
-}
-
-.icon-box.java { 
-  color: #f89820; 
-  border-color: #f89820; 
-}
-.icon-box.java svg { 
-  color: #f89820; 
-}
-.tech-icon:hover .java { 
-  background: #f89820; 
-  color: #fff; 
-}
-.tech-icon:hover .java svg { 
-  color: #fff; 
-}
-
-.icon-box.python { 
-  color: #3776ab; 
-  border-color: #3776ab; 
-}
-.icon-box.python svg { 
-  color: #3776ab; 
-}
-.tech-icon:hover .python { 
-  background: #3776ab; 
-  color: #fff; 
-}
-.tech-icon:hover .python svg { 
-  color: #fff; 
-}
-
-.icon-box.php { 
-  color: #777bb4; 
-  border-color: #777bb4; 
-}
-.icon-box.php svg { 
-  color: #777bb4; 
-}
-.tech-icon:hover .php { 
-  background: #777bb4; 
-  color: #fff; 
-}
-.tech-icon:hover .php svg { 
-  color: #fff; 
-}
-
-.icon-box.c { 
-  color: #a8b9cc; 
-  border-color: #a8b9cc; 
-}
-.icon-box.c svg { 
-  color: #a8b9cc; 
-}
-.tech-icon:hover .c { 
-  background: #a8b9cc; 
-  color: #fff; 
-}
-.tech-icon:hover .c svg { 
-  color: #fff; 
-}
-
-.icon-box.cpp { 
-  color: #00599c; 
-  border-color: #00599c; 
-}
-.icon-box.cpp svg { 
-  color: #00599c; 
-}
-.tech-icon:hover .cpp { 
-  background: #00599c; 
-  color: #fff; 
-}
-.tech-icon:hover .cpp svg { 
-  color: #fff; 
-}
-
-.icon-box.csharp {
-  background: #000;
-  border-color: #239120;
-  color: #239120;
-}
-.icon-box.csharp svg {
-  color: #239120;
-  padding: 18px;
-}
-.tech-icon:hover .icon-box.csharp {
-  background: #239120;
-  color: #fff;
-  border-color: #239120;
-  box-shadow: 0 0 80px #23912066;
-}
-.tech-icon:hover .icon-box.csharp svg {
-  color: #fff;
-}
-
-/* HTML & CSS */
-.icon-box.html { 
-  color: #e34f26; 
-  border-color: #e34f26; 
-}
-.icon-box.html svg { 
-  color: #e34f26; 
-}
-.tech-icon:hover .html { 
-  background: #e34f26; 
-  color: #fff; 
-}
-.tech-icon:hover .html svg { 
-  color: #fff; 
-}
-
-.icon-box.css { 
-  color: #1572b6; 
-  border-color: #1572b6; 
-}
-.icon-box.css svg { 
-  color: #1572b6; 
-}
-.tech-icon:hover .css { 
-  background: #1572b6; 
-  color: #fff; 
-}
-.tech-icon:hover .css svg { 
-  color: #fff; 
 }
 
 .tech-icon span {
@@ -296,208 +97,105 @@
   letter-spacing: 1px;
   text-align: center;
   transition: color 0.3s ease;
-  white-space: nowrap; /* ✅ Prevent text wrapping */
+  white-space: nowrap;
 }
 
-.tech-icon:hover span {
-  color: #ffffff;
-}
+.tech-icon:hover span { color: #ffffff; }
 
-/* Frameworks & Libraries */
-.icon-box.react {
-  background: #000;
-  border-color: #61dafb;
-  color: #61dafb;
-}
-.icon-box.react svg {
-  color: #61dafb;
-}
-.tech-icon:hover .icon-box.react {
-  background: #61dafb;
-  border-color: #61dafb;
-  color: #fff;
-}
-.tech-icon:hover .icon-box.react svg {
-  color: #fff;
-}
+/* ── Icon colours — defined once per class ──── */
+/* Each class sets its colour via a CSS variable so hover
+   just swaps background/color without extra rules.      */
 
-.icon-box.nodejs {
-  background: #000;
-  border-color: #68a063;
-  color: #68a063;
-}
-.icon-box.nodejs svg {
-  color: #68a063;
-}
-.tech-icon:hover .icon-box.nodejs {
-  background: #68a063;
-  border-color: #68a063;
-  color: #fff;
-}
-.tech-icon:hover .icon-box.nodejs svg {
-  color: #fff;
-}
+/* TypeScript */
+.icon-box.ts  { color: #3178c6; }
+.tech-icon:hover .icon-box.ts  { background: #3178c6; color: #fff; }
 
-/* Tools & Platforms */
-.icon-box.unity { 
-  color: #ffffff; 
-  border-color: #ffffff; 
-}
-.icon-box.unity svg {
-  color: #ffffff;
-}
-.tech-icon:hover .icon-box.unity {
-  background: #ffffff;
-  border-color: #ffffff;
-  color: #000;
-}
-.tech-icon:hover .icon-box.unity svg {
-  color: #000;
-}
+/* JavaScript */
+.icon-box.js  { color: #f7df1e; }
+.tech-icon:hover .icon-box.js  { background: #f7df1e; color: #000; }
 
-.icon-box.android {
-  background: #000;
-  border-color: #3ddc84;
-  color: #3ddc84;
-}
-.icon-box.android svg {
-  color: #3ddc84;
-}
-.tech-icon:hover .icon-box.android {
-  background: #3ddc84;
-  color: #fff;
-  border-color: #3ddc84;
-  box-shadow: 0 0 80px #3ddc8466;
-}
-.tech-icon:hover .icon-box.android svg {
-  color: #fff;
-}
+/* Java */
+.icon-box.java { color: #f89820; }
+.tech-icon:hover .icon-box.java { background: #f89820; color: #fff; }
 
-.icon-box.laravel {
-  background: #000;
-  border-color: #ff2d20;
-  color: #ff2d20;
-}
-.icon-box.laravel svg {
-  color: #ff2d20;
-}
-.tech-icon:hover .icon-box.laravel {
-  background: #ff2d20;
-  color: #fff;
-  border-color: #ff2d20;
-  box-shadow: 0 0 80px #ff2d2066;
-}
-.tech-icon:hover .icon-box.laravel svg {
-  color: #fff;
-}
+/* Python */
+.icon-box.python { color: #3776ab; }
+.tech-icon:hover .icon-box.python { background: #3776ab; color: #fff; }
 
-.icon-box.mysql {
-  background: #000;
-  border-color: #4479a1;
-  color: #4479a1;
-}
-.icon-box.mysql svg {
-  color: #4479a1;
-}
-.tech-icon:hover .icon-box.mysql {
-  background: #4479a1;
-  color: #fff;
-  border-color: #4479a1;
-  box-shadow: 0 0 80px #4479a166;
-}
-.tech-icon:hover .icon-box.mysql svg {
-  color: #fff;
-}
+/* PHP */
+.icon-box.php  { color: #777bb4; }
+.tech-icon:hover .icon-box.php  { background: #777bb4; color: #fff; }
 
-.icon-box.github {
-  background: #000;
-  border-color: #ffffff;
-  color: #ffffff;
-}
-.icon-box.github svg {
-  color: #ffffff;
-}
-.tech-icon:hover .icon-box.github {
-  background: #ffffff;
-  color: #000;
-  border-color: #ffffff;
-}
-.tech-icon:hover .icon-box.github svg {
-  color: #000;
-}
+/* C */
+.icon-box.c    { color: #a8b9cc; }
+.tech-icon:hover .icon-box.c    { background: #a8b9cc; color: #fff; }
 
-.icon-box.figma {
-  background: #000;
-  border-color: #f24e1e;
-  color: #f24e1e;
-}
-.icon-box.figma svg {
-  color: #f24e1e;
-}
-.tech-icon:hover .icon-box.figma {
-  background: #f24e1e;
-  color: #fff;
-  border-color: #f24e1e;
-  box-shadow: 0 0 80px #f24e1e66;
-}
-.tech-icon:hover .icon-box.figma svg {
-  color: #fff;
-}
+/* C++ */
+.icon-box.cpp  { color: #00599c; }
+.tech-icon:hover .icon-box.cpp  { background: #00599c; color: #fff; }
 
-.icon-box.threejs {
-  background: #000;
-  border-color: #ffffff;
-  color: #ffffff;
-}
-.icon-box.threejs svg {
-  color: #ffffff;
-}
-.tech-icon:hover .icon-box.threejs {
-  background: #ffffff;
-  border-color: #ffffff;
-  color: #000;
-}
-.tech-icon:hover .icon-box.threejs svg {
-  color: #000;
-}
+/* C# */
+.icon-box.csharp { color: #239120; }
+.icon-box.csharp svg { padding: 18px; }
+.tech-icon:hover .icon-box.csharp { background: #239120; color: #fff; }
 
-.icon-box.jupyter {
-  background: #000;
-  border-color: #f37726;
-  color: #f37726;
-}
-.icon-box.jupyter svg {
-  color: #f37726;
-}
-.tech-icon:hover .icon-box.jupyter {
-  background: #f37726;
-  color: #fff;
-  border-color: #f37726;
-  box-shadow: 0 0 80px #f3772666;
-}
-.tech-icon:hover .icon-box.jupyter svg {
-  color: #fff;
-}
+/* HTML */
+.icon-box.html { color: #e34f26; }
+.tech-icon:hover .icon-box.html { background: #e34f26; color: #fff; }
 
-.icon-box.rstudio {
-  background: #000;
-  border-color: #75aadb;
-  color: #75aadb;
-}
-.icon-box.rstudio svg {
-  color: #75aadb;
-}
-.tech-icon:hover .icon-box.rstudio {
-  background: #75aadb;
-  color: #fff;
-  border-color: #75aadb;
-  box-shadow: 0 0 80px #75aadb66;
-}
-.tech-icon:hover .icon-box.rstudio svg {
-  color: #fff;
-}
+/* CSS */
+.icon-box.css  { color: #1572b6; }
+.tech-icon:hover .icon-box.css  { background: #1572b6; color: #fff; }
 
-/* ✅ CERTIFICATIONS CAROUSEL */
+/* React */
+.icon-box.react { color: #61dafb; }
+.tech-icon:hover .icon-box.react { background: #61dafb; color: #fff; }
+
+/* Node.js */
+.icon-box.nodejs { color: #68a063; }
+.tech-icon:hover .icon-box.nodejs { background: #68a063; color: #fff; }
+
+/* Unity */
+.icon-box.unity { color: #ffffff; }
+.tech-icon:hover .icon-box.unity { background: #ffffff; color: #000; }
+
+/* Android */
+.icon-box.android { color: #3ddc84; }
+.tech-icon:hover .icon-box.android { background: #3ddc84; color: #fff; }
+
+/* Laravel */
+.icon-box.laravel { color: #ff2d20; }
+.tech-icon:hover .icon-box.laravel { background: #ff2d20; color: #fff; }
+
+/* MySQL */
+.icon-box.mysql { color: #4479a1; }
+.tech-icon:hover .icon-box.mysql { background: #4479a1; color: #fff; }
+
+/* GitHub */
+.icon-box.github { color: #ffffff; }
+.tech-icon:hover .icon-box.github { background: #ffffff; color: #000; }
+
+/* Figma */
+.icon-box.figma { color: #f24e1e; }
+.tech-icon:hover .icon-box.figma { background: #f24e1e; color: #fff; }
+
+/* Three.js */
+.icon-box.threejs { color: #ffffff; }
+.tech-icon:hover .icon-box.threejs { background: #ffffff; color: #000; }
+
+/* Jupyter */
+.icon-box.jupyter { color: #f37726; }
+.tech-icon:hover .icon-box.jupyter { background: #f37726; color: #fff; }
+
+/* RStudio */
+.icon-box.rstudio { color: #75aadb; }
+.tech-icon:hover .icon-box.rstudio { background: #75aadb; color: #fff; }
+
+/* SVG inside icon inherits color */
+.icon-box svg { color: inherit; }
+.tech-icon:hover .icon-box svg { color: inherit; }
+
+/* ── Certifications ──────────────────────────── */
 .certifications-section {
   margin-top: 4rem;
   margin-bottom: 3rem;
@@ -524,8 +222,8 @@
 }
 
 .carousel-arrow {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.2);
   color: #ffffff;
   width: 50px;
   height: 50px;
@@ -534,20 +232,18 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   font-size: 1.2rem;
   z-index: 10;
 }
 
 .carousel-arrow:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.4);
   transform: scale(1.1);
 }
 
-.carousel-arrow:active {
-  transform: scale(0.95);
-}
+.carousel-arrow:active { transform: scale(0.95); }
 
 .carousel-track {
   display: flex;
@@ -556,7 +252,6 @@
   gap: 1.5rem;
   flex: 1;
   max-width: 900px;
-  position: relative;
 }
 
 .cert-card-carousel {
@@ -565,34 +260,27 @@
   border-radius: 12px;
   padding: 2rem;
   text-align: center;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  position: relative;
   min-width: 250px;
   max-width: 250px;
 }
 
-/* ✅ ACTIVE CARD (CENTER) */
 .cert-card-carousel.active {
   transform: scale(1.15);
   border-color: #ffffff;
-  box-shadow: none;
   z-index: 5;
 }
 
-/* ✅ SIDE CARDS (PREV/NEXT) */
 .cert-card-carousel.prev,
 .cert-card-carousel.next {
   transform: scale(0.85);
   opacity: 0.5;
   filter: blur(1px);
 }
-
-.cert-card-carousel:hover.active {
-  border-color: #ffffff;
-  box-shadow: none;
-}
-
 
 .cert-image {
   width: 100%;
@@ -615,7 +303,6 @@
   border: 1px solid #333;
 }
 
-
 .cert-card-carousel h4 {
   font-family: var(--font-accent);
   color: #ffffff;
@@ -624,11 +311,7 @@
   letter-spacing: 1px;
 }
 
-.cert-issuer {
-  color: #808080;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
+.cert-issuer { color: #808080; font-size: 0.9rem; margin-bottom: 1rem; }
 
 .cert-date {
   font-family: var(--font-accent);
@@ -650,26 +333,23 @@
   letter-spacing: 1px;
 }
 
-/* ✅ CERTIFICATION POPUP */
+/* ── Cert popup ──────────────────────────────── */
 .cert-popup-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.9);
+  inset: 0;
+  background: rgba(0,0,0,0.9);
   backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10000;
-  animation: fadeIn 0.3s ease;
   padding: 2rem;
+  animation: fadeIn 0.3s ease;
 }
 
 .cert-popup {
   background: #0a0a0a;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255,255,255,0.2);
   border-radius: 16px;
   max-width: 800px;
   width: 100%;
@@ -677,15 +357,15 @@
   overflow-y: auto;
   position: relative;
   animation: slideUp 0.3s ease;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
 
 .cert-close-btn {
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
   color: #ffffff;
   width: 40px;
   height: 40px;
@@ -694,15 +374,12 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease;
   font-size: 1.2rem;
   z-index: 10;
 }
 
-.cert-close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: rotate(90deg);
-}
+.cert-close-btn:hover { background: rgba(255,255,255,0.2); transform: rotate(90deg); }
 
 .cert-popup-content {
   display: grid;
@@ -721,7 +398,6 @@
 
 .cert-popup-placeholder {
   width: 100%;
-  height: 100%;
   min-height: 300px;
   background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
   border-radius: 12px;
@@ -731,13 +407,11 @@
   border: 1px solid #333;
 }
 
-
 .cert-popup-info {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-
 
 .cert-popup-info h3 {
   font-family: var(--font-accent);
@@ -747,11 +421,7 @@
   letter-spacing: 1px;
 }
 
-.cert-popup-issuer {
-  color: #808080;
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-}
+.cert-popup-issuer { color: #808080; font-size: 1.1rem; margin-bottom: 1rem; }
 
 .cert-popup-date {
   font-family: var(--font-accent);
@@ -765,43 +435,36 @@
   margin-bottom: 1.5rem;
 }
 
-.cert-popup-description {
-  color: #c0c0c0;
-  line-height: 1.8;
-  margin-bottom: 2rem;
-}
+.cert-popup-description { color: #c0c0c0; line-height: 1.8; margin-bottom: 2rem; }
 
 .cert-pdf-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.8rem;
   padding: 0.9rem 2rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255,255,255,0.05);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255,255,255,0.2);
   border-radius: 50px;
   font-family: var(--font-accent);
   font-size: 0.9rem;
-  font-weight: 500;
   letter-spacing: 1px;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
 }
 
 .cert-pdf-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.4);
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.15);
 }
 
-/* Download CV */
+/* ── Download CV ─────────────────────────────── */
 .download-cv-container {
   margin-top: 3rem;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .download-cv-button {
@@ -812,225 +475,38 @@
   background: transparent;
   color: #ffffff;
   border: 1px solid #ffffff;
-  border-radius: 0; /* match Back to Top */
   font-family: var(--font-accent);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 2px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: none;
+  transition: background 0.3s ease, color 0.3s ease;
   text-decoration: none;
 }
 
-.download-cv-button:hover {
-  background: #ffffff;
-  color: #000000;
-}
+.download-cv-button:hover { background: #ffffff; color: #000000; }
 
+/* ── Animations ──────────────────────────────── */
+@keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes bounce  { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-.popup-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  animation: bounce 0.6s ease;
-}
-
-
-.popup-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
-.popup-btn {
-  padding: 0.8rem 1.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50px;
-  font-family: var(--font-accent);
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background: transparent;
-  color: #ffffff;
-}
-
-.confirm-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.confirm-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.6);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.15);
-}
-
-.cancel-btn:hover {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-/* ✅ RESPONSIVE DESIGN */
+/* ── Responsive ──────────────────────────────── */
 @media (max-width: 768px) {
-  .scrolling-track {
-    gap: 1rem;
-  }
-
-  .icon-box {
-    width: 70px;
-    height: 70px;
-    font-size: 2rem;
-  }
-
-  .carousel-container {
-    padding: 1rem 0;
-    min-height: 350px;
-  }
-
-  .carousel-arrow {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
-
-  .cert-card-carousel {
-    min-width: 200px;
-    max-width: 200px;
-    padding: 1.5rem;
-  }
-
-  .cert-image {
-    height: 150px;
-  }
-
-  .cert-placeholder {
-    height: 150px;
-  }
-
-  .cert-popup-content {
-    grid-template-columns: 1fr;
-  }
-
-  .download-cv-button {
-    padding: 0.8rem 1.8rem;
-    font-size: 0.8rem;
-  }
-
-  .download-popup {
-    padding: 2rem;
-  }
-
-  .download-popup h3 {
-    font-size: 1.3rem;
-  }
-
-  .popup-buttons {
-    flex-direction: column;
-  }
-
-  .popup-btn {
-    width: 100%;
-  }
+  .icon-box { width: 70px; height: 70px; font-size: 2rem; }
+  .carousel-container { padding: 1rem 0; min-height: 350px; }
+  .carousel-arrow { width: 40px; height: 40px; font-size: 1rem; }
+  .cert-card-carousel { min-width: 200px; max-width: 200px; padding: 1.5rem; }
+  .cert-image { height: 150px; }
+  .cert-popup-content { grid-template-columns: 1fr; }
+  .download-cv-button { padding: 0.8rem 1.8rem; font-size: 0.8rem; }
 }
 
 @media (max-width: 480px) {
-  .carousel-container {
-    gap: 0.5rem;
-  }
-
-  .cert-card-carousel {
-    min-width: 160px;
-    max-width: 160px;
-    padding: 1rem;
-  }
-
-  .cert-card-carousel h4 {
-    font-size: 0.9rem;
-  }
-
-  .cert-issuer {
-    font-size: 0.8rem;
-  }
-
-  .cert-image {
-    height: 120px;
-  }
-
-  .cert-placeholder {
-    height: 120px;
-  }
-
-  .cert-popup {
-    padding: 1.5rem;
-  }
-
-  .cert-popup-content {
-    padding: 1.5rem;
-  }
-
-}
-/* ✅ STATIC TECH GRID */
-.tech-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
-  padding: 1rem 0;
-}
-
-/* ✅ REMOVE BORDER */
-.icon-box {
-  border: none;
-}
-
-/* ✅ DISABLE GLOW / HOVER LIGHT */
-.tech-carousel .tech-icon:hover {
-  transform: none;
-}
-
-.tech-carousel .tech-icon:hover .icon-box {
-  background: #000000;
-  box-shadow: none;
-  color: inherit;
-}
-
-.tech-carousel .tech-icon:hover .icon-box svg {
-  color: inherit;
-}
-
-.tech-carousel .tech-icon:hover span {
-  color: #808080;
+  .carousel-container { gap: 0.5rem; }
+  .cert-card-carousel { min-width: 160px; max-width: 160px; padding: 1rem; }
+  .cert-card-carousel h4 { font-size: 0.9rem; }
+  .cert-issuer { font-size: 0.8rem; }
+  .cert-image { height: 120px; }
+  .cert-popup-content { padding: 1.5rem; }
 }
