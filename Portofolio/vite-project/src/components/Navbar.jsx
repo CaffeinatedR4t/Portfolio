@@ -1,29 +1,33 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './Navbar.css'
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [visible, setVisible] = useState(true)
-  const [lastScrollY, setLastScrollY] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  // Use a ref instead of state for lastScrollY.
+  // State triggers re-render + useEffect cleanup/re-subscribe every scroll tick.
+  // Ref updates silently — the listener is created ONCE and reads the ref each time.
+  const lastScrollYRef = useRef(0)
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
 
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      if (currentScrollY > lastScrollYRef.current && currentScrollY > 100) {
         setVisible(false)
       } else {
         setVisible(true)
       }
 
       setScrolled(currentScrollY > 50)
-      setLastScrollY(currentScrollY)
+      lastScrollYRef.current = currentScrollY  // ref write — no re-render
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [lastScrollY])
+  }, []) // empty dep array — listener created once, never recreated
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
@@ -49,8 +53,8 @@ function Navbar() {
           <Logo onClick={closeMobileMenu} />
         </div>
 
-        <div 
-          className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`} 
+        <div
+          className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
           onClick={toggleMobileMenu}
         >
           <span className="arrow-icon">
@@ -76,7 +80,6 @@ function Navbar() {
   )
 }
 
-// ✅ NEW: Simple Logo component with static image
 function Logo({ onClick }) {
   const handleClick = (e) => {
     e.preventDefault()
@@ -96,11 +99,7 @@ function Logo({ onClick }) {
   }
 
   return (
-    <a
-      href="#home"
-      className="nav-logo"
-      onClick={handleClick}
-    >
+    <a href="#home" className="nav-logo" onClick={handleClick}>
       <img src="/[logo].svg" alt="Logo" className="logo-image" />
     </a>
   )
@@ -110,9 +109,8 @@ function CursorPopupLink({ href, text, popup, onClick }) {
   const [displayPopup, setDisplayPopup] = useState(popup)
   const [isHovering, setIsHovering] = useState(false)
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
-
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*'
-  
+
   useEffect(() => {
     if (!isHovering) {
       setDisplayPopup(popup)
@@ -122,48 +120,22 @@ function CursorPopupLink({ href, text, popup, onClick }) {
     let iteration = 0
     const interval = setInterval(() => {
       setDisplayPopup(
-        popup
-          .split('')
-          .map((char, index) => {
-            if (char === ' ') return ' '
-            if (index < iteration) {
-              return popup[index]
-            }
-            return characters[Math.floor(Math.random() * characters.length)]
-          })
-          .join('')
+        popup.split('').map((char, index) => {
+          if (char === ' ') return ' '
+          if (index < iteration) return popup[index]
+          return characters[Math.floor(Math.random() * characters.length)]
+        }).join('')
       )
-
-      if (iteration >= popup.length) {
-        clearInterval(interval)
-      }
-
+      if (iteration >= popup.length) clearInterval(interval)
       iteration += 1 / 3
     }, 30)
 
     return () => clearInterval(interval)
   }, [isHovering, popup])
 
-  const handleMouseMove = (e) => {
-    setCursorPosition({
-      x: e.clientX,
-      y: e.clientY
-    })
-  }
-
-  const handleMouseEnter = () => {
-    setIsHovering(true)
-  }
-
-  const handleMouseLeave = () => {
-    setIsHovering(false)
-  }
-
   const handleClick = (e) => {
     e.preventDefault()
-    const targetId = href.replace('#', '')
-    const targetElement = document.getElementById(targetId)
-    
+    const targetElement = document.getElementById(href.replace('#', ''))
     if (targetElement) {
       if (window.lenis) {
         window.lenis.scrollTo(targetElement, {
@@ -175,7 +147,6 @@ function CursorPopupLink({ href, text, popup, onClick }) {
         targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
     }
-    
     if (onClick) onClick()
   }
 
@@ -185,20 +156,17 @@ function CursorPopupLink({ href, text, popup, onClick }) {
         href={href}
         className="nav-link cursor-popup-link"
         onClick={handleClick}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        onMouseMove={(e) => setCursorPosition({ x: e.clientX, y: e.clientY })}
       >
         {text}
       </a>
-      
+
       {isHovering && (
-        <div 
+        <div
           className="cursor-popup"
-          style={{
-            left: `${cursorPosition.x}px`,
-            top: `${cursorPosition.y}px`,
-          }}
+          style={{ left: `${cursorPosition.x}px`, top: `${cursorPosition.y}px` }}
         >
           {displayPopup}
         </div>
@@ -210,9 +178,7 @@ function CursorPopupLink({ href, text, popup, onClick }) {
 function MobileNavLink({ href, text, onClick }) {
   const handleClick = (e) => {
     e.preventDefault()
-    const targetId = href.replace('#', '')
-    const targetElement = document.getElementById(targetId)
-    
+    const targetElement = document.getElementById(href.replace('#', ''))
     if (targetElement) {
       if (window.lenis) {
         window.lenis.scrollTo(targetElement, {
@@ -224,7 +190,6 @@ function MobileNavLink({ href, text, onClick }) {
         targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
     }
-    
     if (onClick) onClick()
   }
 
