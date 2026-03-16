@@ -26,53 +26,53 @@
 .projects-vertical-scroll {
   display: flex;
   flex-direction: column;
-  gap: 5vh; /* ✅ NEW - Much closer */
+  gap: 5vh;
   padding: 2rem 0;
 }
 
 .project-folder-wrapper {
-  min-height: auto; /* ✅ NEW - No forced full height */
+  min-height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   transform: translateY(60px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 2rem 0; /* ✅ Add some breathing room */
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 2rem 0;
+  will-change: transform, opacity;
 }
 
-/* ✅ FADE IN + SLIDE UP ANIMATION */
 .project-folder-wrapper.visible {
   opacity: 1;
   transform: translateY(0);
+  will-change: auto;
 }
 
-/* ✅ FOLDER CARD */
 .project-folder-card {
   position: relative;
   background: #0a0a0a;
   border: 1px solid #1a1a1a;
   border-radius: 12px;
-  max-width: 1200px; /* ✅ NEW - Larger folder */
+  max-width: 1200px;
   width: 100%;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
 
-/* ✅ HOVER: LIFT + SCALE */
 .project-folder-card:hover {
   transform: translateY(-10px) scale(1.02);
   border-color: #ffffff;
-  box-shadow: 0 20px 60px rgba(255, 255, 255, 0.15);
+  /* box-shadow removed — was causing repaint lag on scroll */
 }
 
-/* ✅ FOLDER TAB (SOLID WHITE) */
 .folder-tab {
   position: absolute;
   top: -1px;
   left: 40px;
-  background: #ffffff; /* ✅ SOLID WHITE */
+  background: #ffffff;
   padding: 0.6rem 2rem;
   border-radius: 8px 8px 0 0;
   z-index: 10;
@@ -87,7 +87,6 @@
   letter-spacing: 2px;
 }
 
-/* ✅ FOLDER CONTENT */
 .folder-content {
   padding: 3rem 2.5rem 2.5rem;
   display: grid;
@@ -96,11 +95,10 @@
   align-items: start;
 }
 
-/* ✅ PROJECT IMAGE (4:3 RATIO) */
 .project-image-container {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3; /* ✅ 4:3 RATIO */
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   border-radius: 8px;
   border: 1px solid #333;
@@ -114,12 +112,10 @@
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ✅ SLIGHT ZOOM ON HOVER */
 .project-folder-card:hover .project-image {
   transform: scale(1.05);
 }
 
-/* ✅ PROJECT INFO */
 .project-info {
   display: flex;
   flex-direction: column;
@@ -167,7 +163,6 @@
   font-size: 0.95rem;
 }
 
-/* ✅ TECH STACK BADGES */
 .project-tags {
   display: flex;
   gap: 0.6rem;
@@ -183,7 +178,7 @@
   padding: 0.4rem 0.9rem;
   border-radius: 50px;
   letter-spacing: 0.5px;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .tag:hover {
@@ -191,7 +186,6 @@
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* ✅ VIEW DETAILS CTA */
 .project-cta {
   margin-top: auto;
 }
@@ -206,7 +200,8 @@
   gap: 0.5rem;
   opacity: 0;
   transform: translateX(-10px);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .project-folder-card:hover .view-details {
@@ -214,7 +209,6 @@
   transform: translateX(0);
 }
 
-/* ✅ PROJECT MODAL */
 .project-modal-overlay {
   position: fixed;
   top: 0;
@@ -378,104 +372,44 @@
   letter-spacing: 1px;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease,
+              border-color 0.3s ease,
+              transform 0.3s ease;
 }
 
 .modal-link-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.4);
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.15);
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ✅ RESPONSIVE DESIGN */
 @media (max-width: 968px) {
-  .projects-vertical-scroll {
-    gap: 50vh;
-  }
-
-  .project-folder-wrapper {
-    min-height: 50vh;
-  }
-
-  .folder-content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .modal-content {
-    grid-template-columns: 1fr;
-    padding: 2rem;
-  }
-
-  .modal-close-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 1.1rem;
-  }
+  .projects-vertical-scroll { gap: 50vh; }
+  .project-folder-wrapper { min-height: 50vh; }
+  .folder-content { grid-template-columns: 1fr; gap: 2rem; }
+  .modal-content { grid-template-columns: 1fr; padding: 2rem; }
+  .modal-close-btn { width: 40px; height: 40px; font-size: 1.1rem; }
 }
 
 @media (max-width: 480px) {
-  .projects-vertical-scroll {
-    gap: 30vh;
-  }
-
-  .project-folder-wrapper {
-    min-height: auto;
-    padding: 2rem 0;
-  }
-
-  .folder-content {
-    padding: 2.5rem 1.5rem 1.5rem;
-  }
-
-  .folder-tab {
-    left: 20px;
-    padding: 0.5rem 1.5rem;
-  }
-
-  .folder-number {
-    font-size: 0.8rem;
-  }
-
-  .project-title {
-    font-size: 1.3rem;
-  }
-
-  .modal-content {
-    padding: 1.5rem;
-  }
-
-  .modal-info-section h2 {
-    font-size: 1.6rem;
-  }
-
-  .modal-links {
-    gap: 0.8rem;
-  }
-
-  .modal-link-btn {
-    padding: 0.8rem 1.5rem;
-    font-size: 0.85rem;
-  }
+  .projects-vertical-scroll { gap: 30vh; }
+  .project-folder-wrapper { min-height: auto; padding: 2rem 0; }
+  .folder-content { padding: 2.5rem 1.5rem 1.5rem; }
+  .folder-tab { left: 20px; padding: 0.5rem 1.5rem; }
+  .folder-number { font-size: 0.8rem; }
+  .project-title { font-size: 1.3rem; }
+  .modal-content { padding: 1.5rem; }
+  .modal-info-section h2 { font-size: 1.6rem; }
+  .modal-links { gap: 0.8rem; }
+  .modal-link-btn { padding: 0.8rem 1.5rem; font-size: 0.85rem; }
 }

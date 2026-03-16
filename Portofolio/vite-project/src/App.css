@@ -19,10 +19,6 @@
   box-sizing: border-box;
 }
 
-/*html {
-  scroll-behavior: smooth;
-}*/
-
 body {
   font-family: var(--font-primary);
   background-color: #000000;
@@ -31,10 +27,25 @@ body {
   overflow-x: hidden;
 }
 
+.App {
+  position: relative;
+  z-index: 1;
+}
+
 .section {
   min-height: 100vh;
   padding: 120px 0 80px;
   position: relative;
+  z-index: 5;
+  background: #000000;
+}
+
+#home,
+#about,
+#projects,
+#contact {
+  position: relative;
+  z-index: 5;
   background: #000000;
 }
 
@@ -58,34 +69,37 @@ body {
   z-index: 0;
 }
 
-::selection {
-  background: #cc0000;
-  color: #ffffff;
-}
+::selection { background: #cc0000; color: #ffffff; }
+::-moz-selection { background: #cc0000; color: #ffffff; text-shadow: none; }
 
-::-moz-selection {
-  background: #cc0000;
-  color: #ffffff;
-  text-shadow: none;
-}
-
-.App {
-  position: relative;
-  z-index: 1;
-}
-
-.section {
-  position: relative;
-  z-index: 5;
-}
-
-.navbar {
-  z-index: 1000 !important;
+/* Footer sticky — sticks while spacer scrolls beneath it */
+.footer-sticky-wrapper {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background: #000000;
 }
 
 footer {
   position: relative;
   z-index: 10;
+  background: #000000;
+}
+
+/* Spacer — same height as matrix (80vh).
+   Lives in normal flow AFTER the sticky footer.
+   Gives Lenis the scroll distance needed for the
+   footer to unstick and slide away off screen. */
+.matrix-reveal-spacer {
+  height: 80vh;
+  background: transparent; /* transparent so fixed matrix shows through */
+  pointer-events: none;
+  position: relative;
+  z-index: 2; /* above matrix (1) but below footer-sticky-wrapper (10) */
+}
+
+.navbar {
+  z-index: 1000 !important;
 }
 
 #preloader {
@@ -97,18 +111,7 @@ footer {
   z-index: 99999 !important;
 }
 
-html.lenis {
-  height: auto;
-}
-
-html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
+html.lenis { height: auto; }
+html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }

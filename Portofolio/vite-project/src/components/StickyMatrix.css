@@ -1,0 +1,44 @@
+/* Matrix sits behind everything — sections scroll over it,
+   footer slides away to reveal it at the end */
+.sticky-matrix {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80vh;
+  z-index: 1;        /* behind sections (5) and footer (10) */
+  background: #000000;
+}
+
+.sticky-matrix__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #000000;
+}
+
+.sticky-matrix__logo {
+  position: absolute;
+  bottom: 8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sticky-matrix__logo img {
+  height: 320px;
+  width: auto;
+  filter: brightness(0) invert(1) drop-shadow(0 0 40px rgba(204, 0, 0, 0.5));
+  opacity: 0.9;
+}
+
+@media (max-width: 1024px) {
+  .sticky-matrix__logo img { height: 220px; }
+}
+
+@media (max-width: 768px) {
+  .sticky-matrix { display: none; }
+}

@@ -124,7 +124,7 @@ function Footer() {
 
       <div className="footer-bottom">
         <div className="footer-bottom-left">
-          <div className="footer-brand">JJP</div>
+          <div className="footer-brand"><img src="/[logo].svg" alt="Logo" className="footer-logo-img" /></div>
           <p>All content ©<br />Jeremy Joseph Pohar {currentYear}</p>
         </div>
         <div className="footer-bottom-center">

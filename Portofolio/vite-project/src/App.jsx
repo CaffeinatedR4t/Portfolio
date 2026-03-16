@@ -8,6 +8,7 @@ import About from './components/About'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import StickyMatrix from './components/StickyMatrix'
 import './App.css'
 
 function App() {
@@ -38,16 +39,12 @@ function App() {
 
     rafIdRef.current = requestAnimationFrame(raf)
 
-    // Handle anchor link clicks
     const handleAnchorClick = (e) => {
       const target = e.target.closest('a[href^="#"]')
       if (!target) return
-
       const href = target.getAttribute('href')
       if (!href || href === '#') return
-
       e.preventDefault()
-
       const targetElement = document.querySelector(href)
       if (targetElement) {
         lenisInstance.scrollTo(targetElement, {
@@ -62,18 +59,9 @@ function App() {
 
     return () => {
       document.removeEventListener('click', handleAnchorClick)
-      
-      if (rafIdRef.current) {
-        cancelAnimationFrame(rafIdRef.current)
-      }
-      
-      if (lenisRef.current) {
-        lenisRef.current.destroy()
-      }
-      
-      if (window.lenis) {
-        delete window.lenis
-      }
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current)
+      if (lenisRef.current) lenisRef.current.destroy()
+      if (window.lenis) delete window.lenis
     }
   }, [])
 
@@ -84,14 +72,28 @@ function App() {
   return (
     <div className="App">
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
-      
+
       <CustomCursor />
       <Navbar />
       <Home />
       <About />
       <Projects />
       <Contact />
-      <Footer />
+
+      {/* Footer sticky wrapper — sticks to bottom while spacer scrolls.
+          The spacer below is what gives scroll room for the footer
+          to unstick and slide away, revealing the matrix. */}
+      <div className="footer-sticky-wrapper">
+        <Footer />
+      </div>
+
+      {/* Spacer — exactly 80vh (same as matrix height).
+          This sits AFTER the sticky footer in normal flow.
+          Lenis scrolls through it while the footer stays pinned,
+          then as the spacer ends the footer slides away. */}
+      <div className="matrix-reveal-spacer" aria-hidden="true" />
+
+      <StickyMatrix />
     </div>
   )
 }
