@@ -6,7 +6,8 @@
   position: fixed;
   pointer-events: none;
   z-index: 99999;
-  will-change: transform; 
+  will-change: transform;
+  mix-blend-mode: difference;
 }
 
 .pixel-cursor {
@@ -24,43 +25,23 @@
   width: 8px;
   height: 8px;
   background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 
-    0 0 8px rgba(255, 255, 255, 0.3),
-    inset 0 0 4px rgba(255, 255, 255, 0.2);
+  border: 2px solid #ffffff;
 }
 
 .pixel.fill {
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 
-    0 0 12px rgba(255, 255, 255, 0.5),
-    inset 0 0 6px rgba(255, 255, 255, 0.4);
-}
-
-.retro-cursor.hovering .pixel {
-  border-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 
-    0 0 15px rgba(255, 255, 255, 0.5),
-    inset 0 0 8px rgba(255, 255, 255, 0.3);
-}
-
-.retro-cursor.hovering .pixel.fill {
-  background: rgba(255, 255, 255, 1);
-  box-shadow: 
-    0 0 20px rgba(255, 255, 255, 0.7),
-    inset 0 0 10px rgba(255, 255, 255, 0.5);
+  background: #ffffff;
 }
 
 .cursor-trail {
   position: fixed;
   width: 4px;
   height: 4px;
-  background: rgba(255, 255, 255, 0.3);
+  background: #ffffff;
   border-radius: 50%;
   pointer-events: none;
   z-index: 99998;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-  will-change: transform; 
+  will-change: transform;
+  mix-blend-mode: difference;
 }
 
 @media (hover: none) and (pointer: coarse) {
@@ -68,7 +49,7 @@
   .cursor-trail {
     display: none;
   }
-  
+
   * {
     cursor: auto !important;
   }
