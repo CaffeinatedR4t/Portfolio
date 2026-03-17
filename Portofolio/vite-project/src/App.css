@@ -106,10 +106,6 @@ footer {
   z-index: 10000 !important;
 }
 
-.retro-cursor,
-.cursor-trail {
-  z-index: 99999 !important;
-}
 
 html.lenis { height: auto; }
 html.lenis body { height: auto; }

@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from 'react'
 import Lenis from '@studio-freight/lenis'
 import Preloader from './components/Preloader'
 import Navbar from './components/Navbar'
-import CustomCursor from './components/CustomCursor'
 import Home from './components/Home'
 import About from './components/About'
 import Projects from './components/Projects'
@@ -73,7 +72,6 @@ function App() {
     <div className="App">
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
 
-      <CustomCursor />
       <Navbar />
       <Home />
       <About />
