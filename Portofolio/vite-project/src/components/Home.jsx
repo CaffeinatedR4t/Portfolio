@@ -66,7 +66,7 @@ function Home() {
           [Jeremy J. Pohar]
         </p>
         
-        <p className="home-year">©2025</p>
+        <p className="home-year">©2026</p>
       </div>
 
       <div className="home-bottom-right">

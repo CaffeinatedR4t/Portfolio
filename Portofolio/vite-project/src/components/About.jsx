@@ -142,10 +142,7 @@ function About() {
         <div className="about-content">
           <div className="about-text">
             <p className="intro-text">
-              Hi! I'm <strong>Jeremy Joseph Pohar</strong>, a Computer Science student at Universitas Multimedia Nusantara.
-            </p>
-            <p>
-              Fluent in <strong>English (C1)</strong> and <strong>Indonesian (Native)</strong>, I combine technical expertise with strong communication skills to tackle challenges in cybersecurity, AI development, and full-stack engineering.
+              Hello! I'm <strong>Jeremy Joseph Pohar</strong>, a Computer Science student at Universitas Multimedia Nusantara.
             </p>
           </div>
 

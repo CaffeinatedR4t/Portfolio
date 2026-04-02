@@ -46,7 +46,7 @@ const projectsData = [
     description: "Machine learning system designed to predict and manage Type 2 Diabetes through personalized meal recommendations.",
     tags: ["Python", "Machine Learning", "Data Science", "Healthcare"],
     image: '/images/diabetes-meal.png',
-    date: "August 2025 - Present",
+    date: "December 2025",
     role: "ML Engineer & Data Scientist",
     github: "https://github.com/Gr1X/Diabetes_MealPlan_Model",
     fullDescription: "Machine learning system designed to predict and manage Type 2 Diabetes through personalized meal recommendations. Built classification models using Python to analyze health and lifestyle data, integrating prediction algorithms with nutritional guidance."
@@ -58,7 +58,7 @@ const projectsData = [
     description: "Android-based mobile application using Kotlin and Android Studio to support community reading activities through digital access.",
     tags: ["Kotlin", "Android Studio", "Mobile Dev", "Leadership"],
     image: '/images/taman-bacaan.png',
-    date: "August 2025 - Present",
+    date: "December 2025",
     role: "Lead Developer & Project Manager",
     github: "https://github.com/CaffeinatedR4t/Project_TamanBacaan",
     fullDescription: "Android-based mobile application using Kotlin and Android Studio to support community reading activities through digital access and user engagement. Led the full project lifecycle from system design, task delegation, and database integration to UI/UX development and testing."
