@@ -56,7 +56,7 @@
 
 .desktop-nav {
   display: flex;
-  gap: 3rem;
+  gap: 6rem;
   align-items: center;
 }
 
@@ -73,78 +73,21 @@
   cursor: pointer;
 }
 
-.nav-link::before {
+.nav-link::after {
   content: '';
   position: absolute;
   bottom: -5px;
   left: 0;
-  width: 0;
+  width: 100%;
   height: 1px;
   background: #ffffff;
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scaleX(0);
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
 }
 
-.nav-link:hover::before {
-  width: 100%;
-}
-
-.cursor-popup {
-  position: fixed;
-  transform: translate(-50%, -120%);
-  background: #ffffff;
-  color: #000000;
-  padding: 0.8rem 1.5rem;
-  border-radius: 50px;
-  font-family: var(--font-accent);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  white-space: nowrap;
-  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
-  z-index: 99999;
-  border: 2px solid #000000;
-  pointer-events: none;
-  animation: popupFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.cursor-popup::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid #ffffff;
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
-}
-
-.cursor-popup::before {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid #000000;
-  z-index: -1;
-}
-
-@keyframes popupFadeIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -100%);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -120%);
-  }
+.nav-link:hover::after {
+  transform: scaleX(1);
 }
 
 .mobile-menu-toggle {
@@ -196,7 +139,7 @@
   backdrop-filter: blur(20px);
   border-left: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0 0 0 16px;
+  border-radius: 0;
   z-index: 9999;
   transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: -10px 10px 40px rgba(0, 0, 0, 0.5);
@@ -222,7 +165,7 @@
   letter-spacing: 2px;
   padding: 1rem 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: 0;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
@@ -286,7 +229,7 @@
   .mobile-menu-overlay {
     width: 100%;
     max-width: calc(100vw - 40px);
-    border-radius: 0 0 0 20px;
+    border-radius: 0;
   }
 
   .mobile-nav-link {

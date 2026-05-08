@@ -9,19 +9,34 @@ import {
   SiCplusplus,
   SiHtml5, 
   SiCss3,
+  SiTailwindcss,
   SiReact, 
+  SiNextdotjs,
   SiNodedotjs,
-  SiAndroidstudio, 
   SiLaravel, 
+  SiThreedotjs,
   SiMysql, 
+  SiPostgresql,
+  SiMongodb,
+  SiSupabase,
+  SiPrisma,
+  SiMongoose,
+  SiUnity,
+  SiAndroidstudio, 
+  SiExpo,
+  SiJupyter,
+  SiR,
   SiGithub, 
   SiFigma,
-  SiUnity,
-  SiThreedotjs,
-  SiJupyter
+  SiDocker,
+  SiPostman,
+  SiVercel,
+  SiLinux
 } from 'react-icons/si'
 
 import { DiJava } from 'react-icons/di'
+import { TbApi } from 'react-icons/tb'
+import { VscVscode } from 'react-icons/vsc'
 import { FaFilePdf, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
 // Custom SVG Logos
@@ -112,23 +127,47 @@ function About() {
     { name: 'C#', icon: <CSharpLogo />, className: 'csharp' }
   ]
 
-  const frameworks = [
+  const webFrameworks = [
     { name: 'HTML5', icon: <SiHtml5 />, className: 'html' },
     { name: 'CSS3', icon: <SiCss3 />, className: 'css' },
+    { name: 'Tailwind CSS', icon: <SiTailwindcss />, className: 'tailwind' },
     { name: 'React', icon: <SiReact />, className: 'react' },
+    { name: 'Next.js', icon: <SiNextdotjs />, className: 'nextjs' },
     { name: 'Node.js', icon: <SiNodedotjs />, className: 'nodejs' },
+    { name: 'Laravel', icon: <SiLaravel />, className: 'laravel' },
     { name: 'Three.js', icon: <SiThreedotjs />, className: 'threejs' },
-    { name: 'Laravel', icon: <SiLaravel />, className: 'laravel' }
+    { name: 'REST API', icon: <TbApi />, className: 'rest' }
   ]
 
-  const tools = [
+  const databasesOrms = [
+    { name: 'MySQL', icon: <SiMysql />, className: 'mysql' },
+    { name: 'PostgreSQL', icon: <SiPostgresql />, className: 'postgresql' },
+    { name: 'MongoDB', icon: <SiMongodb />, className: 'mongodb' },
+    { name: 'Supabase', icon: <SiSupabase />, className: 'supabase' },
+    { name: 'Prisma', icon: <SiPrisma />, className: 'prisma' },
+    { name: 'Mongoose', icon: <SiMongoose />, className: 'mongoose' }
+  ]
+
+  const mobileGameDev = [
     { name: 'Unity', icon: <SiUnity />, className: 'unity' },
     { name: 'Android Studio', icon: <SiAndroidstudio />, className: 'android' },
+    { name: 'Expo', icon: <SiExpo />, className: 'expo' }
+  ]
+
+  const dataScience = [
     { name: 'Jupyter', icon: <SiJupyter />, className: 'jupyter' },
-    { name: 'RStudio', icon: <RStudioLogo />, className: 'rstudio' },
-    { name: 'MySQL', icon: <SiMysql />, className: 'mysql' },
+    { name: 'R', icon: <SiR />, className: 'r' },
+    { name: 'RStudio', icon: <RStudioLogo />, className: 'rstudio' }
+  ]
+
+  const toolsPlatforms = [
+    { name: 'VS Code', icon: <VscVscode />, className: 'vscode' },
     { name: 'GitHub', icon: <SiGithub />, className: 'github' },
-    { name: 'Figma', icon: <SiFigma />, className: 'figma' }
+    { name: 'Figma', icon: <SiFigma />, className: 'figma' },
+    { name: 'Docker', icon: <SiDocker />, className: 'docker' },
+    { name: 'Postman', icon: <SiPostman />, className: 'postman' },
+    { name: 'Vercel', icon: <SiVercel />, className: 'vercel' },
+    { name: 'Linux (WSL)', icon: <SiLinux />, className: 'linux' }
   ]
 
   return (
@@ -142,7 +181,7 @@ function About() {
         <div className="about-content">
           <div className="about-text">
             <p className="intro-text">
-              Hello! I'm <strong>Jeremy Joseph Pohar</strong>, a Computer Science student at Universitas Multimedia Nusantara.
+              Computer Science student at <strong>Universitas Multimedia Nusantara</strong> specialising in full-stack, mobile, cybersecurity, and AI-driven development.
             </p>
           </div>
 
@@ -153,16 +192,34 @@ function About() {
               <StaticTechGrid items={programmingLanguages} />
             </div>
 
-            {/* ✅ FRAMEWORKS & LIBRARIES */}
+            {/* ✅ WEB & FRAMEWORKS */}
             <div className="tech-category">
-              <h3>Frameworks & Libraries</h3>
-              <StaticTechGrid items={frameworks} />
+              <h3>Web & Frameworks</h3>
+              <StaticTechGrid items={webFrameworks} />
+            </div>
+
+            {/* ✅ DATABASES & ORMS */}
+            <div className="tech-category">
+              <h3>Databases & ORMs</h3>
+              <StaticTechGrid items={databasesOrms} />
+            </div>
+
+            {/* ✅ MOBILE & GAME DEV */}
+            <div className="tech-category">
+              <h3>Mobile & Game Dev</h3>
+              <StaticTechGrid items={mobileGameDev} />
+            </div>
+
+            {/* ✅ DATA SCIENCE & ANALYTICS */}
+            <div className="tech-category">
+              <h3>Data Science & Analytics</h3>
+              <StaticTechGrid items={dataScience} />
             </div>
 
             {/* ✅ TOOLS & PLATFORMS */}
             <div className="tech-category">
               <h3>Tools & Platforms</h3>
-              <StaticTechGrid items={tools} />
+              <StaticTechGrid items={toolsPlatforms} />
             </div>
           </div>
 
@@ -310,7 +367,7 @@ function CertificationsCarousel({ certifications }) {
       {/* Certification Popup */}
       {selectedCert && (
         <div className="cert-popup-overlay" onClick={handleClosePopup}>
-          <div className="cert-popup" onClick={(e) => e.stopPropagation()}>
+          <div className="cert-popup" onClick={(e) => e.stopPropagation()} data-lenis-prevent="true">
             <button className="cert-close-btn" onClick={handleClosePopup}>
               <FaTimes />
             </button>

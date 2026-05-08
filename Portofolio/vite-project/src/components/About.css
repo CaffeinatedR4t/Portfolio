@@ -1,6 +1,7 @@
 #about {
   background: #000000;
-  padding: 100px 0;
+  padding-top: 100px;
+  padding-bottom: 0;
   min-height: 100vh;
 }
 
@@ -13,12 +14,14 @@
   color: #c0c0c0;
   line-height: 1.8;
   margin-bottom: 4rem;
+  text-align: center;
 }
 
 .intro-text {
   font-size: 1.15rem;
   color: #ffffff;
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .about-text p {
@@ -78,7 +81,7 @@
   height: 80px;
   background: #000000;
   border: none;
-  border-radius: 8px;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,6 +194,66 @@
 .icon-box.rstudio { color: #75aadb; }
 .tech-icon:hover .icon-box.rstudio { background: #75aadb; color: #fff; }
 
+/* Tailwind CSS */
+.icon-box.tailwind { color: #38b2ac; }
+.tech-icon:hover .icon-box.tailwind { background: #38b2ac; color: #fff; }
+
+/* Next.js */
+.icon-box.nextjs { color: #ffffff; }
+.tech-icon:hover .icon-box.nextjs { background: #ffffff; color: #000; }
+
+/* REST API */
+.icon-box.rest { color: #ffffff; }
+.tech-icon:hover .icon-box.rest { background: #ffffff; color: #000; }
+
+/* PostgreSQL */
+.icon-box.postgresql { color: #336791; }
+.tech-icon:hover .icon-box.postgresql { background: #336791; color: #fff; }
+
+/* MongoDB */
+.icon-box.mongodb { color: #47a248; }
+.tech-icon:hover .icon-box.mongodb { background: #47a248; color: #fff; }
+
+/* Supabase */
+.icon-box.supabase { color: #3ecf8e; }
+.tech-icon:hover .icon-box.supabase { background: #3ecf8e; color: #000; }
+
+/* Prisma */
+.icon-box.prisma { color: #ffffff; }
+.tech-icon:hover .icon-box.prisma { background: #ffffff; color: #000; }
+
+/* Mongoose */
+.icon-box.mongoose { color: #880000; }
+.tech-icon:hover .icon-box.mongoose { background: #880000; color: #fff; }
+
+/* Expo */
+.icon-box.expo { color: #ffffff; }
+.tech-icon:hover .icon-box.expo { background: #ffffff; color: #000; }
+
+/* R */
+.icon-box.r { color: #276dc3; }
+.tech-icon:hover .icon-box.r { background: #276dc3; color: #fff; }
+
+/* VS Code */
+.icon-box.vscode { color: #007acc; }
+.tech-icon:hover .icon-box.vscode { background: #007acc; color: #fff; }
+
+/* Docker */
+.icon-box.docker { color: #2496ed; }
+.tech-icon:hover .icon-box.docker { background: #2496ed; color: #fff; }
+
+/* Postman */
+.icon-box.postman { color: #ff6c37; }
+.tech-icon:hover .icon-box.postman { background: #ff6c37; color: #fff; }
+
+/* Vercel */
+.icon-box.vercel { color: #ffffff; }
+.tech-icon:hover .icon-box.vercel { background: #ffffff; color: #000; }
+
+/* Linux */
+.icon-box.linux { color: #fcc624; }
+.tech-icon:hover .icon-box.linux { background: #fcc624; color: #000; }
+
 /* SVG inside icon inherits color */
 .icon-box svg { color: inherit; }
 .tech-icon:hover .icon-box svg { color: inherit; }
@@ -227,7 +290,7 @@
   color: #ffffff;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -257,7 +320,7 @@
 .cert-card-carousel {
   background: #0a0a0a;
   border: 1px solid #1a1a1a;
-  border-radius: 12px;
+  border-radius: 0;
   padding: 2rem;
   text-align: center;
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
@@ -286,7 +349,7 @@
   width: 100%;
   height: 180px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 0;
   margin-bottom: 1rem;
   border: 1px solid #333;
 }
@@ -295,7 +358,7 @@
   width: 100%;
   height: 180px;
   background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-  border-radius: 8px;
+  border-radius: 0;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -321,7 +384,7 @@
   display: inline-block;
   padding: 0.5rem 1rem;
   border: 1px solid #333;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .carousel-counter {
@@ -342,7 +405,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10000;
+  z-index: 99999 !important;
   padding: 2rem;
   animation: fadeIn 0.3s ease;
 }
@@ -350,7 +413,7 @@
 .cert-popup {
   background: #0a0a0a;
   border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 16px;
+  border-radius: 0;
   max-width: 800px;
   width: 100%;
   max-height: 90vh;
@@ -369,7 +432,7 @@
   color: #ffffff;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -392,7 +455,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 12px;
+  border-radius: 0;
   border: 1px solid #333;
 }
 
@@ -400,7 +463,7 @@
   width: 100%;
   min-height: 300px;
   background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-  border-radius: 12px;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -431,7 +494,7 @@
   display: inline-block;
   padding: 0.5rem 1rem;
   border: 1px solid #333;
-  border-radius: 4px;
+  border-radius: 0;
   margin-bottom: 1.5rem;
 }
 
@@ -445,7 +508,7 @@
   background: rgba(255,255,255,0.05);
   color: #ffffff;
   border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 50px;
+  border-radius: 0;
   font-family: var(--font-accent);
   font-size: 0.9rem;
   letter-spacing: 1px;

@@ -57,19 +57,6 @@ function Footer() {
     <footer className="footer">
       <div className="footer-cta">
         <h2>READY TO BUILD<br />RESILIENT SOLUTIONS?</h2>
-        <button onClick={scrollToContact} className="arrow-button">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-            <rect x="1" y="1" width="78" height="78" stroke="currentColor" strokeWidth="1" />
-            <path
-              d="M28 46 L40 34 L52 46"
-              stroke="currentColor"
-              strokeWidth="2"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
       </div>
 
       <div className="footer-main">
@@ -109,14 +96,6 @@ function Footer() {
               <li><a href="#projects" onClick={(e) => scrollToSection(e, 'projects')}>PROJECTS</a></li>
               <li><a href="#about" onClick={(e) => scrollToSection(e, 'about')}>ABOUT</a></li>
               <li><a href="#contact" onClick={(e) => scrollToSection(e, 'contact')}>CONTACT</a></li>
-              <li className="model-credit">
-                <a href="https://skfb.ly/6SvyM" 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   title="3D Model by Vivien Deroche">
-                  3D Model by Vivien Deroche
-                </a>
-              </li>
             </ul>
           </div>
         </div>

@@ -1,28 +1,6 @@
-import { useEffect, useState } from 'react'
-import ModelViewer from './ModelViewer'
 import './Home.css'
 
 function Home() {
-  const [hours, setHours] = useState('00')
-  const [minutes, setMinutes] = useState('00')
-  const [seconds, setSeconds] = useState('00')
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date()
-      const jakartaTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }))
-      
-      setHours(String(jakartaTime.getHours()).padStart(2, '0'))
-      setMinutes(String(jakartaTime.getMinutes()).padStart(2, '0'))
-      setSeconds(String(jakartaTime.getSeconds()).padStart(2, '0'))
-    }
-
-    updateTime()
-    const interval = setInterval(updateTime, 1000)
-
-    return () => clearInterval(interval)
-  }, [])
-
   const scrollToContact = (e) => {
     e.preventDefault()
     const contactSection = document.getElementById('contact')
@@ -46,15 +24,15 @@ function Home() {
         <p>JAKARTA, INDONESIA</p>
       </div>
 
-      <div className="home-top-right">
-        <div className="rotated-time">
-          {hours}:{minutes}:{seconds} | 6.2088° S, 106.8456° E
-        </div>
-      </div>
-
-      <div className="model-container">
-        <ModelViewer />
-      </div>
+      <video 
+        className="home-background-video" 
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+      >
+        <source src="/videos/particleizer_remix_scene.webm" type="video/webm" />
+      </video>
 
       <div className="home-bottom-left">
         <button className="cta-button" onClick={scrollToContact}>
@@ -81,10 +59,6 @@ function Home() {
         </div>
       </div>
 
-      <div className="scroll-indicator">
-        <span>SCROLL</span>
-        <span className="arrow">↓</span>
-      </div>
     </section>
   )
 }

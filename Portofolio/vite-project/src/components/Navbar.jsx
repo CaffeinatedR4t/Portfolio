@@ -63,9 +63,9 @@ function Navbar() {
         </div>
 
         <div className="nav-right desktop-nav">
-          <CursorPopupLink href="#about" text="ABOUT" popup="ABOUT ME" onClick={closeMobileMenu} />
-          <CursorPopupLink href="#projects" text="PROJECTS" popup="FEATURED PROJECTS" onClick={closeMobileMenu} />
-          <CursorPopupLink href="#contact" text="CONTACT" popup="LET'S CONNECT" onClick={closeMobileMenu} />
+          <BinaryHoverLink href="#about" text="ABOUT" onClick={closeMobileMenu} />
+          <BinaryHoverLink href="#projects" text="PROJECTS" onClick={closeMobileMenu} />
+          <BinaryHoverLink href="#contact" text="CONTACT" onClick={closeMobileMenu} />
         </div>
       </nav>
 
@@ -105,33 +105,51 @@ function Logo({ onClick }) {
   )
 }
 
-function CursorPopupLink({ href, text, popup, onClick }) {
-  const [displayPopup, setDisplayPopup] = useState(popup)
+function BinaryHoverLink({ href, text, onClick }) {
+  const [displayText, setDisplayText] = useState(text)
   const [isHovering, setIsHovering] = useState(false)
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*'
+  const characters = '01'
 
   useEffect(() => {
     if (!isHovering) {
-      setDisplayPopup(popup)
+      setDisplayText(text)
       return
     }
 
     let iteration = 0
+    const centerIndex = (text.length - 1) / 2
+    const maxIteration = Math.max(centerIndex, text.length - 1 - centerIndex)
+    
+    // Sync with CSS transition-duration (1.2s = 1200ms)
+    const duration = 1200 
+    const intervalTime = 40
+    const totalTicks = duration / intervalTime
+    const increment = maxIteration / totalTicks
+    
     const interval = setInterval(() => {
-      setDisplayPopup(
-        popup.split('').map((char, index) => {
+      setDisplayText(
+        text.split('').map((char, index) => {
           if (char === ' ') return ' '
-          if (index < iteration) return popup[index]
+          if (Math.abs(index - centerIndex) <= iteration) {
+            return text[index]
+          }
           return characters[Math.floor(Math.random() * characters.length)]
         }).join('')
       )
-      if (iteration >= popup.length) clearInterval(interval)
-      iteration += 1 / 3
-    }, 30)
+      
+      if (iteration >= maxIteration) {
+        clearInterval(interval)
+        setDisplayText(text) // Ensure final state is perfect
+      }
+      
+      iteration += increment
+    }, intervalTime)
 
-    return () => clearInterval(interval)
-  }, [isHovering, popup])
+    return () => {
+      clearInterval(interval)
+      setDisplayText(text)
+    }
+  }, [isHovering, text])
 
   const handleClick = (e) => {
     e.preventDefault()
@@ -151,27 +169,20 @@ function CursorPopupLink({ href, text, popup, onClick }) {
   }
 
   return (
-    <>
-      <a
-        href={href}
-        className="nav-link cursor-popup-link"
-        onClick={handleClick}
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-        onMouseMove={(e) => setCursorPosition({ x: e.clientX, y: e.clientY })}
-      >
-        {text}
-      </a>
-
-      {isHovering && (
-        <div
-          className="cursor-popup"
-          style={{ left: `${cursorPosition.x}px`, top: `${cursorPosition.y}px` }}
-        >
-          {displayPopup}
-        </div>
-      )}
-    </>
+    <a
+      href={href}
+      className="nav-link"
+      onClick={handleClick}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
+      {/* Invisible original text locks the width to prevent X-axis shifting */}
+      <span style={{ visibility: 'hidden' }}>{text}</span>
+      {/* Absolutely positioned scrambled text */}
+      <span style={{ position: 'absolute', left: 0, right: 0, textAlign: 'center' }}>
+        {displayText}
+      </span>
+    </a>
   )
 }
 
