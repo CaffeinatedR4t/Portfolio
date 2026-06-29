@@ -133,10 +133,6 @@
 .icon-box.c    { color: #a8b9cc; }
 .tech-icon:hover .icon-box.c    { background: #a8b9cc; color: #fff; }
 
-/* C++ */
-.icon-box.cpp  { color: #00599c; }
-.tech-icon:hover .icon-box.cpp  { background: #00599c; color: #fff; }
-
 /* C# */
 .icon-box.csharp { color: #239120; }
 .icon-box.csharp svg { padding: 18px; }
@@ -323,26 +319,22 @@
   border-radius: 0;
   padding: 2rem;
   text-align: center;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   min-width: 250px;
   max-width: 250px;
+  overflow: hidden;
+  /* border-color transition only — Framer Motion owns transform/opacity/filter */
+  transition: border-color 0.35s ease;
 }
 
 .cert-card-carousel.active {
-  transform: scale(1.15);
   border-color: #ffffff;
   z-index: 5;
 }
 
 .cert-card-carousel.prev,
 .cert-card-carousel.next {
-  transform: scale(0.85);
-  opacity: 0.5;
-  filter: blur(1px);
+  border-color: #1a1a1a;
 }
 
 .cert-image {

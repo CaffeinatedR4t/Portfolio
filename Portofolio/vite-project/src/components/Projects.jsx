@@ -6,6 +6,30 @@ const projectsData = [
   {
     id: 1,
     number: "01",
+    title: "Gridism.co Portfolio",
+    description: "Built the official Gridism digital creative agency website — a premium, high-performance agency portfolio with immersive animations, grid-based layout system, and full-stack architecture.",
+    tags: ["Next.js", "TypeScript", "Go", "React", "TailwindCSS"],
+    image: '/images/gridism-web.png',
+    date: "Jun 2026",
+    role: "Full-Stack Developer",
+    external: "https://www.gridism.co/",
+    fullDescription: "Built the official Gridism co digital creative agency website — a premium, high-performance platform for a Jakarta-based creative agency. The site features immersive scroll-driven animations, a custom grid-based design system, and a full-stack architecture with a Next.js + TypeScript frontend and a Go backend. Designed and engineered with precision to reflect Gridism's brand identity: structure with purpose, commitment to crafting, and human-centric approach. Live at gridism.co."
+  },
+  {
+    id: 2,
+    number: "02",
+    title: "EcoSort System",
+    description: "Cross-platform mobile application for AI-based waste classification and reward-based wallet payouts.",
+    tags: ["React Native", "Expo", "Zustand", "Supabase", "Gemini AI", "Node.js"],
+    image: "/images/EcoSort.png",
+    date: "Feb 2026",
+    role: "Full-Stack Mobile Developer",
+    github: "https://github.com/CaffeinatedR4t/EcoSort",
+    fullDescription: "EcoSort is a cross-platform mobile application built with React Native (Expo) designed to streamline waste collection. It features an AI-driven workflow where users scan waste items (classified by Gemini 1.5 Flash), request pickups, and receive flat-rate wallet rewards upon driver and admin verification. The system utilizes Supabase for secure data management and a Node.js backend for business logic."
+  },
+  {
+    id: 3,
+    number: "03",
     title: "Personal Portfolio Website",
     description: "A modern, interactive portfolio website built with React and Vite, featuring smooth animations with Lenis scroll, custom cursor effects, and a sleek dark theme.",
     tags: ["React", "Vite", "JavaScript", "Node.js", "CSS3"],
@@ -16,8 +40,8 @@ const projectsData = [
     fullDescription: "A modern, interactive portfolio website built with React and Vite, featuring smooth animations with Lenis scroll, custom cursor effects, and a sleek dark theme. Showcases my projects, skills, certifications, and professional experience with an engaging user interface. Fully responsive design with optimized performance and SEO."
   },
   {
-    id: 2,
-    number: "02",
+    id: 4,
+    number: "04",
     title: "XSS Mitigation Framework",
     description: "Designed and executed experimental testing on PHP-based web applications to identify Reflected, Stored, and DOM-based XSS vulnerabilities.",
     tags: ["PHP", "Cybersecurity", "XSS", "OWASP", "Research"],
@@ -28,8 +52,8 @@ const projectsData = [
     fullDescription: "Designed and executed experimental testing on PHP-based web applications to identify Reflected, Stored, and DOM-based XSS vulnerabilities. Developed and evaluated prevention frameworks using input validation, output encoding (e.g., htmlspecialchars()), and Content-Security-Policy (CSP) implementation. Strengthened applied understanding of cybersecurity principles, secure coding practices, and OWASP standards."
   },
   {
-    id: 3,
-    number: "03",
+    id: 5,
+    number: "05",
     title: "Seadex - Export Management Platform",
     description: "A PHP-Laravel based export management platform connecting Indonesian suppliers with global buyers.",
     tags: ["PHP", "Laravel", "MySQL", "Full-Stack", "TailwindCSS"],
@@ -40,8 +64,8 @@ const projectsData = [
     fullDescription: "A PHP-Laravel based export management platform connecting Indonesian suppliers with global buyers. Integrated front-end interfaces with robust MySQL database systems to streamline product listings and export operations."
   },
   {
-    id: 4,
-    number: "04",
+    id: 6,
+    number: "06",
     title: "Diabetes Meal Plan Framework",
     description: "Machine learning system designed to predict and manage Type 2 Diabetes through personalized meal recommendations.",
     tags: ["Python", "Machine Learning", "Data Science", "Healthcare"],
@@ -52,8 +76,8 @@ const projectsData = [
     fullDescription: "Machine learning system designed to predict and manage Type 2 Diabetes through personalized meal recommendations. Built classification models using Python to analyze health and lifestyle data, integrating prediction algorithms with nutritional guidance."
   },
   {
-    id: 5,
-    number: "05",
+    id: 7,
+    number: "07",
     title: "Taman Bacaan Mobile App",
     description: "Android-based mobile application using Kotlin and Android Studio to support community reading activities through digital access.",
     tags: ["Kotlin", "Android Studio", "Mobile Dev", "Leadership"],
@@ -64,8 +88,8 @@ const projectsData = [
     fullDescription: "Android-based mobile application using Kotlin and Android Studio to support community reading activities through digital access and user engagement. Led the full project lifecycle from system design, task delegation, and database integration to UI/UX development and testing."
   },
   {
-    id: 6,
-    number: "06",
+    id: 8,
+    number: "08",
     title: "AI in Student Learning",
     description: "Research project analyzing the impact of AI integration on student learning outcomes using statistical analysis in R.",
     tags: ["R", "Data Analysis", "Research", "Education", "Statistics"],
@@ -74,18 +98,6 @@ const projectsData = [
     role: "Data Analyst & Researcher",
     pdf: "/AI_Student_Learning_Paper.pdf",
     fullDescription: "Comprehensive research project examining the integration of AI tools in educational settings and their effect on student engagement, comprehension, and academic performance. Utilized R and RStudio for statistical modeling, hypothesis testing, and data visualization to derive actionable insights."
-  },
-  {
-    id: 7,
-    number: "07",
-    title: "EcoSort System",
-    description: "Cross-platform mobile application for AI-based waste classification and reward-based wallet payouts.",
-    tags: ["React Native", "Expo", "Zustand", "Supabase", "Gemini AI", "Node.js"],
-    image: "/images/EcoSort.png",
-    date: "Feb 2026",
-    role: "Full-Stack Mobile Developer",
-    github: "https://github.com/CaffeinatedR4t/EcoSort",
-    fullDescription: "EcoSort is a cross-platform mobile application built with React Native (Expo) designed to streamline waste collection. It features an AI-driven workflow where users scan waste items (classified by Gemini 1.5 Flash), request pickups, and receive flat-rate wallet rewards upon driver and admin verification. The system utilizes Supabase for secure data management and a Node.js backend for business logic."
   }
 ]
 
@@ -93,9 +105,30 @@ function Projects() {
   const [selectedProject, setSelectedProject] = useState(null)
   const [hoveredProject, setHoveredProject] = useState(null)
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 })
-  const projectRefs = useRef([])
+  const [smoothPos, setSmoothPos] = useState({ x: 0, y: 0 })
+  const animFrameRef = useRef(null)
+  const targetPos = useRef({ x: 0, y: 0 })
+
+  // Smooth gliding cursor follow
+  useEffect(() => {
+    const lerp = (start, end, t) => start + (end - start) * t
+
+    const animate = () => {
+      setSmoothPos(prev => ({
+        x: lerp(prev.x, targetPos.current.x, 0.12),
+        y: lerp(prev.y, targetPos.current.y, 0.12)
+      }))
+      animFrameRef.current = requestAnimationFrame(animate)
+    }
+
+    animFrameRef.current = requestAnimationFrame(animate)
+    return () => {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current)
+    }
+  }, [])
 
   const handleMouseMove = (e) => {
+    targetPos.current = { x: e.clientX, y: e.clientY }
     setCursorPos({ x: e.clientX, y: e.clientY })
   }
 
@@ -125,7 +158,7 @@ function Projects() {
             {projectsData.map((project, index) => (
               <div
                 key={project.id}
-                className="project-list-row"
+                className={`project-list-row${hoveredProject?.id === project.id ? ' is-hovered' : ''}`}
                 onClick={() => handleProjectClick(project)}
                 onMouseEnter={() => setHoveredProject(project)}
                 onMouseLeave={() => setHoveredProject(null)}
@@ -160,13 +193,13 @@ function Projects() {
           </div>
         </div>
 
-      {/* Floating Image Component */}
+      {/* Floating Glide Image Component */}
       {hoveredProject && (
         <div 
           className="floating-image-container"
           style={{ 
-            left: `${cursorPos.x}px`, 
-            top: `${cursorPos.y}px` 
+            left: `${smoothPos.x}px`, 
+            top: `${smoothPos.y}px` 
           }}
         >
           <img 
@@ -174,6 +207,9 @@ function Projects() {
             alt={hoveredProject.title} 
             className="floating-image"
           />
+          <div className="floating-image-label">
+            <span>{hoveredProject.role}</span>
+          </div>
         </div>
       )}
 
@@ -185,29 +221,34 @@ function Projects() {
               <FaTimes />
             </button>
 
-            <div className="modal-content">
-              {/* Left Side - Image */}
-              <div className="modal-image-section">
-                <img 
-                  src={selectedProject.image} 
-                  alt={selectedProject.title}
-                  className="modal-image"
-                />
+            {/* Top — Image Banner */}
+            <div className="modal-image-section">
+              <img 
+                src={selectedProject.image} 
+                alt={selectedProject.title}
+                className="modal-image"
+              />
+              <div className="modal-image-overlay">
+                <span className="modal-number">#{selectedProject.number}</span>
+              </div>
+            </div>
+
+            {/* Bottom — Info Grid */}
+            <div className="modal-body">
+              <div className="modal-body-left">
+                <div className="modal-header">
+                  <h2>{selectedProject.title}</h2>
+                  <div className="modal-meta-row">
+                    <span className="modal-role">{selectedProject.role}</span>
+                    <span className="modal-date">{selectedProject.date}</span>
+                  </div>
+                </div>
+                <p className="modal-description">{selectedProject.fullDescription}</p>
               </div>
 
-              {/* Right Side - Details */}
-              <div className="modal-info-section">
-                <div className="modal-header">
-                  <span className="modal-number">#{selectedProject.number}</span>
-                  <h2>{selectedProject.title}</h2>
-                  <span className="modal-role">{selectedProject.role}</span>
-                  <span className="modal-date">{selectedProject.date}</span>
-                </div>
-
-                <p className="modal-description">{selectedProject.fullDescription}</p>
-
+              <div className="modal-body-right">
                 <div className="modal-tags">
-                  <h4>Technologies Used</h4>
+                  <h4>Tech Stack</h4>
                   <div className="tags-list">
                     {selectedProject.tags.map((tag, idx) => (
                       <span key={idx} className="tag">{tag}</span>
@@ -223,7 +264,17 @@ function Projects() {
                       rel="noopener noreferrer"
                       className="modal-link-btn"
                     >
-                      <FaGithub /> View on GitHub
+                      <FaGithub /> GitHub
+                    </a>
+                  )}
+                  {selectedProject.external && (
+                    <a 
+                      href={selectedProject.external} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="modal-link-btn modal-link-btn--primary"
+                    >
+                      <FaExternalLinkAlt /> Live Site
                     </a>
                   )}
                   {selectedProject.pdf && (
@@ -234,16 +285,6 @@ function Projects() {
                       className="modal-link-btn"
                     >
                       <FaFilePdf /> View PDF
-                    </a>
-                  )}
-                  {selectedProject.external && (
-                    <a 
-                      href={selectedProject.external} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="modal-link-btn"
-                    >
-                      <FaExternalLinkAlt /> Visit Project
                     </a>
                   )}
                 </div>

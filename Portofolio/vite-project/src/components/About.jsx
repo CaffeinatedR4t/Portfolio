@@ -1,12 +1,12 @@
 import './About.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { 
   SiTypescript, 
   SiJavascript, 
   SiPython, 
   SiPhp, 
-  SiC, 
-  SiCplusplus,
+  SiC,
   SiHtml5, 
   SiCss3,
   SiTailwindcss,
@@ -123,7 +123,6 @@ function About() {
     { name: 'Python', icon: <SiPython />, className: 'python' },
     { name: 'PHP', icon: <SiPhp />, className: 'php' },
     { name: 'C', icon: <SiC />, className: 'c' },
-    { name: 'C++', icon: <SiCplusplus />, className: 'cpp' },
     { name: 'C#', icon: <CSharpLogo />, className: 'csharp' }
   ]
 
@@ -260,20 +259,15 @@ function StaticTechGrid({ items }) {
 
 // ✅ CERTIFICATIONS CAROUSEL COMPONENT
 function CertificationsCarousel({ certifications }) {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [[currentIndex, direction], setPage] = useState([0, 0])
   const [selectedCert, setSelectedCert] = useState(null)
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
-  const handlePrev = () => {
-    setCurrentIndex((prev) => 
-      prev === 0 ? certifications.length - 1 : prev - 1
-    )
-  }
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => 
-      prev === certifications.length - 1 ? 0 : prev + 1
-    )
+  const total = certifications.length
+
+  const paginate = (dir) => {
+    setPage(([idx]) => [(idx + dir + total) % total, dir])
   }
 
   const handleCertClick = (cert) => {
@@ -288,74 +282,72 @@ function CertificationsCarousel({ certifications }) {
     if (window.lenis) window.lenis.start()
   }
 
-  // Touch handlers for swipe
-  const handleTouchStart = (e) => {
-    setTouchStart(e.touches[0].clientX)
+  const handleTouchStart = (e) => setTouchStart(e.touches[0].clientX)
+  const handleTouchMove  = (e) => setTouchEnd(e.touches[0].clientX)
+  const handleTouchEnd   = () => {
+    if (touchStart - touchEnd > 50)  paginate(1)
+    if (touchStart - touchEnd < -50) paginate(-1)
   }
 
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.touches[0].clientX)
-  }
+  const prevIndex = (currentIndex - 1 + total) % total
+  const nextIndex = (currentIndex + 1) % total
 
-  const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 50) {
-      handleNext()
-    }
-    if (touchStart - touchEnd < -50) {
-      handlePrev()
-    }
-  }
+  // Build the 3 visible slots — stable key=pos so layout animation fires
+  const visibleCards = [
+    { cert: certifications[prevIndex],    pos: 'prev' },
+    { cert: certifications[currentIndex], pos: 'active' },
+    { cert: certifications[nextIndex],    pos: 'next' },
+  ]
 
-  // Get visible cards (previous, current, next)
-  const getVisibleCards = () => {
-    const total = certifications.length
-    const prevIndex = currentIndex === 0 ? total - 1 : currentIndex - 1
-    const nextIndex = currentIndex === total - 1 ? 0 : currentIndex + 1
-
-    return [
-      certifications[prevIndex],
-      certifications[currentIndex],
-      certifications[nextIndex]
-    ]
-  }
-
-  const visibleCards = getVisibleCards()
+  // Spring config for the conveyor belt slide
+  const spring = { type: 'spring', stiffness: 280, damping: 28, mass: 0.8 }
 
   return (
     <div className="certifications-section">
       <h3>Certifications</h3>
-      
-      <div 
+
+      <div
         className="carousel-container"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <button className="carousel-arrow carousel-prev" onClick={handlePrev}>
+        <button className="carousel-arrow carousel-prev" onClick={() => paginate(-1)}>
           <FaChevronLeft />
         </button>
 
-        <div className="carousel-track">
-          {visibleCards.map((cert, idx) => (
-            <div 
-              key={cert.id} 
-              className={`cert-card-carousel ${idx === 1 ? 'active' : idx === 0 ? 'prev' : 'next'}`}
-              onClick={() => idx === 1 && handleCertClick(cert)}
-            >
-              {cert.image ? (
-                <img src={cert.image} alt={cert.title} className="cert-image" />
-              ) : (
-                <div className="cert-placeholder">
-                </div>
-              )}
-              <h4>{cert.title}</h4>
-              <p className="cert-issuer">{cert.issuer}</p>
-              <span className="cert-date">{cert.date}</span>
-            </div>
-          ))}
-        </div>
+        {/* LayoutGroup ensures Framer Motion tracks cards across renders */}
+        <motion.div className="carousel-track" layout>
+          <AnimatePresence initial={false} mode="popLayout" custom={direction}>
+            {visibleCards.map(({ cert, pos }) => (
+              <motion.div
+                key={cert.id}
+                layoutId={`cert-card-${cert.id}`}
+                layout
+                transition={spring}
+                className={`cert-card-carousel ${pos}`}
+                onClick={() => pos === 'active' && handleCertClick(cert)}
+                initial={{ opacity: 0, scale: 0.7 }}
+                animate={{
+                  opacity: pos === 'active' ? 1 : 0.5,
+                  scale: pos === 'active' ? 1.15 : 0.85,
+                  filter: pos === 'active' ? 'blur(0px)' : 'blur(1px)',
+                  transition: spring,
+                }}
+                exit={{ opacity: 0, scale: 0.7, transition: { duration: 0.2 } }}
+              >
+                {cert.image
+                  ? <img src={cert.image} alt={cert.title} className="cert-image" />
+                  : <div className="cert-placeholder" />}
+                <h4>{cert.title}</h4>
+                <p className="cert-issuer">{cert.issuer}</p>
+                <span className="cert-date">{cert.date}</span>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
-        <button className="carousel-arrow carousel-next" onClick={handleNext}>
+        <button className="carousel-arrow carousel-next" onClick={() => paginate(1)}>
           <FaChevronRight />
         </button>
       </div>
@@ -371,7 +363,7 @@ function CertificationsCarousel({ certifications }) {
             <button className="cert-close-btn" onClick={handleClosePopup}>
               <FaTimes />
             </button>
-            
+
             <div className="cert-popup-content">
               {selectedCert.image ? (
                 <img src={selectedCert.image} alt={selectedCert.title} className="cert-popup-image" />
@@ -380,18 +372,18 @@ function CertificationsCarousel({ certifications }) {
                   <span className="cert-placeholder-icon-large">{selectedCert.icon}</span>
                 </div>
               )}
-              
+
               <div className="cert-popup-info">
                 <div className="cert-popup-icon">{selectedCert.icon}</div>
                 <h3>{selectedCert.title}</h3>
                 <p className="cert-popup-issuer">{selectedCert.issuer}</p>
                 <span className="cert-popup-date">{selectedCert.date}</span>
                 <p className="cert-popup-description">{selectedCert.description}</p>
-                
+
                 {selectedCert.pdf && (
-                  <a 
-                    href={selectedCert.pdf} 
-                    target="_blank" 
+                  <a
+                    href={selectedCert.pdf}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="cert-pdf-btn"
                   >
