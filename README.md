@@ -1,4 +1,4 @@
-# Jeremy Joseph Pohar | Developer Portfolio
+# Jeremy Joseph Pohar | Portfolio
 
 A personal portfolio showcasing my projects, skills, and professional journey as a Computer Science student, AI Trainer, and Web Developer based in Jakarta, Indonesia.
 
