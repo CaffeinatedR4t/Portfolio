@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import emailjs from '@emailjs/browser'
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa'
 import { MdEmail, MdLocationOn, MdWorkOutline } from 'react-icons/md'
 import './Contact.css'
@@ -72,34 +73,37 @@ function Contact() {
     setStatus({ type: '', message: '' })
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const response = await fetch(`${apiUrl}/api/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID'
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID'
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          reply_to: formData.email,
+          message: formData.message,
         },
-        body: JSON.stringify(formData),
+        publicKey
+      )
+
+      setStatus({ 
+        type: 'success', 
+        message: 'MESSAGE SENT SUCCESSFULLY.' 
       })
+      setFormData({ name: '', email: '', message: '' })
+      
+      // Auto-hide toaster after 5 seconds
+      setTimeout(() => {
+        setStatus({ type: '', message: '' })
+      }, 5000)
 
-      const data = await response.json()
-
-      if (data.success) {
-        setStatus({ 
-          type: 'success', 
-          message: '✅ Message sent! Check your email for confirmation.' 
-        })
-        setFormData({ name: '', email: '', message: '' })
-      } else {
-        setStatus({ 
-          type: 'error', 
-          message: `❌ ${data.message}` 
-        })
-      }
     } catch (error) {
-      console.error('Error:', error)
+      console.error('EmailJS Error:', error)
       setStatus({ 
         type: 'error', 
-        message: '❌ Failed to send message. Make sure the backend server is running.' 
+        message: 'FAILED TO SEND MESSAGE. PLEASE TRY AGAIN.' 
       })
     } finally {
       setIsSubmitting(false)
@@ -199,11 +203,19 @@ function Contact() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
           >
-            {status.message && (
-              <div className={`form-status ${status.type}`}>
-                {status.message}
-              </div>
-            )}
+            <AnimatePresence>
+              {status.message && (
+                <motion.div
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 50 }}
+                  transition={{ duration: 0.4, ease: easeOutExpo }}
+                  className={`form-status ${status.type}`}
+                >
+                  {status.message}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             <div className="form-group">
               <label htmlFor="name">NAME</label>
