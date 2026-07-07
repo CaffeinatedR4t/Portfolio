@@ -1,16 +1,53 @@
-# React + Vite
+# Jeremy Joseph Pohar | Developer Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal portfolio showcasing my projects, skills, and professional journey as a Computer Science student, AI Trainer, and Web Developer based in Jakarta, Indonesia.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This repository contains the source code for my personal portfolio website. It features a modern, responsive design with smooth scrolling, interactive animations, and a dynamic project showcase. 
 
-## React Compiler
+The site is built with performance and aesthetics in mind, utilizing modern web development practices and tools.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **Core**: [React 18](https://reactjs.org/) & [Vite](https://vitejs.dev/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Smooth Scrolling**: [Lenis](https://lenis.studiofreight.com/)
+- **Styling**: Vanilla CSS (Custom Breakpoints & Flex/Grid Layouts)
+- **Icons**: [React Icons](https://react-icons.github.io/react-icons/)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Features
+
+- **Dynamic Hero Section**: Interactive background elements and smooth reveal animations.
+- **Projects Showcase**: Detailed project cards with custom hover states and an animated modal view.
+- **Fluid Navigation**: Custom Lenis smooth scrolling for a premium user experience.
+- **Responsive Design**: Fully optimized for desktop, tablet, and mobile breakpoints.
+- **SEO Ready**: Configured with meta tags, Open Graph, Twitter Cards, robots.txt, and a sitemap.
+
+## Getting Started
+
+To run this project locally on your machine:
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/CaffeinatedR4t/Portfolio.git
+   ```
+
+2. **Navigate to the project directory:**
+   ```bash
+   cd vite-project
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+4. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+
+## Contact
+
+Feel free to reach out to me through my [LinkedIn](https://www.linkedin.com/in/jeremyjosephpohar/) or via email at jeremy.yosep@gmail.com.
