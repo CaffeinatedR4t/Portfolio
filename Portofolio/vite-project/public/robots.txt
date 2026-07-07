@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://jeremyjpohar.github.io/sitemap.xml
+Sitemap: https://jeremy-joseph.vercel.app/sitemap.xml
