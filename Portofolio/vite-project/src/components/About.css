@@ -90,7 +90,7 @@
   font-weight: 700;
   /* Composite-only transition — no layout/paint */
   transition: background 0.3s ease, color 0.3s ease;
-  cursor: pointer;
+  cursor: default;
 }
 
 .tech-icon span {

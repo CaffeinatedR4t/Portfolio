@@ -1,5 +1,32 @@
 import './Footer.css'
 import { FaChevronUp } from 'react-icons/fa'
+import { motion } from 'framer-motion'
+
+const easeOutExpo = [0.16, 1, 0.3, 1]
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: easeOutExpo },
+  },
+}
+
+const staggerContainer = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1 },
+  },
+}
+
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.6, ease: easeOutExpo },
+  },
+}
 
 function Footer() {
   const currentYear = new Date().getFullYear()
@@ -55,13 +82,25 @@ function Footer() {
 
   return (
     <footer className="footer">
-      <div className="footer-cta">
+      <motion.div
+        className="footer-cta"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         <h2>READY TO BUILD<br />RESILIENT SOLUTIONS?</h2>
-      </div>
+      </motion.div>
 
       <div className="footer-main">
-        <div className="footer-grid">
-          <div className="footer-col">
+        <motion.div
+          className="footer-grid"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.div className="footer-col" variants={fadeUp}>
             <div className="footer-logo">
               <svg width="40" height="40" viewBox="0 0 40 40">
                 <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" 
@@ -71,39 +110,45 @@ function Footer() {
               </svg>
               <h3>WORK WITH ME</h3>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="footer-col">
+          <motion.div className="footer-col" variants={fadeUp}>
             <h4>HELLO</h4>
             <p><a href="mailto:jeremy.yosep@gmail.com">jeremy.yosep@gmail.com</a></p>
             <p className="address">
               Jakarta, Indonesia
             </p>
-          </div>
+          </motion.div>
 
-          <div className="footer-col">
+          <motion.div className="footer-col" variants={fadeUp}>
             <h4>SOCIAL</h4>
             <ul>
               <li><a href="https://instagram.com/jeremyjpohar" target="_blank" rel="noopener noreferrer">INSTAGRAM</a></li>
               <li><a href="https://www.linkedin.com/in/jeremyjosephpohar/" target="_blank" rel="noopener noreferrer">LINKEDIN</a></li>
               <li><a href="https://github.com/CaffeinatedR4t" target="_blank" rel="noopener noreferrer">GITHUB</a></li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="footer-col">
+          <motion.div className="footer-col" variants={fadeUp}>
             <h4>OTHER</h4>
             <ul>
               <li><a href="#projects" onClick={(e) => scrollToSection(e, 'projects')}>PROJECTS</a></li>
               <li><a href="#about" onClick={(e) => scrollToSection(e, 'about')}>ABOUT</a></li>
               <li><a href="#contact" onClick={(e) => scrollToSection(e, 'contact')}>CONTACT</a></li>
             </ul>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
 
-      <div className="footer-bottom">
+      <motion.div
+        className="footer-bottom"
+        variants={fadeIn}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         <div className="footer-bottom-left">
-          <div className="footer-brand"><img src="/[logo].svg" alt="Logo" className="footer-logo-img" /></div>
+          <div className="footer-brand"><img src="/[logo].svg" alt="Jeremy Joseph Pohar Portfolio Logo" className="footer-logo-img" /></div>
           <p>All content ©<br />Jeremy Joseph Pohar {currentYear}</p>
         </div>
         <div className="footer-bottom-center">
@@ -112,7 +157,7 @@ function Footer() {
         <button className="back-to-top" onClick={scrollToTop}>
           BACK TO TOP <FaChevronUp />
         </button>
-      </div>
+      </motion.div>
     </footer>
   )
 }

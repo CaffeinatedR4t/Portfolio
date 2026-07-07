@@ -169,63 +169,140 @@ function About() {
     { name: 'Linux (WSL)', icon: <SiLinux />, className: 'linux' }
   ]
 
+  const sectionEasing = [0.16, 1, 0.3, 1]
+
+  const fadeUpProps = {
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.2 },
+    transition: { duration: 0.7, ease: sectionEasing },
+  }
+
+  const techCategoryVariants = {
+    hidden: {},
+    visible: {
+      transition: { staggerChildren: 0.07 },
+    },
+  }
+
+  const techCategoryItemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: sectionEasing },
+    },
+  }
+
   return (
     <section id="about" className="section">
       <div className="container">
-        <div className="section-header">
+        <motion.div
+          className="section-header"
+          {...fadeUpProps}
+        >
           <h2 className="section-title">ABOUT</h2>
           <p className="section-subtitle">Get to know me</p>
-        </div>
+        </motion.div>
 
         <div className="about-content">
-          <div className="about-text">
+          <motion.div
+            className="about-text"
+            {...fadeUpProps}
+            transition={{ duration: 0.7, ease: sectionEasing, delay: 0.1 }}
+          >
             <p className="intro-text">
               Computer Science student at <strong>Universitas Multimedia Nusantara</strong> specialising in full-stack, mobile, cybersecurity, and AI-driven development.
             </p>
-          </div>
+          </motion.div>
 
             <div className="tech-stack">
             {/* ✅ PROGRAMMING LANGUAGES */}
-            <div className="tech-category">
+            <motion.div
+              className="tech-category"
+              variants={techCategoryVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
               <h3>Programming Languages</h3>
-              <StaticTechGrid items={programmingLanguages} />
-            </div>
+              <StaticTechGrid items={programmingLanguages} itemVariants={techCategoryItemVariants} />
+            </motion.div>
 
             {/* ✅ WEB & FRAMEWORKS */}
-            <div className="tech-category">
+            <motion.div
+              className="tech-category"
+              variants={techCategoryVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
               <h3>Web & Frameworks</h3>
-              <StaticTechGrid items={webFrameworks} />
-            </div>
+              <StaticTechGrid items={webFrameworks} itemVariants={techCategoryItemVariants} />
+            </motion.div>
 
             {/* ✅ DATABASES & ORMS */}
-            <div className="tech-category">
+            <motion.div
+              className="tech-category"
+              variants={techCategoryVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
               <h3>Databases & ORMs</h3>
-              <StaticTechGrid items={databasesOrms} />
-            </div>
+              <StaticTechGrid items={databasesOrms} itemVariants={techCategoryItemVariants} />
+            </motion.div>
 
             {/* ✅ MOBILE & GAME DEV */}
-            <div className="tech-category">
+            <motion.div
+              className="tech-category"
+              variants={techCategoryVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
               <h3>Mobile & Game Dev</h3>
-              <StaticTechGrid items={mobileGameDev} />
-            </div>
+              <StaticTechGrid items={mobileGameDev} itemVariants={techCategoryItemVariants} />
+            </motion.div>
 
             {/* ✅ DATA SCIENCE & ANALYTICS */}
-            <div className="tech-category">
+            <motion.div
+              className="tech-category"
+              variants={techCategoryVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
               <h3>Data Science & Analytics</h3>
-              <StaticTechGrid items={dataScience} />
-            </div>
+              <StaticTechGrid items={dataScience} itemVariants={techCategoryItemVariants} />
+            </motion.div>
 
             {/* ✅ TOOLS & PLATFORMS */}
-            <div className="tech-category">
+            <motion.div
+              className="tech-category"
+              variants={techCategoryVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
               <h3>Tools & Platforms</h3>
-              <StaticTechGrid items={toolsPlatforms} />
-            </div>
+              <StaticTechGrid items={toolsPlatforms} itemVariants={techCategoryItemVariants} />
+            </motion.div>
           </div>
 
           {/* ✅ CERTIFICATIONS CAROUSEL */}
-          <CertificationsCarousel certifications={certificationsData} />
+          <motion.div
+            {...fadeUpProps}
+            transition={{ duration: 0.8, ease: sectionEasing }}
+          >
+            <CertificationsCarousel certifications={certificationsData} />
+          </motion.div>
 
-          <div className="download-cv-container">
+          <motion.div
+            className="download-cv-container"
+            {...fadeUpProps}
+            transition={{ duration: 0.6, ease: sectionEasing }}
+          >
             <a
               className="download-cv-button"
               href="/CV_ATS_JeremyJosephPohar.pdf"
@@ -234,7 +311,7 @@ function About() {
             >
               View CV
             </a>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -242,16 +319,16 @@ function About() {
 }
 
 // ✅ STATIC TECH GRID (NO CAROUSEL)
-function StaticTechGrid({ items }) {
+function StaticTechGrid({ items, itemVariants }) {
   return (
     <div className="tech-grid">
       {items.map((item) => (
-        <div key={item.name} className="tech-icon">
+        <motion.div key={item.name} className="tech-icon" variants={itemVariants}>
           <div className={`icon-box ${item.className}`}>
             {item.icon}
           </div>
           <span>{item.name}</span>
-        </div>
+        </motion.div>
       ))}
     </div>
   )

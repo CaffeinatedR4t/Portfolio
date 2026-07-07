@@ -1,6 +1,56 @@
 import { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { FaGithub, FaFilePdf, FaTimes, FaExternalLinkAlt, FaFolder, FaArrowRight } from 'react-icons/fa'
 import './Projects.css'
+
+const easeOutExpo = [0.16, 1, 0.3, 1]
+
+const headerVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: easeOutExpo }
+  }
+}
+
+const listContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08 }
+  }
+}
+
+const rowVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: easeOutExpo }
+  }
+}
+
+const modalOverlayVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.3, ease: easeOutExpo } },
+  exit: { opacity: 0, transition: { duration: 0.2, ease: easeOutExpo } }
+}
+
+const modalVariants = {
+  hidden: { opacity: 0, scale: 0.95, y: 20 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: easeOutExpo }
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.97,
+    y: 10,
+    transition: { duration: 0.25, ease: easeOutExpo }
+  }
+}
 
 const projectsData = [
   {
@@ -147,18 +197,31 @@ function Projects() {
   return (
     <section id="projects" className="section">
       <div className="container">
-        <div className="section-header">
+        <motion.div
+          className="section-header"
+          variants={headerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <h2 className="section-title">FEATURED PROJECTS</h2>
           <p className="section-subtitle">Directory of work</p>
-        </div>
+        </motion.div>
       </div>
 
       <div className="project-list-container">
-        <div className="project-list">
+        <motion.div
+          className="project-list"
+          variants={listContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
             {projectsData.map((project, index) => (
-              <div
+              <motion.div
                 key={project.id}
                 className={`project-list-row${hoveredProject?.id === project.id ? ' is-hovered' : ''}`}
+                variants={rowVariants}
                 onClick={() => handleProjectClick(project)}
                 onMouseEnter={() => setHoveredProject(project)}
                 onMouseLeave={() => setHoveredProject(null)}
@@ -188,9 +251,9 @@ function Projects() {
                 <div className="col-arrow">
                   <FaArrowRight className="arrow-icon" />
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
       {/* Floating Glide Image Component */}
@@ -214,85 +277,102 @@ function Projects() {
       )}
 
       {/* Project Modal */}
-      {selectedProject && (
-        <div className="project-modal-overlay" onClick={handleCloseModal}>
-          <div className="project-modal" onClick={(e) => e.stopPropagation()} data-lenis-prevent="true">
-            <button className="modal-close-btn" onClick={handleCloseModal}>
-              <FaTimes />
-            </button>
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            className="project-modal-overlay"
+            onClick={handleCloseModal}
+            variants={modalOverlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <motion.div
+              className="project-modal"
+              onClick={(e) => e.stopPropagation()}
+              data-lenis-prevent="true"
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <button className="modal-close-btn" onClick={handleCloseModal}>
+                <FaTimes />
+              </button>
 
-            {/* Top — Image Banner */}
-            <div className="modal-image-section">
-              <img 
-                src={selectedProject.image} 
-                alt={selectedProject.title}
-                className="modal-image"
-              />
-              <div className="modal-image-overlay">
-                <span className="modal-number">#{selectedProject.number}</span>
+              {/* Top — Image Banner */}
+              <div className="modal-image-section">
+                <img 
+                  src={selectedProject.image} 
+                  alt={selectedProject.title}
+                  className="modal-image"
+                />
+                <div className="modal-image-overlay">
+                  <span className="modal-number">#{selectedProject.number}</span>
+                </div>
               </div>
-            </div>
 
-            {/* Bottom — Info Grid */}
-            <div className="modal-body">
-              <div className="modal-body-left">
-                <div className="modal-header">
-                  <h2>{selectedProject.title}</h2>
-                  <div className="modal-meta-row">
-                    <span className="modal-role">{selectedProject.role}</span>
-                    <span className="modal-date">{selectedProject.date}</span>
+              {/* Bottom — Info Grid */}
+              <div className="modal-body">
+                <div className="modal-body-left">
+                  <div className="modal-header">
+                    <h2>{selectedProject.title}</h2>
+                    <div className="modal-meta-row">
+                      <span className="modal-role">{selectedProject.role}</span>
+                      <span className="modal-date">{selectedProject.date}</span>
+                    </div>
+                  </div>
+                  <p className="modal-description">{selectedProject.fullDescription}</p>
+                </div>
+
+                <div className="modal-body-right">
+                  <div className="modal-tags">
+                    <h4>Tech Stack</h4>
+                    <div className="tags-list">
+                      {selectedProject.tags.map((tag, idx) => (
+                        <span key={idx} className="tag">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="modal-links">
+                    {selectedProject.github && (
+                      <a 
+                        href={selectedProject.github} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="modal-link-btn"
+                      >
+                        <FaGithub /> GitHub
+                      </a>
+                    )}
+                    {selectedProject.external && (
+                      <a 
+                        href={selectedProject.external} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="modal-link-btn modal-link-btn--primary"
+                      >
+                        <FaExternalLinkAlt /> Live Site
+                      </a>
+                    )}
+                    {selectedProject.pdf && (
+                      <a 
+                        href={selectedProject.pdf} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="modal-link-btn"
+                      >
+                        <FaFilePdf /> View PDF
+                      </a>
+                    )}
                   </div>
                 </div>
-                <p className="modal-description">{selectedProject.fullDescription}</p>
               </div>
-
-              <div className="modal-body-right">
-                <div className="modal-tags">
-                  <h4>Tech Stack</h4>
-                  <div className="tags-list">
-                    {selectedProject.tags.map((tag, idx) => (
-                      <span key={idx} className="tag">{tag}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="modal-links">
-                  {selectedProject.github && (
-                    <a 
-                      href={selectedProject.github} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="modal-link-btn"
-                    >
-                      <FaGithub /> GitHub
-                    </a>
-                  )}
-                  {selectedProject.external && (
-                    <a 
-                      href={selectedProject.external} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="modal-link-btn modal-link-btn--primary"
-                    >
-                      <FaExternalLinkAlt /> Live Site
-                    </a>
-                  )}
-                  {selectedProject.pdf && (
-                    <a 
-                      href={selectedProject.pdf} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="modal-link-btn"
-                    >
-                      <FaFilePdf /> View PDF
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

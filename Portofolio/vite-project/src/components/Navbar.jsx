@@ -100,7 +100,7 @@ function Logo({ onClick }) {
 
   return (
     <a href="#home" className="nav-logo" onClick={handleClick}>
-      <img src="/[logo].svg" alt="Logo" className="logo-image" />
+      <img src="/[logo].svg" alt="Jeremy Joseph Pohar Portfolio Logo" className="logo-image" />
     </a>
   )
 }

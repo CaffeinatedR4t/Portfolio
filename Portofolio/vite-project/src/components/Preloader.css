@@ -4,126 +4,120 @@
   left: 0;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   background: #000000;
   z-index: 10000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
   opacity: 1;
   visibility: visible;
+}
+
+#preloader.phase-done {
+  opacity: 0;
+  visibility: hidden;
   transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
-#preloader.fade-out {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.preloader-container {
-  width: 100%;
-  padding: 0 3rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.loader-bar-container {
+/* Thin line spanning the screen, slightly above center — the counter rides on it */
+.loader-line-parent {
+  position: absolute;
+  left: 3rem;
+  right: 3rem;
+  top: 50%;
+  transform: translateY(-40px);
+  height: 1em;
   display: flex;
   align-items: center;
-  gap: 2rem;
-  width: 100%;
-  margin-bottom: 1.5rem;
+  --x: 0px;
+  --textWidth: 0px;
+  --progress: 0;
 }
 
-.loader-bar {
+/* Exit: the whole line wipes away from left to right */
+#preloader.phase-wipe .loader-line-parent,
+#preloader.phase-done .loader-line-parent {
+  animation: lineWipe 0.8s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+
+@keyframes lineWipe {
+  from {
+    clip-path: inset(-30px 0 -30px 0);
+  }
+  to {
+    clip-path: inset(-30px 0 -30px 100%);
+  }
+}
+
+.loader-line {
   position: relative;
-  flex: 1;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 
-    0 0 20px rgba(255, 255, 255, 0.05),
-    0 0 40px rgba(255, 255, 255, 0.03);
-}
-
-.loader-fill {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.4) 20%,
-    rgba(255, 255, 255, 0.9) 50%,
-    rgba(255, 255, 255, 0.4) 80%,
-    transparent 100%
-  );
-  transition: width 0.05s linear;
-  filter: blur(0.5px);
-  box-shadow: 
-    0 0 15px rgba(255, 255, 255, 0.3),
-    0 0 30px rgba(255, 255, 255, 0.2),
-    0 0 45px rgba(255, 255, 255, 0.1);
-}
-
-.loader-fill::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
   width: 100%;
   height: 1px;
+  align-self: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  /* Gap in the line that follows the counter as it travels */
+  mask-image: linear-gradient(
+    to right,
+    black calc(var(--x) - 20px),
+    transparent calc(var(--x) - 5px),
+    transparent calc(var(--x) + var(--textWidth) + 5px),
+    black calc(var(--x) + var(--textWidth) + 20px)
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    black calc(var(--x) - 20px),
+    transparent calc(var(--x) - 5px),
+    transparent calc(var(--x) + var(--textWidth) + 5px),
+    black calc(var(--x) + var(--textWidth) + 20px)
+  );
+}
+
+/* Filled portion trailing behind the counter */
+.loader-line::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform-origin: left;
   background: #ffffff;
-  transform: translateY(-50%);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  transform: scaleX(var(--progress));
 }
 
-.loader-bar::before {
-  content: '';
+/* Counter that travels along the line */
+.loader-counter {
   position: absolute;
   top: 50%;
   left: 0;
-  width: 100%;
-  height: 60px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 255, 255, 0.03) 0%,
-    transparent 70%
-  );
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-.loader-percentage {
+  z-index: 2;
   font-family: var(--font-accent);
-  font-size: clamp(0.85rem, 1.2vw, 1rem);
+  font-size: clamp(0.8rem, 1.1vw, 0.95rem);
   color: #ffffff;
   font-weight: 400;
   letter-spacing: 2px;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  min-width: 60px;
-  text-align: left;
-  opacity: 0;
-  animation: fadeIn 0.6s ease-out 0.2s forwards;
+  line-height: 1;
+  transform: translateX(0);
+  will-change: transform;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.loader-counter span {
+  display: block;
+  transform: translateY(-50%);
 }
 
 .loader-branding-bottom {
+  position: absolute;
+  left: 3rem;
+  bottom: 2.5rem;
   display: flex;
   align-items: baseline;
   gap: 1rem;
   opacity: 0;
   animation: fadeInUp 0.8s ease-out 0.4s forwards;
+}
+
+#preloader.phase-wipe .loader-branding-bottom,
+#preloader.phase-done .loader-branding-bottom {
+  animation: fadeOutDown 0.6s ease forwards;
 }
 
 @keyframes fadeInUp {
@@ -134,6 +128,17 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px);
   }
 }
 
@@ -157,34 +162,32 @@
 }
 
 @media (max-width: 768px) {
-  .preloader-container {
-    padding: 0 2rem;
-  }
-
-  .loader-bar-container {
-    gap: 1.5rem;
-    margin-bottom: 1rem;
+  .loader-line-parent {
+    left: 2rem;
+    right: 2rem;
   }
 
   .loader-branding-bottom {
+    left: 2rem;
+    bottom: 2rem;
     flex-direction: column;
     gap: 0.3rem;
     align-items: flex-start;
   }
 
-  .loader-percentage {
-    font-size: 0.85rem;
-    min-width: 50px;
+  .loader-counter {
+    font-size: 0.8rem;
   }
 }
 
 @media (max-width: 480px) {
-  .preloader-container {
-    padding: 0 1.5rem;
+  .loader-line-parent {
+    left: 1.5rem;
+    right: 1.5rem;
   }
 
-  .loader-bar-container {
-    gap: 1rem;
+  .loader-branding-bottom {
+    left: 1.5rem;
   }
 
   .loader-name {
@@ -195,7 +198,7 @@
     font-size: 0.65rem;
   }
 
-  .loader-percentage {
+  .loader-counter {
     font-size: 0.75rem;
   }
 }

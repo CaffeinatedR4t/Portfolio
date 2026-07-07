@@ -126,11 +126,6 @@
   transform: translateY(-1px);
 }
 
-.cta-button:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
 .home-quote {
   font-family: var(--font-accent);
   font-size: 0.8rem;
@@ -239,99 +234,116 @@
 }
 
 @media (max-width: 968px) {
+  /* Subtle bottom fade — no more heavy 85% black wall */
   #home::after {
-    height: 250px;
-    background: linear-gradient(to top, #000000 0%, #000000 85%, transparent 100%);
+    height: 120px;
+    background: linear-gradient(to top, #000000 0%, #000000 30%, transparent 100%);
   }
 
+  /* Keep fullscreen hero — don't break into column flow */
   #home {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 7rem 1.5rem 2rem;
-    overflow-y: auto;
-    gap: 1.5rem;
-    height: auto;
+    height: 100vh;
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
   }
 
+  /* Title — top center */
   .home-top-left {
-    position: relative;
-    top: 0;
-    left: 0;
+    position: absolute;
+    top: 5.5rem;
+    left: 50%;
+    transform: translateX(-50%);
     text-align: center;
-    width: 100%;
-    order: 1;
+    width: auto;
   }
 
   .home-top-left h2 {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 
   .home-top-left p {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
   }
 
   .home-top-right {
     display: none;
   }
 
+  /* Quote + CTA — bottom left, stacked cleanly */
   .home-bottom-left {
-    position: relative;
-    bottom: 0;
-    left: 0;
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    order: 3;
+    position: absolute;
+    bottom: 2.5rem;
+    left: 1.5rem;
+    right: auto;
+    text-align: left;
+    width: auto;
+    max-width: 55%;
   }
 
   .cta-button {
-    width: 100%;
-    max-width: 300px;
-    padding: 1rem;
-    margin: 0 auto 1.5rem;
-    display: block;
-  }
-
-  .home-quote {
-    font-size: 0.75rem;
-    max-width: 100%;
-    text-align: center;
-  }
-
-  .home-year {
-    text-align: center;
+    width: auto;
+    max-width: none;
+    padding: 0.65rem 1.3rem;
+    margin: 0 0 1rem 0;
+    display: inline-block;
     font-size: 0.7rem;
   }
 
+  .home-quote {
+    font-size: 0.7rem;
+    max-width: 100%;
+    text-align: left;
+    line-height: 1.5;
+  }
+
+  .home-year {
+    text-align: left;
+    font-size: 0.65rem;
+  }
+
+  /* Status card — bottom right */
   .home-bottom-right {
-    position: relative;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    order: 4;
+    position: absolute;
+    bottom: 2.5rem;
+    right: 1.5rem;
+    left: auto;
+    width: auto;
+    max-width: 45%;
   }
 
   .status-card {
-    width: 100%;
-    max-width: 350px;
-    margin: 0 auto;
+    width: 220px;
+    max-width: 100%;
+    padding: 1.2rem;
+    margin: 0;
+  }
+
+  .status-preview span {
+    font-size: 0.6rem;
+  }
+
+  .status-title {
+    font-size: 0.85rem;
+  }
+
+  .status-link {
+    font-size: 0.65rem;
   }
 }
 
 @media (max-width: 480px) {
   #home::after {
-    height: 280px;
+    height: 180px;
+    background: linear-gradient(to top, #000000 0%, #000000 40%, transparent 100%);
   }
 
-  #home {
-    padding: 6rem 1rem 1.5rem;
-    gap: 1.2rem;
+  /* On small phones, stack bottom content vertically */
+  .home-top-left {
+    top: 5rem;
   }
 
   .home-top-left h2 {
@@ -339,36 +351,66 @@
   }
 
   .home-top-left p {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
+  }
+
+  /* Stack everything at the bottom on small screens */
+  .home-bottom-left {
+    bottom: auto;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    text-align: center;
+    max-width: 85%;
+    width: 100%;
   }
 
   .cta-button {
-    padding: 0.9rem;
-    font-size: 0.8rem;
+    margin: 0 auto 1rem;
+    display: block;
+    width: 100%;
+    max-width: 240px;
+    padding: 0.75rem 1.2rem;
+    font-size: 0.7rem;
   }
 
   .home-quote {
-    font-size: 0.7rem;
+    text-align: center;
+    font-size: 0.68rem;
   }
 
   .home-year {
-    font-size: 0.65rem;
+    text-align: center;
+    font-size: 0.6rem;
+  }
+
+  .home-bottom-right {
+    bottom: 2rem;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 85%;
+    width: 100%;
   }
 
   .status-card {
-    padding: 1.2rem;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    padding: 1rem;
   }
 
   .status-preview span {
-    font-size: 0.65rem;
+    font-size: 0.58rem;
   }
 
   .status-title {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 
   .status-link {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
 }
 

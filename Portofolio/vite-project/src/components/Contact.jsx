@@ -1,7 +1,53 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa'
 import { MdEmail, MdLocationOn, MdWorkOutline } from 'react-icons/md'
 import './Contact.css'
+
+const easeOutExpo = [0.16, 1, 0.3, 1]
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: easeOutExpo },
+  },
+}
+
+const fadeLeft = {
+  hidden: { opacity: 0, x: -30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.7, ease: easeOutExpo },
+  },
+}
+
+const fadeRight = {
+  hidden: { opacity: 0, x: 30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.7, ease: easeOutExpo },
+  },
+}
+
+const staggerContainer = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1 },
+  },
+}
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: easeOutExpo },
+  },
+}
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -63,64 +109,96 @@ function Contact() {
   return (
     <section id="contact" className="section">
       <div className="container">
-        <div className="section-header">
+        <motion.div
+          className="section-header"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <h2 className="section-title">
             GET IN TOUCH
           </h2>
           <p className="section-subtitle">Let's work together</p>
-        </div>
+        </motion.div>
 
         <div className="contact-content">
-          <div className="contact-info">
+          <motion.div
+            className="contact-info"
+            variants={fadeLeft}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
             <h3>Contact Information</h3>
             
-            <div className="info-item">
-              <div className="info-icon-wrapper">
-                <MdEmail className="info-icon" />
-              </div>
-              <div>
-                <h4>Email</h4>
-                <p>jeremy.yosep@gmail.com</p>
-              </div>
-            </div>
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <motion.div className="info-item" variants={staggerItem}>
+                <div className="info-icon-wrapper">
+                  <MdEmail className="info-icon" />
+                </div>
+                <div>
+                  <h4>Email</h4>
+                  <p>jeremy.yosep@gmail.com</p>
+                </div>
+              </motion.div>
 
-            <div className="info-item">
-              <div className="info-icon-wrapper">
-                <MdLocationOn className="info-icon" />
-              </div>
-              <div>
-                <h4>Location</h4>
-                <p>Jakarta, Indonesia</p>
-              </div>
-            </div>
+              <motion.div className="info-item" variants={staggerItem}>
+                <div className="info-icon-wrapper">
+                  <MdLocationOn className="info-icon" />
+                </div>
+                <div>
+                  <h4>Location</h4>
+                  <p>Jakarta, Indonesia</p>
+                </div>
+              </motion.div>
 
-            <div className="info-item">
-              <div className="info-icon-wrapper">
-                <MdWorkOutline className="info-icon" />
-              </div>
-              <div>
-                <h4>Status</h4>
-                <p>Open to Opportunities</p>
-              </div>
-            </div>
+              <motion.div className="info-item" variants={staggerItem}>
+                <div className="info-icon-wrapper">
+                  <MdWorkOutline className="info-icon" />
+                </div>
+                <div>
+                  <h4>Status</h4>
+                  <p>Open to Opportunities</p>
+                </div>
+              </motion.div>
+            </motion.div>
 
-            <div className="social-links">
-              <a href="https://github.com/CaffeinatedR4t" target="_blank" rel="noopener noreferrer" title="GitHub">
+            <motion.div
+              className="social-links"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <motion.a href="https://github.com/CaffeinatedR4t" target="_blank" rel="noopener noreferrer" title="GitHub" variants={staggerItem}>
                 <FaGithub />
-              </a>
-              <a href="https://www.linkedin.com/in/jeremyjosephpohar/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+              </motion.a>
+              <motion.a href="https://www.linkedin.com/in/jeremyjosephpohar/" target="_blank" rel="noopener noreferrer" title="LinkedIn" variants={staggerItem}>
                 <FaLinkedin />
-              </a>
-              <a href="https://instagram.com/jeremyjpohar" target="_blank" rel="noopener noreferrer" title="Instagram">
+              </motion.a>
+              <motion.a href="https://instagram.com/jeremyjpohar" target="_blank" rel="noopener noreferrer" title="Instagram" variants={staggerItem}>
                 <FaInstagram />
-              </a>
-              <a href="mailto:jeremy.yosep@gmail.com" title="Email">
+              </motion.a>
+              <motion.a href="mailto:jeremy.yosep@gmail.com" title="Email" variants={staggerItem}>
                 <FaEnvelope />
-              </a>
-            </div>
-          </div>
+              </motion.a>
+            </motion.div>
+          </motion.div>
 
-          <form className="contact-form" onSubmit={handleSubmit}>
+          <motion.form
+            className="contact-form"
+            onSubmit={handleSubmit}
+            variants={fadeRight}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
             {status.message && (
               <div className={`form-status ${status.type}`}>
                 {status.message}
@@ -173,7 +251,7 @@ function Contact() {
               <span>{isSubmitting ? 'SENDING...' : 'SEND MESSAGE'}</span>
               {!isSubmitting && <i className="fas fa-paper-plane"></i>}
             </button>
-          </form>
+          </motion.form>
         </div>
       </div>
     </section>

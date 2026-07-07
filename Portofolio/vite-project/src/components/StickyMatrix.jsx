@@ -97,7 +97,7 @@ function StickyMatrix() {
     <div className="sticky-matrix">
       <canvas ref={canvasRef} className="sticky-matrix__canvas" />
       <div className="sticky-matrix__logo">
-        <img src="/[logo].svg" alt="Logo" />
+        <img src="/[logo].svg" alt="Jeremy Joseph Pohar Portfolio Logo" />
       </div>
     </div>
   )
