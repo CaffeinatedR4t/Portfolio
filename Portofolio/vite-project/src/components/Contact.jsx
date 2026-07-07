@@ -212,7 +212,14 @@ function Contact() {
                   transition={{ duration: 0.4, ease: easeOutExpo }}
                   className={`form-status ${status.type}`}
                 >
-                  {status.message}
+                  <span>{status.message}</span>
+                  <button 
+                    className="toaster-close" 
+                    onClick={() => setStatus({ type: '', message: '' })}
+                    aria-label="Close notification"
+                  >
+                    ×
+                  </button>
                 </motion.div>
               )}
             </AnimatePresence>
