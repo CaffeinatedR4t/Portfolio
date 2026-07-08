@@ -208,7 +208,7 @@ function Footer() {
           <p>Portfolio by Jeremy Joseph Pohar</p>
         </div>
         <button className="back-to-top" onClick={scrollToTop}>
-          BACK TO TOP <FaChevronUp />
+          <FaChevronUp />
         </button>
       </motion.div>
     </footer>
