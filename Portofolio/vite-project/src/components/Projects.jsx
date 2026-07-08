@@ -151,6 +151,9 @@ const projectsData = [
   }
 ]
 
+const projectHoverSound = new Audio('/audio/lesiakower-minimalist-button-hover-sound-effect-399749.wav');
+projectHoverSound.volume = 0.4;
+
 function Projects() {
   const [selectedProject, setSelectedProject] = useState(null)
   const [hoveredProject, setHoveredProject] = useState(null)
@@ -223,7 +226,13 @@ function Projects() {
                 className={`project-list-row${hoveredProject?.id === project.id ? ' is-hovered' : ''}`}
                 variants={rowVariants}
                 onClick={() => handleProjectClick(project)}
-                onMouseEnter={() => setHoveredProject(project)}
+                onMouseEnter={() => {
+                  setHoveredProject(project);
+                  if (!window.isMuted) {
+                    projectHoverSound.currentTime = 0;
+                    projectHoverSound.play().catch(() => {});
+                  }
+                }}
                 onMouseLeave={() => setHoveredProject(null)}
                 onMouseMove={handleMouseMove}
               >

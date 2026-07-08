@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
+import { FaVolumeUp, FaVolumeMute } from 'react-icons/fa'
 import Lenis from '@studio-freight/lenis'
 import Preloader from './components/Preloader'
 import Navbar from './components/Navbar'
@@ -13,6 +14,7 @@ import './App.css'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
+  const [isMuted, setIsMuted] = useState(true)
   const lenisRef = useRef(null)
   const rafIdRef = useRef(null)
 
@@ -65,6 +67,37 @@ function App() {
     }
   }, [])
 
+  // Sync global mute state for other components to access
+  useEffect(() => {
+    window.isMuted = isMuted;
+  }, [isMuted]);
+
+  // Global hover sound effect
+  useEffect(() => {
+    const hoverSound = new Audio('/audio/lesiakower-minimalist-button-hover-sound-effect-399749.wav');
+    hoverSound.volume = 0.4;
+    let currentHovered = null;
+
+    const handleMouseOver = (e) => {
+      const target = e.target.closest('button, a, .icon-box, .project-list-row');
+      
+      if (target && target !== currentHovered) {
+        currentHovered = target;
+        if (!window.isMuted) {
+          hoverSound.currentTime = 0;
+          hoverSound.play().catch(() => {
+            // Ignore autoplay restrictions until user interacts with the page
+          });
+        }
+      } else if (!target) {
+        currentHovered = null;
+      }
+    };
+
+    document.addEventListener('mouseover', handleMouseOver);
+    return () => document.removeEventListener('mouseover', handleMouseOver);
+  }, []);
+
   const handlePreloaderComplete = () => {
     setIsLoading(false)
   }
@@ -94,6 +127,14 @@ function App() {
       <div className="matrix-reveal-spacer" aria-hidden="true" />
 
       <StickyMatrix />
+      
+      <button 
+        className="mute-btn" 
+        onClick={() => setIsMuted(!isMuted)}
+        aria-label="Toggle Sound"
+      >
+        {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
+      </button>
     </div>
   )
 }
