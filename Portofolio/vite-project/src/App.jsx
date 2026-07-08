@@ -8,6 +8,7 @@ import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import StickyMatrix from './components/StickyMatrix'
+import ScrollReveal from './components/ScrollReveal'
 import './App.css'
 
 function App() {
@@ -76,6 +77,7 @@ function App() {
       <Home />
       <About />
       <Projects />
+      <ScrollReveal />
       <Contact />
 
       {/* Footer sticky wrapper — sticks to bottom while spacer scrolls.

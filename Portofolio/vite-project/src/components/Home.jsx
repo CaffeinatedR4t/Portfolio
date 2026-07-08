@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import './Home.css'
 
@@ -77,7 +78,7 @@ function Home() {
             <span>IT SECURITY</span>
           </div>
           <p className="status-title">AVAILABLE FOR WORK.</p>
-          <a href="#projects" className="status-link">VIEW PROJECTS</a>
+          <a href="#projects" className="status-link"><BinaryScrambleText text="VIEW PROJECTS" /></a>
         </div>
       </motion.div>
 
@@ -86,3 +87,58 @@ function Home() {
 }
 
 export default Home
+
+function BinaryScrambleText({ text }) {
+  const [displayText, setDisplayText] = useState(text)
+  const [isHovering, setIsHovering] = useState(false)
+  const characters = '01'
+
+  useEffect(() => {
+    if (!isHovering) {
+      setDisplayText(text)
+      return
+    }
+
+    let iteration = 0
+    const maxIteration = text.length - 1
+
+    const duration = 350
+    const intervalTime = 25
+    const totalTicks = duration / intervalTime
+    const increment = maxIteration / totalTicks
+
+    const interval = setInterval(() => {
+      setDisplayText(
+        text.split('').map((char, index) => {
+          if (char === ' ') return ' '
+          if (index <= iteration) {
+            return text[index]
+          }
+          return characters[Math.floor(Math.random() * characters.length)]
+        }).join('')
+      )
+      
+      if (iteration >= maxIteration) {
+        clearInterval(interval)
+        setDisplayText(text)
+      }
+      
+      iteration += increment
+    }, intervalTime)
+
+    return () => {
+      clearInterval(interval)
+      setDisplayText(text)
+    }
+  }, [text, isHovering, characters])
+
+  return (
+    <span
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+      style={{ display: 'inline-block', minWidth: `${text.length}ch` }}
+    >
+      {displayText}
+    </span>
+  )
+}

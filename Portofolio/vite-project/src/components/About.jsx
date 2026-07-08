@@ -194,6 +194,15 @@ function About() {
     },
   }
 
+  const [techStackOpen, setTechStackOpen] = useState(false)
+  const [emailCopied, setEmailCopied] = useState(false)
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('jeremy.yosep@gmail.com')
+    setEmailCopied(true)
+    setTimeout(() => setEmailCopied(false), 2000)
+  }
+
   return (
     <section id="about" className="section">
       <div className="container">
@@ -211,84 +220,138 @@ function About() {
             {...fadeUpProps}
             transition={{ duration: 0.7, ease: sectionEasing, delay: 0.1 }}
           >
-            <p className="intro-text">
-              Computer Science student at <strong>Universitas Multimedia Nusantara</strong> specialising in full-stack, mobile, cybersecurity, and AI-driven development.
+            <h3 className="about-role">
+              Full-Stack Developer. Cybersecurity Enthusiast. Founder. Critical Thinker.
+            </h3>
+            <p className="about-description">
+              With 4+ years of experience, I build secure, scalable, and user-focused digital experiences across web, mobile, and AI. I enjoy solving complex problems, learning continuously, and creating technology that makes a meaningful impact.
+            </p>
+            <p className="about-moto">
+              In pursuit of greatness.
             </p>
           </motion.div>
 
-            <div className="tech-stack">
-            {/* ✅ PROGRAMMING LANGUAGES */}
-            <motion.div
-              className="tech-category"
-              variants={techCategoryVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <h3>Programming Languages</h3>
-              <StaticTechGrid items={programmingLanguages} itemVariants={techCategoryItemVariants} />
-            </motion.div>
+            {/* ── Action Buttons Row ── */}
+            <div className="about-actions-row">
+              <a
+                className="download-cv-button"
+                href="/CV_ATS_JeremyJosephPohar.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View CV
+              </a>
 
-            {/* ✅ WEB & FRAMEWORKS */}
-            <motion.div
-              className="tech-category"
-              variants={techCategoryVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <h3>Web & Frameworks</h3>
-              <StaticTechGrid items={webFrameworks} itemVariants={techCategoryItemVariants} />
-            </motion.div>
+              <motion.button
+                layout
+                className="tech-stack-toggle-btn"
+                onClick={() => setTechStackOpen(prev => !prev)}
+                transition={{ layout: { type: 'spring', stiffness: 300, damping: 30 } }}
+              >
+                <motion.span layout="position">
+                  {techStackOpen ? 'Hide Tech Stack' : 'See My Tech Stack'}
+                </motion.span>
+                <motion.span
+                  className="toggle-chevron"
+                  animate={{ rotate: techStackOpen ? 180 : 0 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                >
+                  ▼
+                </motion.span>
+              </motion.button>
 
-            {/* ✅ DATABASES & ORMS */}
-            <motion.div
-              className="tech-category"
-              variants={techCategoryVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <h3>Databases & ORMs</h3>
-              <StaticTechGrid items={databasesOrms} itemVariants={techCategoryItemVariants} />
-            </motion.div>
+              <motion.button
+                layout
+                className="copy-email-btn"
+                onClick={handleCopyEmail}
+                transition={{ layout: { type: 'spring', stiffness: 300, damping: 30 } }}
+              >
+                <motion.span layout="position">
+                  {emailCopied ? 'Copied!' : 'Copy Email'}
+                </motion.span>
+              </motion.button>
+            </div>
 
-            {/* ✅ MOBILE & GAME DEV */}
-            <motion.div
-              className="tech-category"
-              variants={techCategoryVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <h3>Mobile & Game Dev</h3>
-              <StaticTechGrid items={mobileGameDev} itemVariants={techCategoryItemVariants} />
-            </motion.div>
+            {/* ── Collapsible Tech Stack ── */}
+            <AnimatePresence initial={false}>
+              {techStackOpen && (
+                <motion.div
+                  className="tech-stack"
+                  key="tech-stack"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ overflow: 'hidden' }}
+                >
+                  {/* ✅ PROGRAMMING LANGUAGES */}
+                  <motion.div
+                    className="tech-category"
+                    variants={techCategoryVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <h3>Programming Languages</h3>
+                    <StaticTechGrid items={programmingLanguages} itemVariants={techCategoryItemVariants} />
+                  </motion.div>
 
-            {/* ✅ DATA SCIENCE & ANALYTICS */}
-            <motion.div
-              className="tech-category"
-              variants={techCategoryVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <h3>Data Science & Analytics</h3>
-              <StaticTechGrid items={dataScience} itemVariants={techCategoryItemVariants} />
-            </motion.div>
+                  {/* ✅ WEB & FRAMEWORKS */}
+                  <motion.div
+                    className="tech-category"
+                    variants={techCategoryVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <h3>Web & Frameworks</h3>
+                    <StaticTechGrid items={webFrameworks} itemVariants={techCategoryItemVariants} />
+                  </motion.div>
 
-            {/* ✅ TOOLS & PLATFORMS */}
-            <motion.div
-              className="tech-category"
-              variants={techCategoryVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <h3>Tools & Platforms</h3>
-              <StaticTechGrid items={toolsPlatforms} itemVariants={techCategoryItemVariants} />
-            </motion.div>
-          </div>
+                  {/* ✅ DATABASES & ORMS */}
+                  <motion.div
+                    className="tech-category"
+                    variants={techCategoryVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <h3>Databases & ORMs</h3>
+                    <StaticTechGrid items={databasesOrms} itemVariants={techCategoryItemVariants} />
+                  </motion.div>
+
+                  {/* ✅ MOBILE & GAME DEV */}
+                  <motion.div
+                    className="tech-category"
+                    variants={techCategoryVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <h3>Mobile & Game Dev</h3>
+                    <StaticTechGrid items={mobileGameDev} itemVariants={techCategoryItemVariants} />
+                  </motion.div>
+
+                  {/* ✅ DATA SCIENCE & ANALYTICS */}
+                  <motion.div
+                    className="tech-category"
+                    variants={techCategoryVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <h3>Data Science & Analytics</h3>
+                    <StaticTechGrid items={dataScience} itemVariants={techCategoryItemVariants} />
+                  </motion.div>
+
+                  {/* ✅ TOOLS & PLATFORMS */}
+                  <motion.div
+                    className="tech-category"
+                    variants={techCategoryVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <h3>Tools & Platforms</h3>
+                    <StaticTechGrid items={toolsPlatforms} itemVariants={techCategoryItemVariants} />
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
           {/* ✅ CERTIFICATIONS CAROUSEL */}
           <motion.div
@@ -298,20 +361,6 @@ function About() {
             <CertificationsCarousel certifications={certificationsData} />
           </motion.div>
 
-          <motion.div
-            className="download-cv-container"
-            {...fadeUpProps}
-            transition={{ duration: 0.6, ease: sectionEasing }}
-          >
-            <a
-              className="download-cv-button"
-              href="/CV_ATS_JeremyJosephPohar.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View CV
-            </a>
-          </motion.div>
         </div>
       </div>
     </section>

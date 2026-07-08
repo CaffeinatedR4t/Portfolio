@@ -1,6 +1,7 @@
+import { useState, useEffect, useRef } from 'react'
 import './Footer.css'
 import { FaChevronUp } from 'react-icons/fa'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 
 const easeOutExpo = [0.16, 1, 0.3, 1]
 
@@ -26,6 +27,64 @@ const fadeIn = {
     opacity: 1,
     transition: { duration: 0.6, ease: easeOutExpo },
   },
+}
+
+function BinaryScrambleText({ text }) {
+  const [displayText, setDisplayText] = useState(text)
+  const [isHovering, setIsHovering] = useState(false)
+  const characters = '01'
+
+  useEffect(() => {
+    if (!isHovering) {
+      setDisplayText(text)
+      return
+    }
+
+    let iteration = 0
+    const maxIteration = text.length - 1
+
+    const duration = 350
+    const intervalTime = 25
+    const totalTicks = duration / intervalTime
+    const increment = maxIteration / totalTicks
+
+    const interval = setInterval(() => {
+      setDisplayText(
+        text.split('').map((char, index) => {
+          if (char === ' ') return ' '
+          if (index <= iteration) {
+            return text[index]
+          }
+          return characters[Math.floor(Math.random() * characters.length)]
+        }).join('')
+      )
+
+      if (iteration >= maxIteration) {
+        clearInterval(interval)
+        setDisplayText(text)
+      }
+
+      iteration += increment
+    }, intervalTime)
+
+    return () => {
+      clearInterval(interval)
+      setDisplayText(text)
+    }
+  }, [isHovering, text])
+
+  return (
+    <span
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+      style={{ position: 'relative', display: 'inline-block' }}
+    >
+      <span style={{ visibility: 'hidden' }}>{text}</span>
+      <span style={{ position: 'absolute', left: 0, right: 0, textAlign: 'left' }}>
+        {displayText}
+      </span>
+    </span>
+  )
 }
 
 function Footer() {
@@ -82,15 +141,9 @@ function Footer() {
 
   return (
     <footer className="footer">
-      <motion.div
-        className="footer-cta"
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-      >
-        <h2>READY TO BUILD<br />RESILIENT SOLUTIONS?</h2>
-      </motion.div>
+      <div className="footer-cta">
+        <FooterCTA />
+      </div>
 
       <div className="footer-main">
         <motion.div
@@ -123,18 +176,18 @@ function Footer() {
           <motion.div className="footer-col" variants={fadeUp}>
             <h4>SOCIAL</h4>
             <ul>
-              <li><a href="https://instagram.com/jeremyjpohar" target="_blank" rel="noopener noreferrer">INSTAGRAM</a></li>
-              <li><a href="https://www.linkedin.com/in/jeremyjosephpohar/" target="_blank" rel="noopener noreferrer">LINKEDIN</a></li>
-              <li><a href="https://github.com/CaffeinatedR4t" target="_blank" rel="noopener noreferrer">GITHUB</a></li>
+              <li><a href="https://instagram.com/jeremyjpohar" target="_blank" rel="noopener noreferrer"><BinaryScrambleText text="INSTAGRAM" /></a></li>
+              <li><a href="https://www.linkedin.com/in/jeremyjosephpohar/" target="_blank" rel="noopener noreferrer"><BinaryScrambleText text="LINKEDIN" /></a></li>
+              <li><a href="https://github.com/CaffeinatedR4t" target="_blank" rel="noopener noreferrer"><BinaryScrambleText text="GITHUB" /></a></li>
             </ul>
           </motion.div>
 
           <motion.div className="footer-col" variants={fadeUp}>
             <h4>OTHER</h4>
             <ul>
-              <li><a href="#projects" onClick={(e) => scrollToSection(e, 'projects')}>PROJECTS</a></li>
-              <li><a href="#about" onClick={(e) => scrollToSection(e, 'about')}>ABOUT</a></li>
-              <li><a href="#contact" onClick={(e) => scrollToSection(e, 'contact')}>CONTACT</a></li>
+              <li><a href="#projects" onClick={(e) => scrollToSection(e, 'projects')}><BinaryScrambleText text="PROJECTS" /></a></li>
+              <li><a href="#about" onClick={(e) => scrollToSection(e, 'about')}><BinaryScrambleText text="ABOUT" /></a></li>
+              <li><a href="#contact" onClick={(e) => scrollToSection(e, 'contact')}><BinaryScrambleText text="CONTACT" /></a></li>
             </ul>
           </motion.div>
         </motion.div>
@@ -163,3 +216,39 @@ function Footer() {
 }
 
 export default Footer
+
+const FooterCTA = () => {
+  const ctaRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ctaRef,
+    offset: ['start 90%', 'end 50%'],
+  })
+
+  const words = ['READY', 'TO', 'BUILD', 'RESILIENT', 'SOLUTIONS?']
+
+  return (
+    <h2 ref={ctaRef}>
+      {words.map((word, i) => {
+        const step = 1 / words.length
+        const start = i * step
+        const end = (i + 1) * step
+        return (
+          <span key={i}>
+            <CTAWord word={word} progress={scrollYProgress} start={start} end={end} />
+            {i === 2 ? <br /> : ' '}
+          </span>
+        )
+      })}
+    </h2>
+  )
+}
+
+function CTAWord({ word, progress, start, end }) {
+  const opacity = useTransform(progress, [start, end], [0.12, 1])
+  const color   = useTransform(progress, [start, end], ['#444444', '#ffffff'])
+  return (
+    <motion.span style={{ opacity, color, display: 'inline-block', willChange: 'opacity, color' }}>
+      {word}
+    </motion.span>
+  )
+}

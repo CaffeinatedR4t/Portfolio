@@ -1,8 +1,11 @@
 #about {
   background: #000000;
-  padding-top: 100px;
-  padding-bottom: 0;
-  min-height: 100vh;
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+
+#about .section-header {
+  margin-bottom: 1.5rem;
 }
 
 .about-content {
@@ -17,25 +20,43 @@
   text-align: center;
 }
 
-.intro-text {
-  font-size: 1.15rem;
+.about-role {
+  font-family: var(--font-accent);
+  font-size: 1.25rem;
+  font-weight: 500;
   color: #ffffff;
   margin-bottom: 1.5rem;
   text-align: center;
+  letter-spacing: 1px;
 }
 
-.about-text p {
-  margin-bottom: 1.5rem;
-  font-size: 1.05rem;
+.highlight-text {
+  color: #cc0000; /* project's red accent */
 }
 
-.about-text strong {
-  color: #ffffff;
-  font-weight: 600;
+.about-description {
+  font-size: 1.1rem;
+  color: #c0c0c0;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-moto {
+  font-size: 0.95rem;
+  font-weight: 400;
+  font-style: italic;
+  color: #808080;
+  letter-spacing: 1px;
+  margin-top: 1.5rem;
+  text-align: center;
 }
 
 /* ── Tech Stack ─────────────────────────────── */
-.tech-stack { margin-bottom: 4rem; }
+.tech-stack { margin-bottom: 4rem; padding-top: 2.5rem; }
 
 .tech-category {
   margin-bottom: 3rem;
@@ -89,8 +110,30 @@
   font-size: 2.5rem;
   font-weight: 700;
   /* Composite-only transition — no layout/paint */
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: color 0.3s ease;
   cursor: default;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.icon-box::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; width: 100%; height: 100%;
+  background: var(--brand, #ffffff);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.tech-icon:hover .icon-box::before {
+  transform: scaleY(1);
+}
+
+.tech-icon:hover .icon-box {
+  color: var(--hover-text, #ffffff);
 }
 
 .tech-icon span {
@@ -110,145 +153,110 @@
    just swaps background/color without extra rules.      */
 
 /* TypeScript */
-.icon-box.ts  { color: #3178c6; }
-.tech-icon:hover .icon-box.ts  { background: #3178c6; color: #fff; }
+.icon-box.ts { --brand: #3178c6; color: var(--brand); }
 
 /* JavaScript */
-.icon-box.js  { color: #f7df1e; }
-.tech-icon:hover .icon-box.js  { background: #f7df1e; color: #000; }
+.icon-box.js { --brand: #f7df1e; color: var(--brand); --hover-text: #000; }
 
 /* Java */
-.icon-box.java { color: #f89820; }
-.tech-icon:hover .icon-box.java { background: #f89820; color: #fff; }
+.icon-box.java { --brand: #f89820; color: var(--brand); }
 
 /* Python */
-.icon-box.python { color: #3776ab; }
-.tech-icon:hover .icon-box.python { background: #3776ab; color: #fff; }
+.icon-box.python { --brand: #3776ab; color: var(--brand); }
 
 /* PHP */
-.icon-box.php  { color: #777bb4; }
-.tech-icon:hover .icon-box.php  { background: #777bb4; color: #fff; }
+.icon-box.php { --brand: #777bb4; color: var(--brand); }
 
 /* C */
-.icon-box.c    { color: #a8b9cc; }
-.tech-icon:hover .icon-box.c    { background: #a8b9cc; color: #fff; }
+.icon-box.c { --brand: #a8b9cc; color: var(--brand); }
 
 /* C# */
-.icon-box.csharp { color: #239120; }
+.icon-box.csharp { --brand: #239120; color: var(--brand); }
 .icon-box.csharp svg { padding: 18px; }
-.tech-icon:hover .icon-box.csharp { background: #239120; color: #fff; }
 
 /* HTML */
-.icon-box.html { color: #e34f26; }
-.tech-icon:hover .icon-box.html { background: #e34f26; color: #fff; }
+.icon-box.html { --brand: #e34f26; color: var(--brand); }
 
 /* CSS */
-.icon-box.css  { color: #1572b6; }
-.tech-icon:hover .icon-box.css  { background: #1572b6; color: #fff; }
+.icon-box.css { --brand: #1572b6; color: var(--brand); }
 
 /* React */
-.icon-box.react { color: #61dafb; }
-.tech-icon:hover .icon-box.react { background: #61dafb; color: #fff; }
+.icon-box.react { --brand: #61dafb; color: var(--brand); }
 
 /* Node.js */
-.icon-box.nodejs { color: #68a063; }
-.tech-icon:hover .icon-box.nodejs { background: #68a063; color: #fff; }
+.icon-box.nodejs { --brand: #68a063; color: var(--brand); }
 
 /* Unity */
-.icon-box.unity { color: #ffffff; }
-.tech-icon:hover .icon-box.unity { background: #ffffff; color: #000; }
+.icon-box.unity { --brand: #ffffff; color: var(--brand); --hover-text: #000; }
 
 /* Android */
-.icon-box.android { color: #3ddc84; }
-.tech-icon:hover .icon-box.android { background: #3ddc84; color: #fff; }
+.icon-box.android { --brand: #3ddc84; color: var(--brand); }
 
 /* Laravel */
-.icon-box.laravel { color: #ff2d20; }
-.tech-icon:hover .icon-box.laravel { background: #ff2d20; color: #fff; }
+.icon-box.laravel { --brand: #ff2d20; color: var(--brand); }
 
 /* MySQL */
-.icon-box.mysql { color: #4479a1; }
-.tech-icon:hover .icon-box.mysql { background: #4479a1; color: #fff; }
+.icon-box.mysql { --brand: #4479a1; color: var(--brand); }
 
 /* GitHub */
-.icon-box.github { color: #ffffff; }
-.tech-icon:hover .icon-box.github { background: #ffffff; color: #000; }
+.icon-box.github { --brand: #ffffff; color: var(--brand); --hover-text: #000; }
 
 /* Figma */
-.icon-box.figma { color: #f24e1e; }
-.tech-icon:hover .icon-box.figma { background: #f24e1e; color: #fff; }
+.icon-box.figma { --brand: #f24e1e; color: var(--brand); }
 
 /* Three.js */
-.icon-box.threejs { color: #ffffff; }
-.tech-icon:hover .icon-box.threejs { background: #ffffff; color: #000; }
+.icon-box.threejs { --brand: #ffffff; color: var(--brand); --hover-text: #000; }
 
 /* Jupyter */
-.icon-box.jupyter { color: #f37726; }
-.tech-icon:hover .icon-box.jupyter { background: #f37726; color: #fff; }
+.icon-box.jupyter { --brand: #f37726; color: var(--brand); }
 
 /* RStudio */
-.icon-box.rstudio { color: #75aadb; }
-.tech-icon:hover .icon-box.rstudio { background: #75aadb; color: #fff; }
+.icon-box.rstudio { --brand: #75aadb; color: var(--brand); }
 
 /* Tailwind CSS */
-.icon-box.tailwind { color: #38b2ac; }
-.tech-icon:hover .icon-box.tailwind { background: #38b2ac; color: #fff; }
+.icon-box.tailwind { --brand: #38b2ac; color: var(--brand); }
 
 /* Next.js */
-.icon-box.nextjs { color: #ffffff; }
-.tech-icon:hover .icon-box.nextjs { background: #ffffff; color: #000; }
+.icon-box.nextjs { --brand: #ffffff; color: var(--brand); --hover-text: #000; }
 
 /* REST API */
-.icon-box.rest { color: #ffffff; }
-.tech-icon:hover .icon-box.rest { background: #ffffff; color: #000; }
+.icon-box.rest { --brand: #ffffff; color: var(--brand); --hover-text: #000; }
 
 /* PostgreSQL */
-.icon-box.postgresql { color: #336791; }
-.tech-icon:hover .icon-box.postgresql { background: #336791; color: #fff; }
+.icon-box.postgresql { --brand: #336791; color: var(--brand); }
 
 /* MongoDB */
-.icon-box.mongodb { color: #47a248; }
-.tech-icon:hover .icon-box.mongodb { background: #47a248; color: #fff; }
+.icon-box.mongodb { --brand: #47a248; color: var(--brand); }
 
 /* Supabase */
-.icon-box.supabase { color: #3ecf8e; }
-.tech-icon:hover .icon-box.supabase { background: #3ecf8e; color: #000; }
+.icon-box.supabase { --brand: #3ecf8e; color: var(--brand); --hover-text: #000; }
 
 /* Prisma */
-.icon-box.prisma { color: #ffffff; }
-.tech-icon:hover .icon-box.prisma { background: #ffffff; color: #000; }
+.icon-box.prisma { --brand: #ffffff; color: var(--brand); --hover-text: #000; }
 
 /* Mongoose */
-.icon-box.mongoose { color: #880000; }
-.tech-icon:hover .icon-box.mongoose { background: #880000; color: #fff; }
+.icon-box.mongoose { --brand: #880000; color: var(--brand); }
 
 /* Expo */
-.icon-box.expo { color: #ffffff; }
-.tech-icon:hover .icon-box.expo { background: #ffffff; color: #000; }
+.icon-box.expo { --brand: #ffffff; color: var(--brand); --hover-text: #000; }
 
 /* R */
-.icon-box.r { color: #276dc3; }
-.tech-icon:hover .icon-box.r { background: #276dc3; color: #fff; }
+.icon-box.r { --brand: #276dc3; color: var(--brand); }
 
 /* VS Code */
-.icon-box.vscode { color: #007acc; }
-.tech-icon:hover .icon-box.vscode { background: #007acc; color: #fff; }
+.icon-box.vscode { --brand: #007acc; color: var(--brand); }
 
 /* Docker */
-.icon-box.docker { color: #2496ed; }
-.tech-icon:hover .icon-box.docker { background: #2496ed; color: #fff; }
+.icon-box.docker { --brand: #2496ed; color: var(--brand); }
 
 /* Postman */
-.icon-box.postman { color: #ff6c37; }
-.tech-icon:hover .icon-box.postman { background: #ff6c37; color: #fff; }
+.icon-box.postman { --brand: #ff6c37; color: var(--brand); }
 
 /* Vercel */
-.icon-box.vercel { color: #ffffff; }
-.tech-icon:hover .icon-box.vercel { background: #ffffff; color: #000; }
+.icon-box.vercel { --brand: #ffffff; color: var(--brand); --hover-text: #000; }
 
 /* Linux */
-.icon-box.linux { color: #fcc624; }
-.tech-icon:hover .icon-box.linux { background: #fcc624; color: #000; }
+.icon-box.linux { --brand: #fcc624; color: var(--brand); --hover-text: #000; }
 
 /* SVG inside icon inherits color */
 .icon-box svg { color: inherit; }
@@ -256,8 +264,8 @@
 
 /* ── Certifications ──────────────────────────── */
 .certifications-section {
-  margin-top: 4rem;
-  margin-bottom: 3rem;
+  margin-top: 8rem;
+  margin-bottom: 0;
 }
 
 .certifications-section h3 {
@@ -291,15 +299,38 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  transition: color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   font-size: 1.2rem;
   z-index: 10;
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-arrow::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: #ffffff;
+  transform: scaleX(0);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.carousel-next::before {
+  transform-origin: left;
+}
+
+.carousel-prev::before {
+  transform-origin: right;
+}
+
+.carousel-arrow:hover::before {
+  transform: scaleX(1);
 }
 
 .carousel-arrow:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.4);
-  transform: scale(1.1);
+  border-color: #ffffff;
+  color: #000000;
 }
 
 .carousel-arrow:active { transform: scale(0.95); }
@@ -429,12 +460,31 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
   font-size: 1.2rem;
+  overflow: hidden;
   z-index: 10;
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
-.cert-close-btn:hover { background: rgba(255,255,255,0.2); transform: rotate(90deg); }
+.cert-close-btn::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; width: 100%; height: 100%;
+  background: #ffffff;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.cert-close-btn:hover::before {
+  transform: scaleY(1);
+}
+
+.cert-close-btn:hover { 
+  color: #000000;
+  border-color: #ffffff;
+}
 
 .cert-popup-content {
   display: grid;
@@ -466,6 +516,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-right: 3rem; /* Prevents long titles from crashing into the X button */
 }
 
 .cert-popup-info h3 {
@@ -522,11 +573,22 @@
   justify-content: center;
 }
 
-.download-cv-button {
+.about-actions-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem 0 0;
+}
+
+.tech-stack-toggle-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1.5rem;
+  gap: 0.6rem;
+  min-width: 220px;
+  padding: 0.75rem 2rem;
   background: transparent;
   color: #ffffff;
   border: 1px solid #ffffff;
@@ -534,12 +596,121 @@
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 2px;
+  line-height: 1;
   cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease;
-  text-decoration: none;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.3s ease;
 }
 
-.download-cv-button:hover { background: #ffffff; color: #000000; }
+.tech-stack-toggle-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: #ffffff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.tech-stack-toggle-btn:hover::before {
+  transform: scaleX(1);
+}
+
+.tech-stack-toggle-btn:hover {
+  color: #000000;
+}
+
+.toggle-chevron {
+  display: inline-block;
+  font-size: 0.65rem;
+  line-height: 1;
+}
+
+.copy-email-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 130px;
+  padding: 0.75rem 2rem;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  font-family: var(--font-accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  line-height: 1;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.copy-email-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: #ffffff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.copy-email-btn:hover::before {
+  transform: scaleX(1);
+}
+
+.copy-email-btn:hover {
+  color: #000000;
+}
+
+.download-cv-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  font-family: var(--font-accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.download-cv-button::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: #ffffff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.download-cv-button:hover::before {
+  transform: scaleX(1);
+}
+
+.download-cv-button:hover { color: #000000; }
 
 /* ── Animations ──────────────────────────────── */
 @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }

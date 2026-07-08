@@ -117,12 +117,11 @@ function BinaryHoverLink({ href, text, onClick }) {
     }
 
     let iteration = 0
-    const centerIndex = (text.length - 1) / 2
-    const maxIteration = Math.max(centerIndex, text.length - 1 - centerIndex)
+    const maxIteration = text.length - 1
     
-    // Sync with CSS transition-duration (1.2s = 1200ms)
-    const duration = 1200 
-    const intervalTime = 40
+    // Sync with CSS transition-duration (0.35s = 350ms)
+    const duration = 350 
+    const intervalTime = 25
     const totalTicks = duration / intervalTime
     const increment = maxIteration / totalTicks
     
@@ -130,7 +129,7 @@ function BinaryHoverLink({ href, text, onClick }) {
       setDisplayText(
         text.split('').map((char, index) => {
           if (char === ' ') return ' '
-          if (Math.abs(index - centerIndex) <= iteration) {
+          if (index <= iteration) {
             return text[index]
           }
           return characters[Math.floor(Math.random() * characters.length)]

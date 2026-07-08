@@ -1,12 +1,8 @@
 #contact {
   background: #000000;
-  height: 100vh;
-  min-height: 100vh;
-  max-height: 100vh;
-  display: flex;
-  align-items: center;
+  padding-top: 120px;
+  padding-bottom: 120px;
   overflow: hidden;
-  padding: 0; /* override .section padding */
 }
 
 #contact .container {
@@ -91,37 +87,44 @@
   border-radius: 0;
   color: #ffffff;
   font-size: 1.2rem;
-  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  transition: border-color 0.3s ease, color 0.3s ease;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.social-links a::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; width: 100%; height: 100%;
+  background: var(--brand, #ffffff);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.social-links a:hover::before {
+  transform: scaleY(1);
+}
+
+.social-links a:hover {
+  border-color: var(--brand);
+  color: var(--hover-text);
 }
 
 /* GitHub — white */
-.social-links a:nth-child(1):hover {
-  background: #ffffff;
-  border-color: #ffffff;
-  color: #000000;
-}
+.social-links a:nth-child(1) { --brand: #ffffff; --hover-text: #000000; }
 
 /* LinkedIn — blue */
-.social-links a:nth-child(2):hover {
-  background: #0077b5;
-  border-color: #0077b5;
-  color: #ffffff;
-}
+.social-links a:nth-child(2) { --brand: #0077b5; --hover-text: #ffffff; }
 
 /* Instagram — pink/magenta */
-.social-links a:nth-child(3):hover {
-  background: #e4405f;
-  border-color: #e4405f;
-  color: #ffffff;
-}
+.social-links a:nth-child(3) { --brand: #e4405f; --hover-text: #ffffff; }
 
 /* Gmail — red */
-.social-links a:nth-child(4):hover {
-  background: #ea4335;
-  border-color: #ea4335;
-  color: #ffffff;
-}
+.social-links a:nth-child(4) { --brand: #ea4335; --hover-text: #ffffff; }
 
 /* ── Contact form ────────────────────────────── */
 .contact-form {
@@ -187,7 +190,10 @@
   letter-spacing: 2px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: color 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -195,8 +201,22 @@
   margin-top: 1rem;
 }
 
-.btn.btn-primary:hover {
+.btn.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
   background: #ffffff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.btn.btn-primary:hover::before {
+  transform: scaleX(1);
+}
+
+.btn.btn-primary:hover {
   color: #000000;
 }
 
