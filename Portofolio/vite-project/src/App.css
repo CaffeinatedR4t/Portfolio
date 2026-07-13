@@ -106,7 +106,6 @@ footer {
   z-index: 10000 !important;
 }
 
-
 html.lenis { height: auto; }
 html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
