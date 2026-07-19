@@ -17,15 +17,16 @@ function App() {
   const [isMuted, setIsMuted] = useState(true)
   const lenisRef = useRef(null)
   const rafIdRef = useRef(null)
+  const muteBtnRef = useRef(null)
 
   useEffect(() => {
     const lenisInstance = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 1.8,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
-      mouseMultiplier: 1,
+      mouseMultiplier: 0.8,
       smoothTouch: false,
       touchMultiplier: 2,
       infinite: false,
@@ -77,17 +78,38 @@ function App() {
     const hoverSound = new Audio('/audio/lesiakower-minimalist-button-hover-sound-effect-399749.wav');
     hoverSound.volume = 0.4;
     let currentHovered = null;
+    let audioUnlocked = false;
+
+    // Returns true if this call performed the unlock (first time ever).
+    // Returns false if already unlocked — used by the mute button to know
+    // whether to skip the mute toggle on the very first click.
+    const unlockAudio = () => {
+      if (audioUnlocked) return false;
+      audioUnlocked = true;
+      hoverSound.play().then(() => {
+        hoverSound.pause();
+        hoverSound.currentTime = 0;
+      }).catch(() => {});
+      return true;
+    };
+
+    // Expose so the mute button onClick can call it and read the return value
+    window.unlockAudio = unlockAudio;
+
+    // Also unlock passively on any other click/key/touch (nav links, cards, etc.)
+    const handleDocUnlock = () => unlockAudio();
+    document.addEventListener('click', handleDocUnlock);
+    document.addEventListener('keydown', handleDocUnlock);
+    document.addEventListener('touchstart', handleDocUnlock);
 
     const handleMouseOver = (e) => {
       const target = e.target.closest('button, a, .icon-box, .project-list-row');
-      
+
       if (target && target !== currentHovered) {
         currentHovered = target;
         if (!window.isMuted) {
           hoverSound.currentTime = 0;
-          hoverSound.play().catch(() => {
-            // Ignore autoplay restrictions until user interacts with the page
-          });
+          hoverSound.play().catch(() => {});
         }
       } else if (!target) {
         currentHovered = null;
@@ -95,8 +117,31 @@ function App() {
     };
 
     document.addEventListener('mouseover', handleMouseOver);
-    return () => document.removeEventListener('mouseover', handleMouseOver);
+    return () => {
+      document.removeEventListener('mouseover', handleMouseOver);
+      document.removeEventListener('click', handleDocUnlock);
+      document.removeEventListener('keydown', handleDocUnlock);
+      document.removeEventListener('touchstart', handleDocUnlock);
+      window.unlockAudio = null;
+    };
   }, []);
+
+  // Slide mute button out on scroll, back when idle
+  useEffect(() => {
+    let timer
+    const handleScroll = () => {
+      muteBtnRef.current?.classList.add('is-scrolling')
+      clearTimeout(timer)
+      timer = setTimeout(() => muteBtnRef.current?.classList.remove('is-scrolling'), 800)
+    }
+    window.addEventListener('wheel', handleScroll, { passive: true })
+    window.addEventListener('touchmove', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('wheel', handleScroll)
+      window.removeEventListener('touchmove', handleScroll)
+      clearTimeout(timer)
+    }
+  }, [])
 
   const handlePreloaderComplete = () => {
     setIsLoading(false)
@@ -113,24 +158,19 @@ function App() {
       <ScrollReveal />
       <Contact />
 
-      {/* Footer sticky wrapper — sticks to bottom while spacer scrolls.
-          The spacer below is what gives scroll room for the footer
-          to unstick and slide away, revealing the matrix. */}
+      {/* Footer sticky wrapper */}
       <div className="footer-sticky-wrapper">
         <Footer />
       </div>
 
-      {/* Spacer — exactly 80vh (same as matrix height).
-          This sits AFTER the sticky footer in normal flow.
-          Lenis scrolls through it while the footer stays pinned,
-          then as the spacer ends the footer slides away. */}
       <div className="matrix-reveal-spacer" aria-hidden="true" />
 
       <StickyMatrix />
-      
-      <button 
-        className="mute-btn" 
-        onClick={() => setIsMuted(!isMuted)}
+
+      <button
+        ref={muteBtnRef}
+        className="mute-btn"
+        onClick={() => setIsMuted(prev => !prev)}
         aria-label="Toggle Sound"
       >
         {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}

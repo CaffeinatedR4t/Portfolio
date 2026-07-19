@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaGithub, FaFilePdf, FaTimes, FaExternalLinkAlt, FaFolder, FaArrowRight } from 'react-icons/fa'
+import { FaGithub, FaFilePdf, FaTimes, FaExternalLinkAlt, FaArrowRight } from 'react-icons/fa'
 import './Projects.css'
 
 const easeOutExpo = [0.16, 1, 0.3, 1]
@@ -151,13 +151,11 @@ const projectsData = [
   }
 ]
 
-const projectHoverSound = new Audio('/audio/lesiakower-minimalist-button-hover-sound-effect-399749.wav');
-projectHoverSound.volume = 0.4;
+// ponytail: App.jsx already plays this sound globally on .project-list-row hover
 
 function Projects() {
   const [selectedProject, setSelectedProject] = useState(null)
   const [hoveredProject, setHoveredProject] = useState(null)
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 })
   const [smoothPos, setSmoothPos] = useState({ x: 0, y: 0 })
   const animFrameRef = useRef(null)
   const targetPos = useRef({ x: 0, y: 0 })
@@ -182,7 +180,6 @@ function Projects() {
 
   const handleMouseMove = (e) => {
     targetPos.current = { x: e.clientX, y: e.clientY }
-    setCursorPos({ x: e.clientX, y: e.clientY })
   }
 
   const handleProjectClick = (project) => {
@@ -226,13 +223,7 @@ function Projects() {
                 className={`project-list-row${hoveredProject?.id === project.id ? ' is-hovered' : ''}`}
                 variants={rowVariants}
                 onClick={() => handleProjectClick(project)}
-                onMouseEnter={() => {
-                  setHoveredProject(project);
-                  if (!window.isMuted) {
-                    projectHoverSound.currentTime = 0;
-                    projectHoverSound.play().catch(() => {});
-                  }
-                }}
+                onMouseEnter={() => setHoveredProject(project)}
                 onMouseLeave={() => setHoveredProject(null)}
                 onMouseMove={handleMouseMove}
               >

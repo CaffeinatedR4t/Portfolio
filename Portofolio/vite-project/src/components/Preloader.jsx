@@ -11,7 +11,7 @@ const expoInOut = (t) => {
 
 function Preloader({ onComplete }) {
   const [progress, setProgress] = useState(0)
-  const [phase, setPhase] = useState('loading') // loading -> wipe -> done
+  const [phase, setPhase] = useState('loading') // loading -> ready -> wipe -> done
   const lineParentRef = useRef(null)
   const counterRef = useRef(null)
 
@@ -73,7 +73,7 @@ function Preloader({ onComplete }) {
     }
   }, [])
 
-  // After the counter hits 100: wipe the line away, then fade the overlay out
+  // After wipe animation, notify parent
   useEffect(() => {
     if (phase !== 'wipe') return
     const fadeTimer = setTimeout(() => setPhase('done'), 900)
@@ -98,6 +98,11 @@ function Preloader({ onComplete }) {
       <div className="loader-branding-bottom">
         <h1 className="loader-name">Jeremy Joseph Pohar</h1>
         <p className="loader-tagline">PORTFOLIO</p>
+      </div>
+
+      {/* Click to enter prompt — appears after loading completes */}
+      <div className="loader-enter">
+        <span>CLICK TO ENTER</span>
       </div>
     </div>
   )

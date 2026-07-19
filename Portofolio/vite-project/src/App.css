@@ -49,6 +49,7 @@ body {
   background: #000000;
 }
 
+
 .container {
   max-width: 1400px;
   margin: 0 auto;
@@ -116,21 +117,30 @@ html.lenis body { height: auto; }
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: 1px solid #ffffff;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 0.75rem;
   cursor: pointer;
   z-index: 9999;
   border-radius: 0;
-  transition: color 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s,
+              color 0.3s ease,
+              border-color 0.3s ease;
   overflow: hidden;
   padding: 0;
+}
+
+.mute-btn.is-scrolling {
+  transform: translateX(80px);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+              color 0.3s ease,
+              border-color 0.3s ease;
 }
 
 .mute-btn::before {

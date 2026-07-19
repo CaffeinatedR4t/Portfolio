@@ -30,7 +30,7 @@ function Home() {
         transition={{ duration: 0.8, delay: 0.3, ease: easeOutExpo }}
       >
         <h1 className="sr-only">Jeremy Joseph Pohar - Web Developer & AI Trainer Portfolio</h1>
-        <h2>COMPUTER SCIENCE STUDENT</h2>
+        <h2>FULLSTACK DEVELOPER</h2>
         <p>JAKARTA, INDONESIA</p>
       </motion.div>
 
@@ -57,30 +57,10 @@ function Home() {
           CONNECT
         </button>
         
-        <p className="home-quote">
-          "IN PURSUIT OF GREATNESS."<br />
-          [Jeremy J. Pohar]
-        </p>
         
         <p className="home-year">©2026</p>
       </motion.div>
 
-      <motion.div
-        className="home-bottom-right"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.7, ease: easeOutExpo }}
-      >
-        <div className="status-card">
-          <div className="status-preview">
-            <span>AI TRAINER</span>
-            <span>FULL STACK DEV</span>
-            <span>IT SECURITY</span>
-          </div>
-          <p className="status-title">AVAILABLE FOR WORK.</p>
-          <a href="#projects" className="status-link"><BinaryScrambleText text="VIEW PROJECTS" /></a>
-        </div>
-      </motion.div>
 
     </section>
   )

@@ -224,7 +224,7 @@ function About() {
               Full-Stack Developer. Cybersecurity Enthusiast. Founder. Critical Thinker.
             </h3>
             <p className="about-description">
-              With 4+ years of experience, I build secure, scalable, and user-focused digital experiences across web, mobile, and AI. I enjoy solving complex problems, learning continuously, and creating technology that makes a meaningful impact.
+              I'm Jeremy Joseph Pohar with 4+ years of experience, I build secure, scalable, and user-focused digital experiences across web, mobile, and AI. I enjoy solving complex problems, learning continuously, and creating technology that makes a meaningful impact.
             </p>
             <p className="about-moto">
               In pursuit of greatness.
@@ -383,7 +383,8 @@ function StaticTechGrid({ items, itemVariants }) {
   )
 }
 
-// ✅ CERTIFICATIONS CAROUSEL COMPONENT
+const certClickSound = new Audio('/audio/lesiakower-minimalist-button-hover-sound-effect-399749.wav');
+certClickSound.volume = 0.4;
 function CertificationsCarousel({ certifications }) {
   const [[currentIndex, direction], setPage] = useState([0, 0])
   const [selectedCert, setSelectedCert] = useState(null)
@@ -392,11 +393,17 @@ function CertificationsCarousel({ certifications }) {
 
   const total = certifications.length
 
+  const playClick = () => {
+    if (!window.isMuted) { certClickSound.currentTime = 0; certClickSound.play().catch(() => {}) }
+  }
+
   const paginate = (dir) => {
+    playClick()
     setPage(([idx]) => [(idx + dir + total) % total, dir])
   }
 
   const handleCertClick = (cert) => {
+    playClick()
     setSelectedCert(cert)
     document.body.style.overflow = 'hidden'
     if (window.lenis) window.lenis.stop()
