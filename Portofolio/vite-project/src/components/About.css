@@ -1,3 +1,19 @@
+.about-cover-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 15;
+  background: #000000;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+@media (max-width: 768px) {
+  .about-cover-panel { display: none; }
+}
+
 #about {
   background: #000000;
   padding-top: 120px;

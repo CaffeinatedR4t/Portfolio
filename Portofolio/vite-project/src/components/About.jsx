@@ -1,6 +1,6 @@
 import './About.css'
 import { useState, useEffect, useRef } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useMotionValue } from 'framer-motion'
 import { 
   SiTypescript, 
   SiJavascript, 
@@ -204,35 +204,59 @@ function About() {
   }
 
   return (
+    <>
     <section id="about" className="section">
       <div className="container">
         <motion.div
           className="section-header"
-          {...fadeUpProps}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: sectionEasing, delay: 0.2 }}
         >
           <h2 className="section-title">ABOUT</h2>
           <p className="section-subtitle">Get to know me</p>
         </motion.div>
 
         <div className="about-content">
-          <motion.div
-            className="about-text"
-            {...fadeUpProps}
-            transition={{ duration: 0.7, ease: sectionEasing, delay: 0.1 }}
+          <motion.h3
+            className="about-role"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: sectionEasing, delay: 0.35 }}
           >
-            <h3 className="about-role">
-              Full-Stack Developer. Cybersecurity Enthusiast. Founder. Critical Thinker.
-            </h3>
-            <p className="about-description">
-              I'm Jeremy Joseph Pohar with 4+ years of experience, I build secure, scalable, and user-focused digital experiences across web, mobile, and AI. I enjoy solving complex problems, learning continuously, and creating technology that makes a meaningful impact.
-            </p>
-            <p className="about-moto">
-              In pursuit of greatness.
-            </p>
-          </motion.div>
+            Full-Stack Developer. Cybersecurity Enthusiast. Founder. Critical Thinker.
+          </motion.h3>
+
+          <motion.p
+            className="about-description"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: sectionEasing, delay: 0.5 }}
+          >
+            I'm Jeremy Joseph Pohar with 4+ years of experience, I build secure, scalable, and user-focused digital experiences across web, mobile, and AI. I enjoy solving complex problems, learning continuously, and creating technology that makes a meaningful impact.
+          </motion.p>
+
+          <motion.p
+            className="about-moto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: sectionEasing, delay: 0.65 }}
+          >
+            In pursuit of greatness.
+          </motion.p>
 
             {/* ── Action Buttons Row ── */}
-            <div className="about-actions-row">
+            <motion.div
+              className="about-actions-row"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, ease: sectionEasing, delay: 0.8 }}
+            >
               <a
                 className="download-cv-button"
                 href="/CV_ATS_JeremyJosephPohar.pdf"
@@ -270,7 +294,7 @@ function About() {
                   {emailCopied ? 'Copied!' : 'Copy Email'}
                 </motion.span>
               </motion.button>
-            </div>
+            </motion.div>
 
             {/* ── Collapsible Tech Stack ── */}
             <AnimatePresence initial={false}>
@@ -355,8 +379,10 @@ function About() {
 
           {/* ✅ CERTIFICATIONS CAROUSEL */}
           <motion.div
-            {...fadeUpProps}
-            transition={{ duration: 0.8, ease: sectionEasing }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, ease: sectionEasing, delay: 0.3 }}
           >
             <CertificationsCarousel certifications={certificationsData} />
           </motion.div>
@@ -364,6 +390,7 @@ function About() {
         </div>
       </div>
     </section>
+    </>
   )
 }
 

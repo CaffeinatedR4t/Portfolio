@@ -17,7 +17,7 @@ const headerVariants = {
 const listContainerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.08 }
+    transition: { delayChildren: 0.3, staggerChildren: 0.08 }
   }
 }
 
@@ -68,6 +68,20 @@ const projectsData = [
   {
     id: 2,
     number: "02",
+    title: "Persil AI",
+    description: "Geospatial AI platform providing predictive harvest forecasts, yield loss alerts, and soil stress warnings for Indonesian rice farmers.",
+    tags: ["Next.js", "FastAPI", "XGBoost", "Earth Engine", "Gemini AI", "Supabase"],
+    image: "/images/Screenshot 2026-07-17 184133.png",
+    date: "Jul 2026",
+    role: "Full-Stack AI Developer",
+    github: "https://github.com/CaffeinatedR4t/persil-fe",
+    githubBackend: "https://github.com/CaffeinatedR4t/persil-be",
+    external: "https://persil-ai.vercel.app/",
+    fullDescription: "Persil is a geospatial AI that warns Indonesian rice farmers before harvest (e.g., yield loss, soil stress) per kabupaten, turning satellite imagery and rainfall data into actionable forecasts. Engineered end-to-end within a tight 30-hour hackathon sprint, the platform integrates a robust Python backend for AI-driven geospatial analysis with a sleek, responsive Next.js and TailwindCSS frontend. (Read more at devpost.com/software/persil)"
+  },
+  {
+    id: 3,
+    number: "03",
     title: "EcoSort System",
     description: "Cross-platform mobile application for AI-based waste classification and reward-based wallet payouts.",
     tags: ["React Native", "Expo", "Zustand", "Supabase", "Gemini AI", "Node.js"],
@@ -78,8 +92,8 @@ const projectsData = [
     fullDescription: "EcoSort is a cross-platform mobile application built with React Native (Expo) designed to streamline waste collection. It features an AI-driven workflow where users scan waste items (classified by Gemini 1.5 Flash), request pickups, and receive flat-rate wallet rewards upon driver and admin verification. The system utilizes Supabase for secure data management and a Node.js backend for business logic."
   },
   {
-    id: 3,
-    number: "03",
+    id: 4,
+    number: "04",
     title: "Personal Portfolio Website",
     description: "A modern, interactive portfolio website built with React and Vite, featuring smooth animations with Lenis scroll, custom cursor effects, and a sleek dark theme.",
     tags: ["React", "Vite", "JavaScript", "Node.js", "CSS3"],
@@ -90,8 +104,8 @@ const projectsData = [
     fullDescription: "A modern, interactive portfolio website built with React and Vite, featuring smooth animations with Lenis scroll, custom cursor effects, and a sleek dark theme. Showcases my projects, skills, certifications, and professional experience with an engaging user interface. Fully responsive design with optimized performance and SEO."
   },
   {
-    id: 4,
-    number: "04",
+    id: 5,
+    number: "05",
     title: "XSS Mitigation Framework",
     description: "Designed and executed experimental testing on PHP-based web applications to identify Reflected, Stored, and DOM-based XSS vulnerabilities.",
     tags: ["PHP", "Cybersecurity", "XSS", "OWASP", "Research"],
@@ -102,8 +116,8 @@ const projectsData = [
     fullDescription: "Designed and executed experimental testing on PHP-based web applications to identify Reflected, Stored, and DOM-based XSS vulnerabilities. Developed and evaluated prevention frameworks using input validation, output encoding (e.g., htmlspecialchars()), and Content-Security-Policy (CSP) implementation. Strengthened applied understanding of cybersecurity principles, secure coding practices, and OWASP standards."
   },
   {
-    id: 5,
-    number: "05",
+    id: 6,
+    number: "06",
     title: "Seadex - Export Management Platform",
     description: "A PHP-Laravel based export management platform connecting Indonesian suppliers with global buyers.",
     tags: ["PHP", "Laravel", "MySQL", "Full-Stack", "TailwindCSS"],
@@ -114,8 +128,8 @@ const projectsData = [
     fullDescription: "A PHP-Laravel based export management platform connecting Indonesian suppliers with global buyers. Integrated front-end interfaces with robust MySQL database systems to streamline product listings and export operations."
   },
   {
-    id: 6,
-    number: "06",
+    id: 7,
+    number: "07",
     title: "Diabetes Meal Plan Framework",
     description: "Machine learning system designed to predict and manage Type 2 Diabetes through personalized meal recommendations.",
     tags: ["Python", "Machine Learning", "Data Science", "Healthcare"],
@@ -126,8 +140,8 @@ const projectsData = [
     fullDescription: "Machine learning system designed to predict and manage Type 2 Diabetes through personalized meal recommendations. Built classification models using Python to analyze health and lifestyle data, integrating prediction algorithms with nutritional guidance."
   },
   {
-    id: 7,
-    number: "07",
+    id: 8,
+    number: "08",
     title: "Taman Bacaan Mobile App",
     description: "Android-based mobile application using Kotlin and Android Studio to support community reading activities through digital access.",
     tags: ["Kotlin", "Android Studio", "Mobile Dev", "Leadership"],
@@ -138,8 +152,8 @@ const projectsData = [
     fullDescription: "Android-based mobile application using Kotlin and Android Studio to support community reading activities through digital access and user engagement. Led the full project lifecycle from system design, task delegation, and database integration to UI/UX development and testing."
   },
   {
-    id: 8,
-    number: "08",
+    id: 9,
+    number: "09",
     title: "AI in Student Learning",
     description: "Research project analyzing the impact of AI integration on student learning outcomes using statistical analysis in R.",
     tags: ["R", "Data Analysis", "Research", "Education", "Statistics"],
@@ -199,10 +213,10 @@ function Projects() {
       <div className="container">
         <motion.div
           className="section-header"
-          variants={headerVariants}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: easeOutExpo, delay: 0.2 }}
         >
           <h2 className="section-title">FEATURED PROJECTS</h2>
           <p className="section-subtitle">Directory of work</p>
@@ -215,7 +229,8 @@ function Projects() {
           variants={listContainerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ delayChildren: 0.3, staggerChildren: 0.08 }}
         >
             {projectsData.map((project, index) => (
               <motion.div
@@ -343,7 +358,17 @@ function Projects() {
                         rel="noopener noreferrer"
                         className="modal-link-btn"
                       >
-                        <FaGithub /> GitHub
+                        <FaGithub /> Frontend
+                      </a>
+                    )}
+                    {selectedProject.githubBackend && (
+                      <a 
+                        href={selectedProject.githubBackend} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="modal-link-btn"
+                      >
+                        <FaGithub /> Backend
                       </a>
                     )}
                     {selectedProject.external && (

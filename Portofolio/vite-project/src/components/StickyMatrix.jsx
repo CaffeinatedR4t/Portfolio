@@ -35,6 +35,26 @@ function StickyMatrix() {
 
     resize()
 
+    // Pre-warm: run 60 frames instantly so the canvas looks full on first reveal
+    ;(function prewarm() {
+      const drops = dropsRef.current
+      for (let frame = 0; frame < 60; frame++) {
+        ctx.fillStyle = 'rgba(0,0,0,0.08)'
+        ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight)
+        ctx.font = `${fontSize}px "Courier New", monospace`
+        for (let i = 0; i < drops.length; i++) {
+          const char = Math.random() > 0.5 ? '1' : '0'
+          ctx.fillStyle = drops[i] % 3 === 0 ? '#ff3333' : '#cc0000'
+          ctx.shadowColor = '#cc0000'
+          ctx.shadowBlur = drops[i] % 3 === 0 ? 6 : 0
+          ctx.fillText(char, i * fontSize, drops[i] * fontSize)
+          if (drops[i] * fontSize > canvas.offsetHeight && Math.random() > 0.975) drops[i] = 0
+          drops[i]++
+        }
+        ctx.shadowBlur = 0
+      }
+    })()
+
     // Debounced resize
     let resizeTimer
     const onResize = () => {

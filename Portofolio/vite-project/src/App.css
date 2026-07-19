@@ -24,7 +24,7 @@ body {
   background-color: #000000;
   color: #ffffff;
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: clip; /* clip prevents horizontal scroll without breaking position:sticky */
 }
 
 .App {
@@ -40,12 +40,20 @@ body {
   background: #000000;
 }
 
-#home,
-#about,
+#about {
+  position: relative;
+  z-index: 20;
+  background: #000000;
+}
+
 #projects,
 #contact {
   position: relative;
   z-index: 5;
+  background: #000000;
+}
+
+#home {
   background: #000000;
 }
 
@@ -87,12 +95,12 @@ footer {
   background: #000000;
 }
 
-/* Spacer — same height as matrix (80vh).
+/* Spacer — same height as matrix (100vh).
    Lives in normal flow AFTER the sticky footer.
    Gives Lenis the scroll distance needed for the
    footer to unstick and slide away off screen. */
 .matrix-reveal-spacer {
-  height: 80vh;
+  height: 85vh;
   background: transparent; /* transparent so fixed matrix shows through */
   pointer-events: none;
   position: relative;

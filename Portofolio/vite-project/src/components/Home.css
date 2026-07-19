@@ -1,12 +1,21 @@
-#home {
+.home-scroll-wrapper {
+  height: 150vh;
   position: relative;
-  width: 100%;
+}
+
+#home {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 100vh;
+  z-index: 10;
   background: #000000;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  will-change: transform;
 }
 
 #home::after {
