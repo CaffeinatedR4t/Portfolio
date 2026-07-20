@@ -290,7 +290,7 @@ function About() {
                 onClick={() => setIsCalendarOpen(true)}
                 transition={{ layout: { type: 'spring', stiffness: 300, damping: 30 } }}
               >
-                <motion.span layout="position" style={{ color: '#ffffff' }}>
+                <motion.span layout="position">
                   BOOK A CALL
                 </motion.span>
               </motion.button>
