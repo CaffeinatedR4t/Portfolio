@@ -38,6 +38,7 @@ import { DiJava } from 'react-icons/di'
 import { TbApi } from 'react-icons/tb'
 import { VscVscode } from 'react-icons/vsc'
 import { FaFilePdf, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import CalendarModal from './CalendarModal'
 
 // Custom SVG Logos
 const CSharpLogo = () => (
@@ -200,13 +201,7 @@ function About() {
   }
 
   const [techStackOpen, setTechStackOpen] = useState(false)
-  const [emailCopied, setEmailCopied] = useState(false)
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText('jeremy.yosep@gmail.com')
-    setEmailCopied(true)
-    setTimeout(() => setEmailCopied(false), 2000)
-  }
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false)
 
   return (
     <>
@@ -292,11 +287,11 @@ function About() {
               <motion.button
                 layout
                 className="copy-email-btn"
-                onClick={handleCopyEmail}
+                onClick={() => setIsCalendarOpen(true)}
                 transition={{ layout: { type: 'spring', stiffness: 300, damping: 30 } }}
               >
-                <motion.span layout="position">
-                  {emailCopied ? 'Copied!' : 'Copy Email'}
+                <motion.span layout="position" style={{ color: '#ffffff' }}>
+                  BOOK A CALL
                 </motion.span>
               </motion.button>
             </motion.div>
@@ -387,6 +382,10 @@ function About() {
 
       {/* ✅ CERTIFICATIONS STICKY LIST — full-width, outside the constrained container */}
       <CertificationsStickyList certifications={certificationsData} />
+      <CalendarModal 
+        isOpen={isCalendarOpen} 
+        onClose={() => setIsCalendarOpen(false)} 
+      />
     </section>
     </>
   )

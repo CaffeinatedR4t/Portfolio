@@ -1,0 +1,110 @@
+.calendar-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.calendar-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 1000px; /* Wide enough for a calendar picker */
+  height: 85vh; /* Tall enough for the date/time slots */
+  background: #111111;
+  border: 1px solid #333333;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  padding: 0.5rem;
+}
+
+.calendar-close-btn:hover {
+  opacity: 1;
+}
+
+.calendar-iframe-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.actual-iframe {
+  position: relative;
+  z-index: 2;
+  /* Force a white background on the iframe, then invert it to black.
+     This mathematically forces all the dark text inside the iframe to become white! */
+  background: #ffffff; 
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Fallback placeholder underneath the iframe */
+.calendar-placeholder-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #888888;
+  z-index: 1;
+  font-family: var(--font-primary, sans-serif);
+}
+
+.calendar-placeholder-text h3 {
+  color: #ffffff;
+  font-family: var(--font-accent, sans-serif);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.calendar-placeholder-text p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.calendar-placeholder-text code {
+  background: #222;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .calendar-modal-overlay {
+    padding: 1rem;
+  }
+  .calendar-modal-content {
+    height: 90vh;
+  }
+  .calendar-close-btn {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+}

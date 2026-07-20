@@ -1,0 +1,128 @@
+.services-section {
+  position: relative;
+  background: #000000;
+  width: 100%;
+  color: #ffffff;
+  z-index: 10;
+  /* Massive height to create a "scroll track" for the pinned animation */
+  height: 300vh; 
+}
+
+.services-sticky-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center; /* Perfectly center everything vertically */
+  overflow: hidden;
+}
+
+.services-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 5vw;
+}
+
+.services-text-col {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+}
+
+.services-header {
+  padding-top: 5vh; /* Upper top padding as requested */
+  margin-bottom: 4vh;
+}
+
+.services-header h2 {
+  font-family: var(--font-accent);
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--text-muted, #808080);
+}
+
+.service-text-item {
+  /* Tightly packed just like the Monod design */
+  margin-bottom: 1vh;
+  transition: color 0.4s ease;
+  color: #333333; /* almost black/dark gray */
+}
+
+.service-text-item:last-child {
+  margin-bottom: 0;
+}
+
+.service-text-item.active {
+  color: #ffffff;
+}
+
+.service-text-item h3 {
+  font-size: clamp(2.5rem, 4.5vw, 5.5rem);
+  text-transform: capitalize;
+  font-family: var(--font-primary, 'sans-serif');
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.1;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.services-image-col {
+  width: 35%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.services-image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  height: 50vh; /* Fixed container to hold the images */
+  display: flex;
+  align-items: center;
+}
+
+.service-image-card {
+  position: absolute; 
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+.service-image-card.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.service-image-card img {
+  width: 100%;
+  border-radius: 0; /* Kept sharp corners */
+  object-fit: cover;
+  aspect-ratio: 4/3;
+  display: block;
+}
+
+.service-image-card p {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: var(--text-muted, #808080);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+@media (max-width: 1024px) {
+  .service-text-item h3 {
+    white-space: normal;
+  }
+}

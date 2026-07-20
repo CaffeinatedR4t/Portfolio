@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa'
-import { MdEmail, MdLocationOn, MdWorkOutline } from 'react-icons/md'
+import { MdEmail, MdLocationOn, MdWorkOutline, MdCalendarToday } from 'react-icons/md'
+import CalendarModal from './CalendarModal'
 import './Contact.css'
 
 const easeOutExpo = [0.16, 1, 0.3, 1]
@@ -58,6 +59,7 @@ function Contact() {
   })
   const [status, setStatus] = useState({ type: '', message: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false)
 
   const handleChange = (e) => {
     setFormData({
@@ -193,6 +195,22 @@ function Contact() {
                 <FaEnvelope />
               </motion.a>
             </motion.div>
+
+            <motion.div
+              className="book-call-wrapper"
+              variants={staggerItem}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <button 
+                className="btn btn-primary book-call-btn" 
+                onClick={() => setIsCalendarOpen(true)}
+                style={{ width: 'max-content' }}
+              >
+                <span>BOOK A CALL</span>
+              </button>
+            </motion.div>
           </motion.div>
 
           <motion.form
@@ -273,6 +291,11 @@ function Contact() {
           </motion.form>
         </div>
       </div>
+      
+      <CalendarModal 
+        isOpen={isCalendarOpen} 
+        onClose={() => setIsCalendarOpen(false)} 
+      />
     </section>
   )
 }

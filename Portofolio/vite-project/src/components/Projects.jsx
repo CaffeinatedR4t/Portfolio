@@ -218,7 +218,7 @@ function Projects() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, ease: easeOutExpo, delay: 0.2 }}
         >
-          <h2 className="section-title">FEATURED PROJECTS</h2>
+          <h2 className="section-title">FEATURED WORKS</h2>
           <p className="section-subtitle">Directory of work</p>
         </motion.div>
       </div>
