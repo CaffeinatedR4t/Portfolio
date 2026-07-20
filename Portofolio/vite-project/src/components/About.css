@@ -294,9 +294,9 @@
 
 .cert-left-sticky {
   position: sticky;
-  top: 80px;
-  height: calc(100vh - 80px);
-  padding: 3.5rem 4rem 3.5rem 3rem;
+  top: 0;
+  height: 100vh;
+  padding: 120px 4rem 4rem 3rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -369,21 +369,22 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  align-self: flex-start;
-  margin-top: auto;
   padding: 0.75rem 2rem;
-  background: transparent;
-  color: #ffffff;
   border: 1px solid #ffffff;
+  color: #ffffff;
+  text-decoration: none;
   font-family: var(--font-accent);
+  letter-spacing: 2px;
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 2px;
-  text-decoration: none;
+  text-transform: uppercase;
+  line-height: 1;
+  box-sizing: border-box;
   position: relative;
   overflow: hidden;
   z-index: 1;
-  transition: color 0.3s ease, border-color 0.3s ease;
+  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .cert-view-btn::before {
@@ -411,23 +412,22 @@
   position: sticky;
   top: 0;
   height: 100vh;
-  padding: 80px 3rem 4rem 2rem;
+  padding: 120px 3rem 4rem 2rem;
   display: flex;
   align-items: stretch;
 }
 
-/* Clipping container — overflow:hidden hides the incoming image below the frame */
+/* Clipping container removed — images can now overlap and slide from the actual bottom */
 .cert-image-stack {
   position: relative;
   flex: 1;
-  overflow: hidden;
 }
 
 /* Each slide is absolutely positioned. Image 0 starts visible; others start below (JS sets transform on every scroll frame). */
 .cert-image-slide {
   position: absolute;
   inset: 0;
-  transform: translateY(100%); /* default: hidden below — overridden by scroll handler */
+  transform: translateY(100vh); /* default: hidden below viewport — overridden by scroll handler */
   will-change: transform;      /* GPU layer for smooth compositing */
 }
 
@@ -602,6 +602,7 @@
   font-weight: 600;
   letter-spacing: 2px;
   line-height: 1;
+  text-transform: uppercase;
   cursor: pointer;
   text-decoration: none;
   box-sizing: border-box;

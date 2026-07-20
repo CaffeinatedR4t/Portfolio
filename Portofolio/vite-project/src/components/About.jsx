@@ -420,20 +420,35 @@ function CertificationsStickyList({ certifications }) {
       const vh = window.innerHeight
 
       // Update left panel text (React state — fires once per segment boundary)
-      const idx = Math.max(0, Math.min(Math.round(scrolledInto / vh), N - 1))
+      // Switch text exactly when the incoming image is halfway up the screen (scrolledInto / vh reaches i - 0.5)
+      const idx = Math.max(0, Math.min(Math.floor((scrolledInto / vh) - 0.5), N - 1))
       setActiveIndex(prev => (prev === idx ? prev : idx))
 
       // Scroll-driven image positions — transform is 1:1 with scroll, no time delay
       // Image 0 is always at y=0 (base layer). Image i enters during scroll [i*vh → (i+1)*vh].
       slideRefs.current.forEach((el, i) => {
         if (!el) return
-        if (i === 0) {
-          el.style.transform = 'translateY(0%)'
-          return
-        }
-        const progress = (scrolledInto - i * vh) / vh     // 0 = start, 1 = fully in
-        const clamped = Math.max(0, Math.min(1, progress))
-        el.style.transform = `translateY(${(1 - clamped) * 100}%)`
+
+        // 1. Calculate this image's slide-up progress (translateY)
+        // Image i enters during scroll [i*vh → (i+1)*vh]
+        const currentProgress = (scrolledInto - i * vh) / vh
+        const currentClamped = Math.max(0, Math.min(1, currentProgress))
+        
+        let translateY = (1 - currentClamped) * 100 // 100vh to 0vh
+        if (i === 0) translateY = 0 // The first image never slides up, it starts at 0
+
+        // 2. Calculate the NEXT image's slide-up progress (to scale this one down)
+        // Next image enters during scroll [(i+1)*vh → (i+2)*vh]
+        const nextProgress = (scrolledInto - (i + 1) * vh) / vh
+        const nextClamped = Math.max(0, Math.min(1, nextProgress))
+        
+        // Scale down from 1.0 to 0.9 as the next image slides over it
+        const scale = 1 - (nextClamped * 0.1)
+
+        // Apply both translate and scale (using vh instead of % so they sit totally off-screen)
+        el.style.transform = `translateY(${translateY}vh) scale(${scale})`
+        // Add a subtle transition for smoothness if the user scrolls very fast
+        el.style.transition = 'transform 0.1s ease-out'
       })
     }
 
@@ -470,24 +485,66 @@ function CertificationsStickyList({ certifications }) {
               <motion.div
                 key={activeIndex}
                 className="cert-info-inner"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.45, ease: easeOutExpo }}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.15 }
+                  },
+                  exit: {
+                    opacity: 0,
+                    transition: { staggerChildren: 0.05, staggerDirection: -1 }
+                  }
+                }}
               >
-                <h4 className="cert-title">{activeCert.title}</h4>
-                <p className="cert-issuer">{activeCert.issuer} · {activeCert.date}</p>
-                <p className="cert-desc">{activeCert.description}</p>
-                <a
-                  href={activeCert.pdf || activeCert.image}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cert-view-btn"
+                <motion.h4 
+                  className="cert-title"
+                  variants={{
+                    hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
+                    visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+                    exit: { opacity: 0, y: -20, filter: 'blur(4px)', transition: { duration: 0.3 } }
+                  }}
                 >
-                  [ VIEW ]
-                </a>
+                  {activeCert.title}
+                </motion.h4>
+
+                <motion.p 
+                  className="cert-issuer"
+                  variants={{
+                    hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
+                    visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+                    exit: { opacity: 0, y: -20, filter: 'blur(4px)', transition: { duration: 0.3 } }
+                  }}
+                >
+                  {activeCert.issuer} · {activeCert.date}
+                </motion.p>
+
+                <motion.p 
+                  className="cert-desc"
+                  variants={{
+                    hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
+                    visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+                    exit: { opacity: 0, y: -20, filter: 'blur(4px)', transition: { duration: 0.3 } }
+                  }}
+                >
+                  {activeCert.description}
+                </motion.p>
               </motion.div>
             </AnimatePresence>
+            
+            {/* The VIEW button sits permanently on screen, updating its link instantly without animating out */}
+            <a
+              href={activeCert.pdf || activeCert.image}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cert-view-btn"
+              style={{ marginTop: 'auto', alignSelf: 'flex-start' }}
+            >
+              VIEW
+            </a>
           </div>
 
         </div>
@@ -505,7 +562,12 @@ function CertificationsStickyList({ certifications }) {
                 style={{ zIndex: i + 1 }}
               >
                 {cert.image ? (
-                  <img src={cert.image} alt={cert.title} className="cert-block-img" />
+                  <img 
+                    src={cert.image} 
+                    alt={cert.title} 
+                    className="cert-block-img" 
+                    style={{ objectPosition: ['IBM', 'EF Standard English Test'].includes(cert.issuer) ? 'top' : 'center' }}
+                  />
                 ) : (
                   <div className="cert-block-placeholder">
                     <span>{cert.title}</span>
