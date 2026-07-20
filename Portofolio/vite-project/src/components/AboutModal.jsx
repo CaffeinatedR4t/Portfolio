@@ -133,7 +133,7 @@ export default function AboutModal({ isOpen, onClose }) {
                   style={{ padding: 0, border: 'none', background: 'transparent' }}
                 >
                   <img 
-                    src="/images/IMG_20260720_203555.png" 
+                    src="/images/IMG_20260720_203555.webp" 
                     alt="Jeremy Yosep Pohar" 
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                   />

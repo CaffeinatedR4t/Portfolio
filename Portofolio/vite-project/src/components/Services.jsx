@@ -4,27 +4,27 @@ import './Services.css';
 const services = [
   { 
     title: "Web Development", 
-    image: "/images/web_development_1784564493319.jpg", 
+    image: "/images/web_development_1784564493319.webp", 
     desc: "Fast, scalable websites engineered for performance and growth." 
   },
   { 
     title: "Web Security Audits", 
-    image: "/images/security_audits_1784564503776.jpg", 
+    image: "/images/security_audits_1784564503776.webp", 
     desc: "Comprehensive security audits to identify and mitigate vulnerabilities." 
   },
   { 
     title: "Performance Optimization", 
-    image: "/images/performance_opt_1784564513502.jpg", 
+    image: "/images/performance_opt_1784564513502.webp", 
     desc: "Deep performance tuning for lightning-fast load times and seamless UX." 
   },
   { 
     title: "Technical Consulting", 
-    image: "/images/tech_consulting_1784564525214.jpg", 
+    image: "/images/tech_consulting_1784564525214.webp", 
     desc: "Strategic architecture and technical guidance for complex systems." 
   },
   { 
     title: "Automation Solutions", 
-    image: "/images/automation_solutions_1784564577102.jpg", 
+    image: "/images/automation_solutions_1784564577102.webp", 
     desc: "Intelligent workflow automation to save time and reduce human error." 
   }
 ];
