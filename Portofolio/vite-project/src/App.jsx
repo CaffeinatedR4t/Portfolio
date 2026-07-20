@@ -10,6 +10,8 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import StickyMatrix from './components/StickyMatrix'
 import ScrollReveal from './components/ScrollReveal'
+import AboutModal from './components/AboutModal'
+import { motion } from 'framer-motion'
 import './App.css'
 
 function App() {
@@ -115,7 +117,7 @@ function App() {
       const src = ctx.createBufferSource()
       src.buffer = buffer
       const gain = ctx.createGain()
-      gain.gain.value = 0.4
+      gain.gain.value = 1.5
       src.connect(gain)
       gain.connect(ctx.destination)
       src.start(0)
@@ -209,12 +211,14 @@ function App() {
     }
   }, [])
 
+  const [isAboutOpen, setIsAboutOpen] = useState(false)
+
   const handlePreloaderComplete = () => {
     setIsLoading(false)
   }
 
   return (
-    <div className="App">
+    <div className="App" style={{ background: '#000000' }}>
       <audio
         ref={bgMusicRef}
         src="/audio/ytmp3free.cc_the-formula-youtubemp3free.org.mp3"
@@ -222,7 +226,9 @@ function App() {
       />
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
 
-      <Navbar />
+      <AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} />
+
+      <Navbar onAboutClick={() => setIsAboutOpen(true)} />
 
       <Home />
       <About />
@@ -230,24 +236,24 @@ function App() {
       <ScrollReveal />
       <Contact />
 
-      {/* Footer sticky wrapper */}
-      <div className="footer-sticky-wrapper">
-        <Footer />
-      </div>
+        {/* Footer sticky wrapper */}
+        <div className="footer-sticky-wrapper">
+          <Footer />
+        </div>
 
-      <div className="matrix-reveal-spacer" aria-hidden="true" />
+        <div className="matrix-reveal-spacer" aria-hidden="true" />
 
-      <StickyMatrix />
+        <StickyMatrix />
 
-      <button
-        ref={muteBtnRef}
-        className="mute-btn"
-        onClick={() => setIsMuted(prev => !prev)}
-        aria-label="Toggle Sound"
-        title={isMuted ? 'Unmute' : 'Mute'}
-      >
-        {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
-      </button>
+        <button
+          ref={muteBtnRef}
+          className="mute-btn"
+          onClick={() => setIsMuted(prev => !prev)}
+          aria-label="Toggle Sound"
+          title={isMuted ? 'Unmute' : 'Mute'}
+        >
+          {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
+        </button>
     </div>
   )
 }

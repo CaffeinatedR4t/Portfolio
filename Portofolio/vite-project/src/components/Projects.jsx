@@ -204,7 +204,7 @@ function Projects() {
 
   const handleCloseModal = () => {
     setSelectedProject(null)
-    document.body.style.overflow = 'auto'
+    document.body.style.overflow = ''
     if (window.lenis) window.lenis.start()
   }
 

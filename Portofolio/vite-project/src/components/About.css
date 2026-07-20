@@ -429,10 +429,31 @@
   inset: 0;
   transform: translateY(100vh); /* default: hidden below viewport — overridden by scroll handler */
   will-change: transform;      /* GPU layer for smooth compositing */
+  display: block;
+  text-decoration: none;
 }
 
 .cert-image-slide:first-child {
   transform: translateY(0%);   /* base image starts visible */
+}
+
+.cert-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.cert-logo-overlay {
+  width: auto;
+  height: auto;
+  max-width: 250px;
+  max-height: 120px;
+  object-fit: contain;
 }
 
 .cert-block-img {

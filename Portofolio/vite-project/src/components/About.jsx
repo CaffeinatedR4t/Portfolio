@@ -74,7 +74,8 @@ const certificationsData = [
     date: "March 2025",
     description: "Comprehensive certification covering AI fundamentals, machine learning algorithms, deep learning frameworks, and practical applications of artificial intelligence in real-world scenarios.",
     image: "/images/1757263374472.png",
-    pdf: null // No PDF
+    pdf: null, // No PDF
+    logo: "/images/huawei-logo-communication-13-1102022835.png"
   },
   {
     id: 2,
@@ -83,7 +84,8 @@ const certificationsData = [
     date: "May 2025",
     description: "Advanced Python programming certification covering object-oriented programming, decorators, generators, error handling, and best practices for writing clean, efficient Python code.",
     image: "/images/cf42e461-75c2-4823-b515-f953be549a55.png",
-    pdf: "/certs/31a36364-2ae2-41a7-8a17-d5ae64270025.pdf"
+    pdf: "/certs/31a36364-2ae2-41a7-8a17-d5ae64270025.pdf",
+    logo: "/images/sololearn-logo-11CA9A21E1-seeklogo.com-2507789615.png"
   },
   {
     id: 3,
@@ -92,7 +94,8 @@ const certificationsData = [
     date: "November 2025",
     description: "Foundational certification in cybersecurity covering threat landscape, security principles, cryptography, network security, and best practices for protecting digital assets.",
     image: "/images/cybersecurity-fundamentals.png",
-    pdf: "/certs/IBMDesign20260212-32-t4abd9.pdf"
+    pdf: "/certs/IBMDesign20260212-32-t4abd9.pdf",
+    logo: "/images/ibm-blue-logo-transparent-background-3197318730.png"
   },
   {
     id: 4,
@@ -101,7 +104,8 @@ const certificationsData = [
     date: "November 2025",
     description: "Introduction to cybersecurity concepts, including security frameworks, risk management, incident response, and hands-on experience with security tools and techniques.",
     image: "/images/getting-started-with-cybersecurity.png",
-    pdf: "/certs/IBMDesign20260212-33-qfwwb4.pdf"
+    pdf: "/certs/IBMDesign20260212-33-qfwwb4.pdf",
+    logo: "/images/ibm-blue-logo-transparent-background-3197318730.png"
   },
   {
     id: 5,
@@ -110,7 +114,8 @@ const certificationsData = [
     date: "June 2025",
     description: "Advanced English proficiency certification (C1 level) demonstrating strong command of English language skills including reading comprehension, listening, and communication.",
     image: "/images/efset.png",
-    pdf: "/certs/EF SET Certificate.pdf"
+    pdf: "/certs/EF SET Certificate.pdf",
+    logo: "/images/the-ef-standard-english-test-logo-D48EA85B7F-seeklogo.com-2829443847.png"
   }
 ]
 
@@ -555,25 +560,54 @@ function CertificationsStickyList({ certifications }) {
         <div className="cert-right-sticky">
           <div className="cert-image-stack">
             {certifications.map((cert, i) => (
-              <div
+              <motion.a
                 key={i}
                 ref={el => { slideRefs.current[i] = el }}
                 className="cert-image-slide"
                 style={{ zIndex: i + 1 }}
+                href={cert.pdf || cert.image}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial="initial"
+                whileHover="hover"
+                animate="initial"
               >
                 {cert.image ? (
-                  <img 
-                    src={cert.image} 
-                    alt={cert.title} 
-                    className="cert-block-img" 
-                    style={{ objectPosition: ['IBM', 'EF Standard English Test'].includes(cert.issuer) ? 'top' : 'center' }}
-                  />
+                  <>
+                    <img 
+                      src={cert.image} 
+                      alt={cert.title} 
+                      className="cert-block-img" 
+                      style={{ objectPosition: ['IBM', 'EF Standard English Test', 'Huawei'].includes(cert.issuer) ? 'top' : 'center' }}
+                    />
+                    <motion.div 
+                      className="cert-image-overlay"
+                      variants={{
+                        initial: { opacity: 0, backdropFilter: 'blur(0px)' },
+                        hover: { opacity: 1, backdropFilter: 'blur(12px)' }
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {cert.logo && (
+                        <motion.img 
+                          src={cert.logo} 
+                          alt={`${cert.issuer} Logo`} 
+                          className="cert-logo-overlay"
+                          variants={{
+                            initial: { opacity: 0, scale: 0.8 },
+                            hover: { opacity: 1, scale: 1 }
+                          }}
+                          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                        />
+                      )}
+                    </motion.div>
+                  </>
                 ) : (
                   <div className="cert-block-placeholder">
                     <span>{cert.title}</span>
                   </div>
                 )}
-              </div>
+              </motion.a>
             ))}
           </div>
         </div>

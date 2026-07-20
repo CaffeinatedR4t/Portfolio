@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import './Navbar.css'
 
-function Navbar() {
+function Navbar({ onAboutClick }) {
   const [scrolled, setScrolled] = useState(false)
   const [visible, setVisible] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -37,13 +37,13 @@ function Navbar() {
     if (!mobileMenuOpen) {
       document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = 'auto'
+      document.body.style.overflow = ''
     }
   }
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false)
-    document.body.style.overflow = 'auto'
+    document.body.style.overflow = ''
   }
 
   return (
@@ -55,7 +55,7 @@ function Navbar() {
         </div>
 
         <div className="nav-top-links desktop-nav" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
-          <BinaryHoverLink href="#about" text="ABOUT" onClick={closeMobileMenu} />
+          <BinaryHoverLink href="#about" text="ABOUT" onClick={() => { closeMobileMenu(); if(onAboutClick) onAboutClick(); }} />
           <BinaryHoverLink href="#projects" text="WORK" onClick={closeMobileMenu} />
           <BinaryHoverLink href="#contact" text="CONTACT" onClick={closeMobileMenu} />
         </div>
@@ -78,7 +78,7 @@ function Navbar() {
         <div className="desktop-nav" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem' }}>
           <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
             <BinaryHoverLink href="#home" text="HOME" onClick={closeMobileMenu} />
-            <BinaryHoverLink href="#about" text="ABOUT" onClick={closeMobileMenu} />
+            <BinaryHoverLink href="#about" text="ABOUT" onClick={() => { closeMobileMenu(); if(onAboutClick) onAboutClick(); }} />
           </div>
           
           <div style={{ margin: '0 0.5rem', display: 'flex', alignItems: 'center' }}>
@@ -108,7 +108,7 @@ function Navbar() {
       <div className={`mobile-menu-overlay ${mobileMenuOpen ? 'active' : ''}`}>
         <div className="mobile-menu-content">
           <MobileNavLink href="#home" text="HOME" onClick={closeMobileMenu} />
-          <MobileNavLink href="#about" text="ABOUT" onClick={closeMobileMenu} />
+          <MobileNavLink href="#about" text="ABOUT" onClick={() => { closeMobileMenu(); if(onAboutClick) onAboutClick(); }} />
           <MobileNavLink href="#projects" text="WORK" onClick={closeMobileMenu} />
           <MobileNavLink href="#contact" text="CONTACT" onClick={closeMobileMenu} />
         </div>
@@ -189,6 +189,12 @@ function BinaryHoverLink({ href, text, onClick }) {
 
   const handleClick = (e) => {
     e.preventDefault()
+    
+    if (href === '#about') {
+      if (onClick) onClick()
+      return
+    }
+
     const targetElement = document.getElementById(href.replace('#', ''))
     if (targetElement) {
       if (window.lenis) {
@@ -225,6 +231,12 @@ function BinaryHoverLink({ href, text, onClick }) {
 function MobileNavLink({ href, text, onClick }) {
   const handleClick = (e) => {
     e.preventDefault()
+
+    if (href === '#about') {
+      if (onClick) onClick()
+      return
+    }
+
     const targetElement = document.getElementById(href.replace('#', ''))
     if (targetElement) {
       if (window.lenis) {
