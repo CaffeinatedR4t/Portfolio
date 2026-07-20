@@ -65,7 +65,7 @@ export default function AboutModal({ isOpen, onClose }) {
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <div style={{ position: 'sticky', top: 0, zIndex: 100, width: '100%', height: 0 }}>
               <button 

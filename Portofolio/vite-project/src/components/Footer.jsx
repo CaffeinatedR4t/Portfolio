@@ -92,16 +92,18 @@ function Footer() {
 
   const scrollToTop = (e) => {
     e.preventDefault()
-    const homeSection = document.getElementById('home') || document.body
     
     if (window.lenis) {
-      window.lenis.scrollTo(homeSection, {
+      window.lenis.scrollTo(0, {
         offset: 0,
-        duration: 1,
-        easing: (t) => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       })
     } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      })
     }
   }
 
