@@ -6,7 +6,7 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip; /* clip does NOT create a scroll container — overflow:hidden does and breaks position:sticky */
 }
 
 body {
@@ -18,7 +18,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #000000;
   color: #ffffff;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 code {
@@ -28,7 +28,7 @@ code {
 
 #root {
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip; /* clip does NOT create a scroll container; hidden would and breaks position:sticky */
 }
 
 /* Screen reader only utility class for SEO and accessibility */

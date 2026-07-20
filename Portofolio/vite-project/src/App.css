@@ -81,10 +81,8 @@ body {
 ::selection { background: #cc0000; color: #ffffff; }
 ::-moz-selection { background: #cc0000; color: #ffffff; text-shadow: none; }
 
-/* Footer sticky — sticks while spacer scrolls beneath it */
 .footer-sticky-wrapper {
-  position: sticky;
-  bottom: 0;
+  position: relative;
   z-index: 10;
   background: #000000;
 }
@@ -123,19 +121,20 @@ html.lenis body { height: auto; }
 /* ── Global Mute Button ─────────────────────── */
 .mute-btn {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  top: 2.2rem;
+  right: 3rem;
   width: 30px;
   height: 30px;
-  background: transparent;
-  border: 1px solid #ffffff;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  border: none;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.75rem;
   cursor: pointer;
-  z-index: 9999;
+  z-index: 1003; /* Lower z-index so preloader is definitely on top */
   border-radius: 0;
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s,
               color 0.3s ease,

@@ -21,8 +21,11 @@ function Navbar() {
         setVisible(true)
       }
 
-      setScrolled(currentScrollY > 50)
-      lastScrollYRef.current = currentScrollY  // ref write — no re-render
+      // The user wants the bottom navbar to hide "almost reaching the home section" 
+      // instead of right at the top. We'll use 100% of the viewport height as the threshold.
+      const threshold = window.innerHeight * 1.0;
+      setScrolled(currentScrollY > threshold)
+      lastScrollYRef.current = currentScrollY
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -45,12 +48,16 @@ function Navbar() {
 
   return (
     <>
-      <nav
-        className={`navbar ${scrolled ? 'scrolled' : ''} ${visible ? '' : 'navbar-hidden'}`}
-        style={{ mixBlendMode: 'difference' }}
-      >
+      {/* TOP NAVBAR (Visible only at the top of the page) */}
+      <nav className={`navbar-top ${scrolled ? 'hidden' : ''}`} style={{ mixBlendMode: 'difference' }}>
         <div className="nav-left">
           <Logo onClick={closeMobileMenu} />
+        </div>
+
+        <div className="nav-top-links desktop-nav" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+          <BinaryHoverLink href="#about" text="ABOUT" onClick={closeMobileMenu} />
+          <BinaryHoverLink href="#projects" text="WORK" onClick={closeMobileMenu} />
+          <BinaryHoverLink href="#contact" text="CONTACT" onClick={closeMobileMenu} />
         </div>
 
         <div
@@ -61,18 +68,48 @@ function Navbar() {
             {mobileMenuOpen ? '▲' : '▼'}
           </span>
         </div>
+      </nav>
 
-        <div className="nav-right desktop-nav">
-          <BinaryHoverLink href="#about" text="ABOUT" onClick={closeMobileMenu} />
-          <BinaryHoverLink href="#projects" text="PROJECTS" onClick={closeMobileMenu} />
-          <BinaryHoverLink href="#contact" text="CONTACT" onClick={closeMobileMenu} />
+      {/* BOTTOM FLOATING NAVBAR (Visible when scrolling) */}
+      <nav
+        className={`navbar-bottom ${!scrolled ? 'hidden' : ''} ${visible ? '' : 'hidden-scroll-down'}`}
+        style={{ mixBlendMode: 'difference' }}
+      >
+        <div className="desktop-nav" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem' }}>
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+            <BinaryHoverLink href="#home" text="HOME" onClick={closeMobileMenu} />
+            <BinaryHoverLink href="#about" text="ABOUT" onClick={closeMobileMenu} />
+          </div>
+          
+          <div style={{ margin: '0 0.5rem', display: 'flex', alignItems: 'center' }}>
+            <Logo onClick={closeMobileMenu} />
+          </div>
+
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+            <BinaryHoverLink href="#projects" text="WORK" onClick={closeMobileMenu} />
+            <BinaryHoverLink href="#contact" text="CONTACT" onClick={closeMobileMenu} />
+          </div>
+        </div>
+
+        <div className="mobile-only-logo" style={{ display: 'none' }}>
+           <Logo onClick={closeMobileMenu} />
+        </div>
+
+        <div
+          className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
+          onClick={toggleMobileMenu}
+        >
+          <span className="arrow-icon">
+            {mobileMenuOpen ? '▼' : '▲'} 
+          </span>
         </div>
       </nav>
 
       <div className={`mobile-menu-overlay ${mobileMenuOpen ? 'active' : ''}`}>
         <div className="mobile-menu-content">
+          <MobileNavLink href="#home" text="HOME" onClick={closeMobileMenu} />
           <MobileNavLink href="#about" text="ABOUT" onClick={closeMobileMenu} />
-          <MobileNavLink href="#projects" text="PROJECTS" onClick={closeMobileMenu} />
+          <MobileNavLink href="#projects" text="WORK" onClick={closeMobileMenu} />
           <MobileNavLink href="#contact" text="CONTACT" onClick={closeMobileMenu} />
         </div>
       </div>

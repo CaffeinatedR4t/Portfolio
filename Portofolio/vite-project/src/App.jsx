@@ -18,6 +18,7 @@ function App() {
   const lenisRef = useRef(null)
   const rafIdRef = useRef(null)
   const muteBtnRef = useRef(null)
+  const bgMusicRef = useRef(null)
 
   useEffect(() => {
     const lenisInstance = new Lenis({
@@ -139,6 +140,58 @@ function App() {
     };
   }, []);
 
+  // Background music control & tab visibility
+  useEffect(() => {
+    const audio = bgMusicRef.current;
+    if (!audio) return;
+
+    audio.volume = 0.2; // Set a reasonable background volume
+    
+    const originalTitle = "Jeremy Joseph Pohar - Portfolio"; // or we could read it once, but hardcoding or reading is fine. Let's read it:
+    // Wait, reading it inside useEffect is safer:
+    
+    let titleInterval;
+
+    const handlePlayPause = () => {
+      // Pause if user mutes OR if they switch tabs
+      if (isMuted || document.hidden) {
+        audio.pause();
+      } else {
+        audio.muted = false;
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {});
+        }
+      }
+
+      // Title Animation on hold
+      if (document.hidden) {
+        let dotCount = 1;
+        document.title = "Paused.";
+        clearInterval(titleInterval);
+        titleInterval = setInterval(() => {
+          dotCount = (dotCount % 3) + 1;
+          document.title = "Paused" + ".".repeat(dotCount);
+        }, 500);
+      } else {
+        clearInterval(titleInterval);
+        document.title = "Jeremy Joseph Pohar | Portfolio";
+      }
+    };
+
+    // Trigger on state change
+    handlePlayPause();
+
+    // Listen for tab switching
+    document.addEventListener('visibilitychange', handlePlayPause);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handlePlayPause);
+      clearInterval(titleInterval);
+      document.title = "Jeremy Joseph Pohar | Portfolio";
+    };
+  }, [isMuted]);
+
   // Slide mute button out on scroll, back when idle
   useEffect(() => {
     let timer
@@ -162,9 +215,15 @@ function App() {
 
   return (
     <div className="App">
+      <audio
+        ref={bgMusicRef}
+        src="/audio/ytmp3free.cc_the-formula-youtubemp3free.org.mp3"
+        loop
+      />
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
 
       <Navbar />
+
       <Home />
       <About />
       <Projects />

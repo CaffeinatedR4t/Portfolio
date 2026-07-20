@@ -1,4 +1,5 @@
-.navbar {
+/* NEW: Top Navbar (visible only at the top of the page) */
+.navbar-top {
   position: fixed;
   top: 0;
   left: 0;
@@ -7,26 +8,56 @@
   justify-content: space-between;
   align-items: center;
   padding: 2rem 3rem;
-  background: transparent; /* ✅ ALWAYS TRANSPARENT */
-  backdrop-filter: none; /* ✅ NO BLUR */
-  border-bottom: none;
-  z-index: 10000;
-  transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), /* ✅ SMOOTHER */
-              padding 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
+  z-index: 1002;
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-.navbar.scrolled {
-  background: transparent; /* ✅ NO BACKGROUND ON SCROLL */
-  backdrop-filter: none;
-  padding: 1.5rem 3rem;
-}
-
-.navbar-hidden {
+.navbar-top.hidden {
   transform: translateY(-120%);
 }
 
+.nav-top-links {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+/* BOTTOM FLOATING NAVBAR */
+.navbar-bottom {
+  position: fixed;
+  bottom: 2rem; /* Floating above the bottom edge */
+  top: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content; /* Fit tightly around content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1.5rem; /* Even smaller padding */
+  background: rgba(0, 0, 0, 0.4); /* Frosted liquid glass effect */
+  backdrop-filter: blur(12px);
+  border: none; /* Removed border */
+  border-radius: 0; /* NO ROUND EDGES */
+  z-index: 1000;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1),
+              padding 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.3s ease,
+              opacity 0.6s ease;
+}
+
+.navbar-bottom.hidden {
+  transform: translate(-50%, 150%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.navbar-bottom.hidden-scroll-down {
+  transform: translate(-50%, 150%);
+}
+
 .nav-left {
-  z-index: 10001;
+  z-index: 1001;
 }
 
 /* ✅ NEW: Simple logo image styling */
@@ -40,8 +71,8 @@
 }
 
 .logo-image {
-  width: 45px; /* ✅ Adjust size as needed */
-  height: 45px;
+  width: 32px; /* Smaller logo */
+  height: 32px;
   object-fit: contain;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -63,7 +94,7 @@
 .nav-link {
   font-family: var(--font-accent);
   font-size: 0.85rem;
-  font-weight: 400;
+  font-weight: 600;
   color: #ffffff;
   text-decoration: none;
   letter-spacing: 2px;
@@ -97,7 +128,7 @@
   width: 40px;
   height: 40px;
   cursor: pointer;
-  z-index: 10002;
+  z-index: 1002;
   position: relative;
   background: transparent;
   border: none;
@@ -130,7 +161,8 @@
 
 .mobile-menu-overlay {
   position: fixed;
-  top: 80px;
+  bottom: 80px; /* Above the bottom navbar */
+  top: auto;
   right: -100%;
   width: 280px;
   height: auto;
@@ -138,11 +170,11 @@
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(20px);
   border-left: 1px solid rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0;
-  z-index: 9999;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0; /* NO ROUND EDGES */
+  z-index: 999;
   transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: -10px 10px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: -10px -10px 40px rgba(0, 0, 0, 0.5);
 }
 
 .mobile-menu-overlay.active {
@@ -159,7 +191,7 @@
 .mobile-nav-link {
   font-family: var(--font-accent);
   font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #ffffff;
   text-decoration: none;
   letter-spacing: 2px;
@@ -190,17 +222,32 @@
 }
 
 @media (max-width: 968px) {
-  .navbar {
+  .navbar-top {
     padding: 1.5rem 2rem;
   }
 
-  .navbar.scrolled {
-    padding: 1rem 2rem;
-    background: transparent;
+  .nav-top-links {
+    display: none;
+  }
+
+  .navbar-bottom {
+    bottom: 1.5rem;
+    padding: 0.7rem 1.5rem;
+    width: calc(100% - 3rem);
+    justify-content: space-between;
+  }
+
+  .navbar-bottom.scrolled {
+    padding: 0.6rem 1.5rem;
+    background: rgba(0, 0, 0, 0.9);
   }
 
   .desktop-nav {
-    display: none;
+    display: none !important;
+  }
+
+  .mobile-only-logo {
+    display: flex !important;
   }
 
   .mobile-menu-toggle {
@@ -218,12 +265,14 @@
 }
 
 @media (max-width: 480px) {
-  .navbar {
+  .navbar-top {
     padding: 1rem 1.5rem;
   }
 
-  .navbar.scrolled {
-    padding: 0.8rem 1.5rem;
+  .navbar-bottom {
+    bottom: 1rem;
+    padding: 0.6rem 1.2rem;
+    width: calc(100% - 2rem);
   }
 
   .mobile-menu-overlay {

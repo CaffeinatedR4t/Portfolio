@@ -377,18 +377,11 @@ function About() {
               )}
             </AnimatePresence>
 
-          {/* ✅ CERTIFICATIONS CAROUSEL */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: sectionEasing, delay: 0.3 }}
-          >
-            <CertificationsCarousel certifications={certificationsData} />
-          </motion.div>
-
         </div>
       </div>
+
+      {/* ✅ CERTIFICATIONS STICKY LIST — full-width, outside the constrained container */}
+      <CertificationsStickyList certifications={certificationsData} />
     </section>
     </>
   )
@@ -410,152 +403,121 @@ function StaticTechGrid({ items, itemVariants }) {
   )
 }
 
-const certClickSound = new Audio('/audio/lesiakower-minimalist-button-hover-sound-effect-399749.wav');
-certClickSound.volume = 0.4;
-function CertificationsCarousel({ certifications }) {
-  const [[currentIndex, direction], setPage] = useState([0, 0])
-  const [selectedCert, setSelectedCert] = useState(null)
-  const [touchStart, setTouchStart] = useState(0)
-  const [touchEnd, setTouchEnd] = useState(0)
+function CertificationsStickyList({ certifications }) {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const sectionRef = useRef(null)
+  const slideRefs = useRef([])
+  const activeCert = certifications[activeIndex]
+  const easeOutExpo = [0.16, 1, 0.3, 1]
 
-  const total = certifications.length
+  useEffect(() => {
+    const N = certifications.length
 
-  const playClick = () => {
-    if (!window.isMuted) { certClickSound.currentTime = 0; certClickSound.play().catch(() => {}) }
-  }
+    const handleScroll = () => {
+      const section = sectionRef.current
+      if (!section) return
+      const scrolledInto = Math.max(0, -section.getBoundingClientRect().top)
+      const vh = window.innerHeight
 
-  const paginate = (dir) => {
-    playClick()
-    setPage(([idx]) => [(idx + dir + total) % total, dir])
-  }
+      // Update left panel text (React state — fires once per segment boundary)
+      const idx = Math.max(0, Math.min(Math.round(scrolledInto / vh), N - 1))
+      setActiveIndex(prev => (prev === idx ? prev : idx))
 
-  const handleCertClick = (cert) => {
-    playClick()
-    setSelectedCert(cert)
-    document.body.style.overflow = 'hidden'
-    if (window.lenis) window.lenis.stop()
-  }
+      // Scroll-driven image positions — transform is 1:1 with scroll, no time delay
+      // Image 0 is always at y=0 (base layer). Image i enters during scroll [i*vh → (i+1)*vh].
+      slideRefs.current.forEach((el, i) => {
+        if (!el) return
+        if (i === 0) {
+          el.style.transform = 'translateY(0%)'
+          return
+        }
+        const progress = (scrolledInto - i * vh) / vh     // 0 = start, 1 = fully in
+        const clamped = Math.max(0, Math.min(1, progress))
+        el.style.transform = `translateY(${(1 - clamped) * 100}%)`
+      })
+    }
 
-  const handleClosePopup = () => {
-    setSelectedCert(null)
-    document.body.style.overflow = 'auto'
-    if (window.lenis) window.lenis.start()
-  }
+    const lenis = window.lenis
+    if (lenis) lenis.on('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
 
-  const handleTouchStart = (e) => setTouchStart(e.touches[0].clientX)
-  const handleTouchMove  = (e) => setTouchEnd(e.touches[0].clientX)
-  const handleTouchEnd   = () => {
-    if (touchStart - touchEnd > 50)  paginate(1)
-    if (touchStart - touchEnd < -50) paginate(-1)
-  }
-
-  const prevIndex = (currentIndex - 1 + total) % total
-  const nextIndex = (currentIndex + 1) % total
-
-  // Build the 3 visible slots — stable key=pos so layout animation fires
-  const visibleCards = [
-    { cert: certifications[prevIndex],    pos: 'prev' },
-    { cert: certifications[currentIndex], pos: 'active' },
-    { cert: certifications[nextIndex],    pos: 'next' },
-  ]
-
-  // Spring config for the conveyor belt slide
-  const spring = { type: 'spring', stiffness: 280, damping: 28, mass: 0.8 }
+    return () => {
+      if (lenis) lenis.off('scroll', handleScroll)
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [certifications.length])
 
   return (
-    <div className="certifications-section">
-      <h3>Certifications</h3>
+    <section
+      ref={sectionRef}
+      className="cert-scroll-section"
+      style={{ height: `calc(${certifications.length + 1} * 100vh)` }}
+    >
 
-      <div
-        className="carousel-container"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        <button className="carousel-arrow carousel-prev" onClick={() => paginate(-1)}>
-          <FaChevronLeft />
-        </button>
+      {/* LEFT: sticky text panel */}
+      <div className="cert-left-col">
+        <div className="cert-left-sticky">
 
-        {/* LayoutGroup ensures Framer Motion tracks cards across renders */}
-        <motion.div className="carousel-track" layout>
-          <AnimatePresence initial={false} mode="popLayout" custom={direction}>
-            {visibleCards.map(({ cert, pos }) => (
+          <h3 className="cert-section-heading">Certifications</h3>
+
+          <p className="cert-counter">
+            {String(activeIndex + 1).padStart(2, '0')} / {String(certifications.length).padStart(2, '0')}
+          </p>
+
+          <div className="cert-info-wrap">
+            <AnimatePresence mode="wait">
               <motion.div
-                key={cert.id}
-                layoutId={`cert-card-${cert.id}`}
-                layout
-                transition={spring}
-                className={`cert-card-carousel ${pos}`}
-                onClick={() => pos === 'active' && handleCertClick(cert)}
-                initial={{ opacity: 0, scale: 0.7 }}
-                animate={{
-                  opacity: pos === 'active' ? 1 : 0.5,
-                  scale: pos === 'active' ? 1.15 : 0.85,
-                  filter: pos === 'active' ? 'blur(0px)' : 'blur(1px)',
-                  transition: spring,
-                }}
-                exit={{ opacity: 0, scale: 0.7, transition: { duration: 0.2 } }}
+                key={activeIndex}
+                className="cert-info-inner"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.45, ease: easeOutExpo }}
               >
-                {cert.image
-                  ? <img src={cert.image} alt={cert.title} className="cert-image" />
-                  : <div className="cert-placeholder" />}
-                <h4>{cert.title}</h4>
-                <p className="cert-issuer">{cert.issuer}</p>
-                <span className="cert-date">{cert.date}</span>
+                <h4 className="cert-title">{activeCert.title}</h4>
+                <p className="cert-issuer">{activeCert.issuer} · {activeCert.date}</p>
+                <p className="cert-desc">{activeCert.description}</p>
+                <a
+                  href={activeCert.pdf || activeCert.image}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cert-view-btn"
+                >
+                  [ VIEW ]
+                </a>
               </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+            </AnimatePresence>
+          </div>
 
-        <button className="carousel-arrow carousel-next" onClick={() => paginate(1)}>
-          <FaChevronRight />
-        </button>
+        </div>
       </div>
 
-      <div className="carousel-counter">
-        {currentIndex + 1} / {certifications.length}
-      </div>
-
-      {/* Certification Popup */}
-      {selectedCert && (
-        <div className="cert-popup-overlay" onClick={handleClosePopup}>
-          <div className="cert-popup" onClick={(e) => e.stopPropagation()} data-lenis-prevent="true">
-            <button className="cert-close-btn" onClick={handleClosePopup}>
-              <FaTimes />
-            </button>
-
-            <div className="cert-popup-content">
-              {selectedCert.image ? (
-                <img src={selectedCert.image} alt={selectedCert.title} className="cert-popup-image" />
-              ) : (
-                <div className="cert-popup-placeholder">
-                  <span className="cert-placeholder-icon-large">{selectedCert.icon}</span>
-                </div>
-              )}
-
-              <div className="cert-popup-info">
-                <div className="cert-popup-icon">{selectedCert.icon}</div>
-                <h3>{selectedCert.title}</h3>
-                <p className="cert-popup-issuer">{selectedCert.issuer}</p>
-                <span className="cert-popup-date">{selectedCert.date}</span>
-                <p className="cert-popup-description">{selectedCert.description}</p>
-
-                {selectedCert.pdf && (
-                  <a
-                    href={selectedCert.pdf}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="cert-pdf-btn"
-                  >
-                    <FaFilePdf /> View Certificate
-                  </a>
+      {/* RIGHT: sticky panel — all images in DOM, positioned directly by scroll progress */}
+      <div className="cert-right-col">
+        <div className="cert-right-sticky">
+          <div className="cert-image-stack">
+            {certifications.map((cert, i) => (
+              <div
+                key={i}
+                ref={el => { slideRefs.current[i] = el }}
+                className="cert-image-slide"
+                style={{ zIndex: i + 1 }}
+              >
+                {cert.image ? (
+                  <img src={cert.image} alt={cert.title} className="cert-block-img" />
+                ) : (
+                  <div className="cert-block-placeholder">
+                    <span>{cert.title}</span>
+                  </div>
                 )}
               </div>
-            </div>
+            ))}
           </div>
         </div>
-      )}
-    </div>
+      </div>
+
+    </section>
   )
 }
 

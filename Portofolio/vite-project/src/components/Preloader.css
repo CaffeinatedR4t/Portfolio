@@ -6,7 +6,9 @@
   height: 100vh;
   height: 100dvh;
   background: #000000;
-  z-index: 10000;
+  z-index: 999999;
+  isolation: isolate;
+  transform: translateZ(0);
   overflow: hidden;
   opacity: 1;
   visibility: visible;
