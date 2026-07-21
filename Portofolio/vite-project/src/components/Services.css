@@ -65,7 +65,7 @@
 .service-text-item h3 {
   font-size: clamp(2.5rem, 4.5vw, 5.5rem);
   text-transform: capitalize;
-  font-family: var(--font-primary, 'sans-serif');
+  font-family: var(--font-accent); /* Updated to match global site headings! */
   font-weight: 700;
   margin: 0;
   line-height: 1.1;

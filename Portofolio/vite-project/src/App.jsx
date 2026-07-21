@@ -13,6 +13,7 @@ import StickyMatrix from './components/StickyMatrix'
 import ScrollReveal from './components/ScrollReveal'
 import AboutModal from './components/AboutModal'
 import WebGLCursor from './components/WebGLCursor'
+import FAQ from './components/FAQ'
 import { motion } from 'framer-motion'
 import './App.css'
 
@@ -127,7 +128,7 @@ function App() {
 
     let currentHovered = null
     const handleMouseOver = (e) => {
-      const target = e.target.closest('button, a, .icon-box, .project-list-row')
+      const target = e.target.closest('button, a, .icon-box, .project-list-row, .faq-item')
       if (target && target !== currentHovered) {
         currentHovered = target
         playHover()
@@ -238,6 +239,7 @@ function App() {
       <Projects />
       <ScrollReveal />
       <Services />
+      <FAQ />
       <Contact />
 
         {/* Footer sticky wrapper */}
