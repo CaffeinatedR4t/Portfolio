@@ -39,7 +39,7 @@ export default function Cursor() {
     // A Map to track active grid cells. Key: "x,y", Value: { life: float }
     const activeCells = new Map()
 
-    const addCellsInRadius = (cx, cy, radius, hoverState) => {
+    const addCellsInRadius = (cx, cy, radius) => {
       const startCol = Math.floor((cx - radius) / gridSize)
       const endCol = Math.ceil((cx + radius) / gridSize)
       const startRow = Math.floor((cy - radius) / gridSize)
@@ -59,7 +59,7 @@ export default function Cursor() {
             const key = `${c},${r}`
             
             // Add random noise to the life so they pop out/dissolve randomly as they fade
-            const initialLife = 1.0 + Math.random() * 0.8 + (hoverState * 0.5)
+            const initialLife = 1.0 + Math.random() * 0.8
             
             // Calculate normalized distance from the center (0 = center, 1 = edge)
             const normalizedDist = dist / radius
@@ -107,22 +107,20 @@ export default function Cursor() {
     const lerp = (start, end, t) => start * (1 - t) + end * t
 
     const render = () => {
-      currentHover += (mouse.hover - currentHover) * 0.15
-
       // Only spawn cells if we are moving AND NOT hovering a button!
       // This causes the trail to smoothly fade away into nothing when you mouse over a button.
       if (isMoving && mouse.hover === 0) {
         const dist = Math.hypot(mouse.x - lastMouse.x, mouse.y - lastMouse.y)
         const steps = Math.max(1, Math.floor(dist / (gridSize / 2)))
         
-        const currentRadius = 35 + (currentHover * 40)
+        const currentRadius = 35 // Locked radius, no longer expands on hover!
 
         for (let i = 0; i <= steps; i++) {
           const t = steps === 0 ? 1 : i / steps
           const px = lerp(lastMouse.x, mouse.x, t)
           const py = lerp(lastMouse.y, mouse.y, t)
           
-          addCellsInRadius(px, py, currentRadius, currentHover)
+          addCellsInRadius(px, py, currentRadius)
         }
         
         lastMouse.x = mouse.x
