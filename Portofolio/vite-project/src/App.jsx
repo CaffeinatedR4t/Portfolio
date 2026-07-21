@@ -12,6 +12,7 @@ import Footer from './components/Footer'
 import StickyMatrix from './components/StickyMatrix'
 import ScrollReveal from './components/ScrollReveal'
 import AboutModal from './components/AboutModal'
+import WebGLCursor from './components/WebGLCursor'
 import { motion } from 'framer-motion'
 import './App.css'
 
@@ -220,6 +221,7 @@ function App() {
 
   return (
     <div className="App" style={{ background: '#000000' }}>
+      <WebGLCursor />
       <audio
         ref={bgMusicRef}
         src="/audio/ytmp3free.cc_the-formula-youtubemp3free.org.mp3"

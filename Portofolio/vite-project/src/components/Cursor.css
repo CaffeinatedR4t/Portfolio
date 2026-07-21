@@ -1,0 +1,31 @@
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  pointer-events: none; /* Let clicks pass through to elements below */
+  z-index: 999999; /* Ensure it stays on top of everything, including modals */
+  transform: translate(-50%, -50%); /* Center the dot directly under the cursor */
+  mix-blend-mode: difference; /* This creates that inverted magic effect */
+  will-change: transform;
+}
+
+.webgl-cursor-wrapper {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999999; /* High enough to be visible over page sections */
+  mix-blend-mode: difference;
+}
+
+
+@media (max-width: 768px) {
+  .custom-cursor {
+    display: none;
+  }
+}
